@@ -47,5 +47,9 @@ private:
     display that to the GLUT window. then in the future the GLFW window I am
     given.
  
+  * Editing the code for the tracing function would be the marching and color
+    determination part. This is what is CUDA cored or cpu pthreaded. First thing
+    is get this with ray marching then to take small incrememted steps for black
+    hole.
  
  */
