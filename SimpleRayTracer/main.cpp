@@ -9,6 +9,7 @@
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <iostream>
+#include "RayTracer/RayTracer.hpp"
 
 #define WINDOW_HEIGHT 512
 #define WINDOW_WIDTH 512
@@ -21,10 +22,11 @@ int main(int argc, char * argv[]) {
     // Setup window statically because GLUT is poor at window and display render
     glutInit( &argc, argv );
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    
     glutInitWindowSize(WINDOW_HEIGHT, WINDOW_WIDTH);
     glutCreateWindow("Simple Ray Tracer");
     glutDisplayFunc(display);
+    
+    initOpenGL();
     
     glutMainLoop();
     return 0;
@@ -34,7 +36,7 @@ int main(int argc, char * argv[]) {
 void initOpenGL(void) {
     glEnable(GL_DEPTH_TEST | GL_CULL_FACE | GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor( 0.0, 0.0, 0.0, 1.0 ); // Black
+    glClearColor( 1.0, 0.0, 0.0, 1.0 ); // Black
     glCullFace(GL_FRONT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     

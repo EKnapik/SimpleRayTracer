@@ -29,6 +29,7 @@
 		130D1BC81BCB11E900CCF04A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		130D1BCF1BCB120600CCF04A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		130D1BD11BCB120D00CCF04A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		138FAF3D1BCB2B70005F8625 /* RayTracer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RayTracer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				130D1BC81BCB11E900CCF04A /* main.cpp */,
+				138FAF3D1BCB2B70005F8625 /* RayTracer */,
 			);
 			path = SimpleRayTracer;
 			sourceTree = "<group>";
@@ -246,6 +248,7 @@
 				130D1BCE1BCB11E900CCF04A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
