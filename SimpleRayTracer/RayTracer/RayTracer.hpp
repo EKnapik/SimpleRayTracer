@@ -51,5 +51,35 @@ private:
     determination part. This is what is CUDA cored or cpu pthreaded. First thing
     is get this with ray marching then to take small incrememted steps for black
     hole.
+    
+    
+    
+    
+    RayTracer(Scene *scenePtr, Window *windowPtr) {
+	* set values to this->scenePtr = scenePtr and window
+	virtual void function that is run per pixel ... This is virtual so that another class could extend this and implement its own
+		per pixel thing.
+	dynamically create 3D array with window info
+
+	Setup the OpenGL stuff
+		compile and link simple shader
+		vertex buffer
+		texture buffer
+}
+
+public:
+RayTracer(Scene *scenePtr, Window *windowPtr);
+void raytraceScene()
+void changeScene(Scene *newScene);
+
+private:
+virtual void setColor(x, y); // <- that is run per pixel updating the 3D matrix
+void setupOpenGLCalls()
+void populateMatrix()
+void renderToWindow()
+void setupThreads()
+void shutdownThreads()
+    
+    
  
  */
