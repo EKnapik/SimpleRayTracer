@@ -16,10 +16,25 @@
  will be draw on those two triangles
  */
 
-class RayTacer {
+class RayTracer {
 public:
-    void render(void);
+    RayTracer(Scene *scenePtr, Window *windowPtr);
+    void raytraceScene();
+    void changeScene(Scene *newScene);
+    
 private:
+    virtual void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
+    void setupOpenGLCalls();
+    void renderToWindow(); // renders the current 3D matrix to the window
+    void populateMatrix();
+    void setupThreads();
+    void shutdownThreads();
+    
+    GLuint shaderProgram;
+    GLuint vertBuffID;
+    GLuint enumBuffID;
+    // I need data for square
+    // need uv data
     const GLuint numVerts;
     const GLfloat screneData[30];
 };
@@ -104,5 +119,4 @@ setup texturegl() {
 
 }
     
- 
- */
+*/
