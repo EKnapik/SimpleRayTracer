@@ -27,13 +27,14 @@ private:
     virtual void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
+    void changeScene(Scene *newScene);
     void populateMatrix(void);
     void setupThreads(void);
     void shutdownThreads(void);
     
     // render 2 triangles and texture
     GLuint shaderProgram;
-    GLuint vBuffer, eBuffer;
+    GLuint vBuffer, eBuffer, texBuffer;
     GLuint vertPos, uvPos, texPos;
     const GLuint numVerts;
     const GLfloat vertexData[20]; // set in construction

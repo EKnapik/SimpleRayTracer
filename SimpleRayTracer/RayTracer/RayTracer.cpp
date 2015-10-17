@@ -38,6 +38,15 @@ void RayTracer::setupOpenGLCalls(void) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEEMENT_ARRAY_BUFFER, 0);
 
+	// texture sending
+	glGenTextures(1, texBuffer);
+	glBindTexture(GL_TEXTURE_2D, texBuffer);
+	glActiveTexture(GL_TEXTURE0);
+	glTexImage(GL_TEXTURE_2D, ......) // pass the 3D texture data to gpu
+
+	glTexParameteri(GL_TEXTURE2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 	// Create shader program and find variable locations in shader program
 	shaderProgram = shaderSetup("RayTracer.vert", "RayTracer.frag");
 	if( shaderProgram ) {
@@ -47,13 +56,14 @@ void RayTracer::setupOpenGLCalls(void) {
 
 	vertPos = glGetAttribLocation(shaderProgram, "currVert");
 	uvPos = glGetAttribLocation(shaderProgram, "uvVert");
-	// some call for the texture location
+	texPos = glGetUniformLocation(shaderProgram, "texture");
 }
 
 void RayTracer::renderToWindow(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eBuffer);
+	glBindTexture(GL_TEXTURE_2D, texBuffer);
 	glUseProgram(shaderProgram);
 
 	// pass the vertex data info
@@ -64,8 +74,7 @@ void RayTracer::renderToWindow(void) {
 	glEnableVertexAttribArray(uvPos);
 	glVertexAttribPointer(uvPos, 2, GL_FLOAT, step, 3*sizeof(GLfloat));
 
-	// Gonna need to pass that texture over
-	//
+	glUniform1i(texPos, 0); // GL_TEXTURE0
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, elementData);
 	glutSwapBuffers();
@@ -75,3 +84,20 @@ void RayTracer::renderToWindow(void) {
 void RayTracer::changeScene(Scene *newScene) {
 	this.scene = newScene;
 }
+
+
+/*
+void RayTracer::sendTexture(void) {
+	// glTexImage(GL_TEXTURE_2D, ...)
+}
+*/
+
+
+
+
+
+
+
+
+
+
