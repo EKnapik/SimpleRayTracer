@@ -40,7 +40,8 @@ private:
     const GLfloat vertexData[20]; // set in construction
     const GLushort elementData[6];
     // some 3D byte array for the texture data
-    
+    GLubyte pixelData[12];
+    int height, width; // these will be covered by the window when that is fixed
     // Scene *scene;
     // Window *window;
 };

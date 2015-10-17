@@ -20,6 +20,11 @@ RayTracer::RayTracer() {
 	               1.0,  1.0, 0.0, 1.0, 1.0};
 	elementData = {0, 1, 2, 3, 0, 2};
 	numVerts = 4;
+
+	// Set the texture data should be a 4 squares
+	pixelData = {255, 0, 0, 	0, 255, 0,
+				 0, 0, 255, 	255, 255, 255};
+
 	setupOpenGLCalls();
 }
 
@@ -42,7 +47,8 @@ void RayTracer::setupOpenGLCalls(void) {
 	glGenTextures(1, texBuffer);
 	glBindTexture(GL_TEXTURE_2D, texBuffer);
 	glActiveTexture(GL_TEXTURE0);
-	glTexImage(GL_TEXTURE_2D, ......) // pass the 3D texture data to gpu
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, G_RGB, GL_UNSIGNED_BYTE, pixelData);
+	// glTexImage(GL_TEXTURE_2D, ......) // pass the 3D texture data to gpu
 
 	glTexParameteri(GL_TEXTURE2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -77,7 +83,11 @@ void RayTracer::renderToWindow(void) {
 	glUniform1i(texPos, 0); // GL_TEXTURE0
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, elementData);
-	glutSwapBuffers();
+}
+
+
+void RayTracer::raytraceScene(void) {
+	renderToWindow();
 }
 
 

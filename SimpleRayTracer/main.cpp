@@ -17,6 +17,8 @@
 void initOpenGL(void);
 void display(void);
 
+RayTracer *rayTracer;
+
 int main(int argc, char * argv[]) {
     
     // Setup window statically because GLUT is poor at window and display render
@@ -28,6 +30,8 @@ int main(int argc, char * argv[]) {
     
     initOpenGL();
     
+    rayTracer = new RayTracer();
+    
     glutMainLoop();
     return 0;
 }
@@ -35,6 +39,7 @@ int main(int argc, char * argv[]) {
 
 void initOpenGL(void) {
     glEnable(GL_DEPTH_TEST | GL_CULL_FACE | GL_BLEND);
+    glEnable(GL_TEXTURE_2D);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor( 0.0, 0.2, 1.0, 1.0 ); // Blue
     glCullFace(GL_FRONT);
@@ -49,6 +54,7 @@ void display(void) {
     
     // poll events
     // bind and draw
+    rayTracer->raytraceScene();
     
     glutSwapBuffers();
     glutPostRedisplay();

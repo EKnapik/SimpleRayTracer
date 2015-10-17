@@ -31,7 +31,6 @@
 		130D1BD11BCB120D00CCF04A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		138FAF3D1BCB2B70005F8625 /* RayTracer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RayTracer; sourceTree = "<group>"; };
 		13CD82961BD1CDA600ABF00F /* Ray */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Ray; sourceTree = "<group>"; };
-		13CD82971BD1CDA600ABF00F /* RayTracer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RayTracer; sourceTree = "<group>"; };
 		13CD82981BD1CDA600ABF00F /* Scene */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scene; sourceTree = "<group>"; };
 		13CD82991BD1CDA600ABF00F /* Window */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Window; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,13 +70,20 @@
 			isa = PBXGroup;
 			children = (
 				13CD82961BD1CDA600ABF00F /* Ray */,
-				13CD82971BD1CDA600ABF00F /* RayTracer */,
+				139AD8D31BD2F47700C65037 /* New Group */,
 				13CD82981BD1CDA600ABF00F /* Scene */,
 				13CD82991BD1CDA600ABF00F /* Window */,
 				130D1BC81BCB11E900CCF04A /* main.cpp */,
 				138FAF3D1BCB2B70005F8625 /* RayTracer */,
 			);
 			path = SimpleRayTracer;
+			sourceTree = "<group>";
+		};
+		139AD8D31BD2F47700C65037 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
