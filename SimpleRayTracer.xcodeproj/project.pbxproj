@@ -12,7 +12,23 @@
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
 		139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */; settings = {ASSET_TAGS = (); }; };
 		139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */; settings = {ASSET_TAGS = (); }; };
+		139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E81BD2FFD700C65037 /* RayTracer.frag */; };
+		139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		139AD8F31BD3044400C65037 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */,
+				139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		130D1BC51BCB11E900CCF04A /* SimpleRayTracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRayTracer; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +113,7 @@
 			buildPhases = (
 				130D1BC11BCB11E900CCF04A /* Sources */,
 				130D1BC21BCB11E900CCF04A /* Frameworks */,
+				139AD8F31BD3044400C65037 /* CopyFiles */,
 			);
 			buildRules = (
 			);

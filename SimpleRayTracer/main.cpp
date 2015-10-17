@@ -41,7 +41,7 @@ void initOpenGL(void) {
     glEnable(GL_DEPTH_TEST | GL_CULL_FACE | GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor( 0.0, 0.2, 1.0, 1.0 ); // Blue
+    glClearColor( 0.0, 0.0, 0.0, 1.0 ); 
     glCullFace(GL_FRONT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     

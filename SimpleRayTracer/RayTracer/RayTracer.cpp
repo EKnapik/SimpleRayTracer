@@ -49,17 +49,19 @@ void RayTracer::setVertexData(void) {
     elementData[5] = 2;
     
     // Set the texture data should be a 4 squares
+    width = 2;
+    height = 2;
     pixelData[0] = 255;
     pixelData[1] = 0;
     pixelData[2] = 0;
     
     pixelData[3] = 0;
-    pixelData[4] = 255;
-    pixelData[5] = 0;
+    pixelData[4] = 0;
+    pixelData[5] = 255;
     
     pixelData[6] = 0;
     pixelData[7] = 0;
-    pixelData[8] = 255;
+    pixelData[8] = 0;
     
     pixelData[9] = 255;
     pixelData[10] = 255;
@@ -67,7 +69,7 @@ void RayTracer::setVertexData(void) {
 }
 
 void RayTracer::setupOpenGLCalls(void) {
-	int dataSize = numVerts * 4 * sizeof(GLfloat);
+	int dataSize = numVerts * 5 * sizeof(GLfloat);
 
 	// Initialize the vertex and element buffer for later drawing
 	glGenBuffers(1, &vBuffer);
@@ -86,14 +88,14 @@ void RayTracer::setupOpenGLCalls(void) {
 	glBindTexture(GL_TEXTURE_2D, texBuffer);
 	glActiveTexture(GL_TEXTURE0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixelData);
-	// glTexImage(GL_TEXTURE_2D, ......) // pass the 3D texture data to gpu
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// Create shader program and find variable locations in shader program
 	shaderProgram = shaderSetup("RayTracer.vert", "RayTracer.frag");
-	if( shaderProgram ) {
+	if( !shaderProgram ) {
 		perror("ERROR SETTING UP SHADERS!!!!\n");
 		_exit(1);
 	}
@@ -105,14 +107,13 @@ void RayTracer::setupOpenGLCalls(void) {
 
 void RayTracer::renderToWindow(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
+    glUseProgram(shaderProgram);
 	glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eBuffer);
 	glBindTexture(GL_TEXTURE_2D, texBuffer);
-	glUseProgram(shaderProgram);
 
 	// pass the vertex data info
 	int step = 5*sizeof(GLfloat);
-    
 	glEnableVertexAttribArray(vertPos);
 	glVertexAttribPointer(vertPos, 3, GL_FLOAT, GL_FALSE, step, 0);
 
@@ -121,7 +122,7 @@ void RayTracer::renderToWindow(void) {
 
 	glUniform1i(texPos, 0); // GL_TEXTURE0
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, elementData);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 }
 
 
