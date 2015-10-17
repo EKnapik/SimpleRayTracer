@@ -8,10 +8,10 @@
 
 #include "RayTracer.hpp"
 
-RayTracer::RayTracer(Scene *scene, Window *window) {
-	this.scene = scene;
-	this.window = window;
-
+//RayTracer::RayTracer(Scene *scene, Window *window) {
+//	this.scene = scene;
+//	this.window = window;
+RayTracer::RayTracer() {
 	// define the 4 points of square in counter clockwise order
 	//			     x,    y,   z,   u,   v
 	vertexData = {-1.0,  1.0, 0.0, 0.0, 1.0,
@@ -81,12 +81,11 @@ void RayTracer::renderToWindow(void) {
 }
 
 
+/*
 void RayTracer::changeScene(Scene *newScene) {
 	this.scene = newScene;
 }
 
-
-/*
 void RayTracer::sendTexture(void) {
 	// glTexImage(GL_TEXTURE_2D, ...)
 }

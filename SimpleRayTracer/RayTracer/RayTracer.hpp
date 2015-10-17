@@ -19,15 +19,15 @@
 
 class RayTracer {
 public:
-    RayTracer(Scene *scenePtr, Window *windowPtr);
+    // RayTracer(Scene *scenePtr, Window *windowPtr);
+    RayTracer();
     void raytraceScene(void);
-    void changeScene(Scene *newScene);
+    // void changeScene(Scene *newScene);
     
 private:
     virtual void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
-    void changeScene(Scene *newScene);
     void populateMatrix(void);
     void setupThreads(void);
     void shutdownThreads(void);
@@ -41,8 +41,8 @@ private:
     const GLushort elementData[6];
     // some 3D byte array for the texture data
     
-    Scene *scene;
-    Window *window;
+    // Scene *scene;
+    // Window *window;
 };
 
 
