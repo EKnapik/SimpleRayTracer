@@ -36,7 +36,7 @@ int main(int argc, char * argv[]) {
 void initOpenGL(void) {
     glEnable(GL_DEPTH_TEST | GL_CULL_FACE | GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor( 1.0, 0.0, 0.0, 1.0 ); // Black
+    glClearColor( 0.0, 0.2, 1.0, 1.0 ); // Blue
     glCullFace(GL_FRONT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     

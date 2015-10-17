@@ -9,6 +9,7 @@
 #ifndef RayTracer_hpp
 #define RayTracer_hpp
 #include <OpenGL/gl.h>
+#include "shaderSetup.h"
 
 /*
  This draws two triangles over the entire rendering scene then given a scene
@@ -19,30 +20,36 @@
 class RayTracer {
 public:
     RayTracer(Scene *scenePtr, Window *windowPtr);
-    void raytraceScene();
+    void raytraceScene(void);
     void changeScene(Scene *newScene);
     
 private:
     virtual void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
-    void setupOpenGLCalls();
-    void renderToWindow(); // renders the current 3D matrix to the window
-    void populateMatrix();
-    void setupThreads();
-    void shutdownThreads();
+    void setupOpenGLCalls(void);
+    void renderToWindow(void); // renders the current 3D matrix to the window
+    void populateMatrix(void);
+    void setupThreads(void);
+    void shutdownThreads(void);
     
+    // render 2 triangles and texture
     GLuint shaderProgram;
-    GLuint vertBuffID;
-    GLuint enumBuffID;
-    // I need data for square
-    // need uv data
+    GLuint vBuffer, eBuffer;
+    GLuint vertPos, uvPos, texPos;
     const GLuint numVerts;
-    const GLfloat screneData[30];
+    const GLfloat vertexData[20]; // set in construction
+    const GLushort elementData[6];
+    // some 3D byte array for the texture data
+    
+    Scene *scene;
+    Window *window;
 };
 
 
 #endif /* RayTracer_hpp */
 
 /* TODO
+ * Fresnel Equation for reflection
+ 
  * Set function to use per pixel including default for constructor which can be
     given one to start with
  * Needs to be given the window dimensions to be create the 3D array
