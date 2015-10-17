@@ -10,19 +10,9 @@
 		130D1BC91BCB11E900CCF04A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130D1BC81BCB11E900CCF04A /* main.cpp */; };
 		130D1BD01BCB120600CCF04A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BCF1BCB120600CCF04A /* OpenGL.framework */; };
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
+		139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */; settings = {ASSET_TAGS = (); }; };
+		139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		130D1BC31BCB11E900CCF04A /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		130D1BC51BCB11E900CCF04A /* SimpleRayTracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRayTracer; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,6 +20,12 @@
 		130D1BCF1BCB120600CCF04A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		130D1BD11BCB120D00CCF04A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		138FAF3D1BCB2B70005F8625 /* RayTracer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RayTracer; sourceTree = "<group>"; };
+		139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RayTracer.cpp; path = RayTracer/RayTracer.cpp; sourceTree = "<group>"; };
+		139AD8E11BD2F6EE00C65037 /* RayTracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RayTracer.hpp; path = RayTracer/RayTracer.hpp; sourceTree = "<group>"; };
+		139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shaderSetup.cpp; path = RayTracer/shaderSetup.cpp; sourceTree = "<group>"; };
+		139AD8E41BD2F6EE00C65037 /* shaderSetup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = shaderSetup.hpp; path = RayTracer/shaderSetup.hpp; sourceTree = "<group>"; };
+		139AD8E81BD2FFD700C65037 /* RayTracer.frag */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = RayTracer.frag; path = RayTracer/RayTracer.frag; sourceTree = "<group>"; };
+		139AD8E91BD2FFDC00C65037 /* RayTracer.vert */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = RayTracer.vert; path = RayTracer/RayTracer.vert; sourceTree = "<group>"; };
 		13CD82961BD1CDA600ABF00F /* Ray */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Ray; sourceTree = "<group>"; };
 		13CD82981BD1CDA600ABF00F /* Scene */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scene; sourceTree = "<group>"; };
 		13CD82991BD1CDA600ABF00F /* Window */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Window; sourceTree = "<group>"; };
@@ -70,7 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				13CD82961BD1CDA600ABF00F /* Ray */,
-				139AD8D31BD2F47700C65037 /* New Group */,
+				139AD8D31BD2F47700C65037 /* RayTracer */,
 				13CD82981BD1CDA600ABF00F /* Scene */,
 				13CD82991BD1CDA600ABF00F /* Window */,
 				130D1BC81BCB11E900CCF04A /* main.cpp */,
@@ -79,11 +75,17 @@
 			path = SimpleRayTracer;
 			sourceTree = "<group>";
 		};
-		139AD8D31BD2F47700C65037 /* New Group */ = {
+		139AD8D31BD2F47700C65037 /* RayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */,
+				139AD8E11BD2F6EE00C65037 /* RayTracer.hpp */,
+				139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */,
+				139AD8E81BD2FFD700C65037 /* RayTracer.frag */,
+				139AD8E91BD2FFDC00C65037 /* RayTracer.vert */,
+				139AD8E41BD2F6EE00C65037 /* shaderSetup.hpp */,
 			);
-			name = "New Group";
+			name = RayTracer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,7 +97,6 @@
 			buildPhases = (
 				130D1BC11BCB11E900CCF04A /* Sources */,
 				130D1BC21BCB11E900CCF04A /* Frameworks */,
-				130D1BC31BCB11E900CCF04A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -146,6 +147,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				130D1BC91BCB11E900CCF04A /* main.cpp in Sources */,
+				139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */,
+				139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

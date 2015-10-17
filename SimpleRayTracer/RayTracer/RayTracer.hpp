@@ -8,8 +8,9 @@
 
 #ifndef RayTracer_hpp
 #define RayTracer_hpp
+#include <cstdio>
 #include <OpenGL/gl.h>
-#include "shaderSetup.h"
+#include "shaderSetup.hpp"
 
 /*
  This draws two triangles over the entire rendering scene then given a scene
@@ -25,20 +26,21 @@ public:
     // void changeScene(Scene *newScene);
     
 private:
-    virtual void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
+    void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
     void populateMatrix(void);
     void setupThreads(void);
     void shutdownThreads(void);
+    void setVertexData(void);
     
     // render 2 triangles and texture
     GLuint shaderProgram;
     GLuint vBuffer, eBuffer, texBuffer;
     GLuint vertPos, uvPos, texPos;
-    const GLuint numVerts;
-    const GLfloat vertexData[20]; // set in construction
-    const GLushort elementData[6];
+    GLuint numVerts;
+    GLfloat vertexData[20]; // set in construction
+    GLushort elementData[6];
     // some 3D byte array for the texture data
     GLubyte pixelData[12];
     int height, width; // these will be covered by the window when that is fixed

@@ -18,7 +18,7 @@
 #include <string.h>
 #endif
 
-#include "shaderSetup.h"
+#include "shaderSetup.hpp"
 
 /*
 ** shaderErrorCode

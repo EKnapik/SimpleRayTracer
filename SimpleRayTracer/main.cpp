@@ -9,7 +9,7 @@
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <iostream>
-#include "RayTracer/RayTracer.hpp"
+#include "RayTracer.hpp"
 
 #define WINDOW_HEIGHT 512
 #define WINDOW_WIDTH 512
