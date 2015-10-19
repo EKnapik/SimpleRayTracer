@@ -51,21 +51,23 @@ void RayTracer::setVertexData(void) {
     // Set the texture data should be a 4 squares
     width = 2;
     height = 2;
-    pixelData[0] = 255;
-    pixelData[1] = 0;
-    pixelData[2] = 0;
+    pixelData[0] = 255; // bottom left R
+    pixelData[1] = 0; // bottom left G
+    pixelData[2] = 0; // bottom left B
     
-    pixelData[3] = 0;
-    pixelData[4] = 0;
-    pixelData[5] = 255;
+    pixelData[3] = 0; // bottom right R
+    pixelData[4] = 255; // bottom right G
+    pixelData[5] = 0; // bottom right B
+    pixelData[6] = 0; // nothing
+    pixelData[7] = 0; // nothing
     
-    pixelData[6] = 0;
-    pixelData[7] = 0;
-    pixelData[8] = 0;
+    pixelData[8] = 255; // top left R
+    pixelData[9] = 0; // top left G
+    pixelData[10] = 255; // top left B
     
-    pixelData[9] = 255;
-    pixelData[10] = 255;
-    pixelData[11] = 255;
+    pixelData[11] = 0; // top right R
+    pixelData[12] = 0; // top right G
+    pixelData[13] = 255; // top right B
 }
 
 void RayTracer::setupOpenGLCalls(void) {
