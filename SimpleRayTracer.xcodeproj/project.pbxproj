@@ -10,6 +10,9 @@
 		130D1BC91BCB11E900CCF04A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130D1BC81BCB11E900CCF04A /* main.cpp */; };
 		130D1BD01BCB120600CCF04A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BCF1BCB120600CCF04A /* OpenGL.framework */; };
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
+		13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D7F1BD5FDC00017CC2A /* Camera.cpp */; settings = {ASSET_TAGS = (); }; };
+		13637D841BD5FDDD0017CC2A /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D821BD5FDDD0017CC2A /* Circle.cpp */; settings = {ASSET_TAGS = (); }; };
+		13637D891BD5FE220017CC2A /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D871BD5FE220017CC2A /* Plane.cpp */; settings = {ASSET_TAGS = (); }; };
 		13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CAE1BD5C77900AC13D3 /* Window.cpp */; settings = {ASSET_TAGS = (); }; };
 		13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CB21BD5C85000AC13D3 /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
 		139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -37,6 +40,15 @@
 		130D1BC81BCB11E900CCF04A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		130D1BCF1BCB120600CCF04A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		130D1BD11BCB120D00CCF04A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		13637D7B1BD5FD8D0017CC2A /* Camera */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Camera; sourceTree = "<group>"; };
+		13637D7C1BD5FD8D0017CC2A /* Circle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Circle; sourceTree = "<group>"; };
+		13637D7F1BD5FDC00017CC2A /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = Camera/Camera.cpp; sourceTree = "<group>"; };
+		13637D801BD5FDC00017CC2A /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Camera.hpp; path = Camera/Camera.hpp; sourceTree = "<group>"; };
+		13637D821BD5FDDD0017CC2A /* Circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Circle.cpp; path = Circle/Circle.cpp; sourceTree = "<group>"; };
+		13637D831BD5FDDD0017CC2A /* Circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Circle.hpp; path = Circle/Circle.hpp; sourceTree = "<group>"; };
+		13637D851BD5FE080017CC2A /* Plane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Plane; sourceTree = "<group>"; };
+		13637D871BD5FE220017CC2A /* Plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Plane.cpp; path = Plane/Plane.cpp; sourceTree = "<group>"; };
+		13637D881BD5FE220017CC2A /* Plane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Plane.hpp; path = Plane/Plane.hpp; sourceTree = "<group>"; };
 		13869CAE1BD5C77900AC13D3 /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Window.cpp; path = Window/Window.cpp; sourceTree = "<group>"; };
 		13869CAF1BD5C77900AC13D3 /* Window.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Window.hpp; path = Window/Window.hpp; sourceTree = "<group>"; };
 		13869CB21BD5C85000AC13D3 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = Scene/Scene.cpp; sourceTree = "<group>"; };
@@ -87,13 +99,46 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
-				13869CB11BD5C7E800AC13D3 /* Scene */,
-				13CD82961BD1CDA600ABF00F /* Ray */,
+				13637D861BD5FE0E0017CC2A /* Plane */,
+				13637D7E1BD5FD9C0017CC2A /* Circle */,
+				13637D7D1BD5FD950017CC2A /* Camera */,
 				130D1BC81BCB11E900CCF04A /* main.cpp */,
+				13CD82961BD1CDA600ABF00F /* Ray */,
+				13869CB11BD5C7E800AC13D3 /* Scene */,
 				13869CAD1BD5C71100AC13D3 /* Window */,
 				139AD8D31BD2F47700C65037 /* RayTracer */,
 			);
 			path = SimpleRayTracer;
+			sourceTree = "<group>";
+		};
+		13637D7D1BD5FD950017CC2A /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				13637D7B1BD5FD8D0017CC2A /* Camera */,
+				13637D7F1BD5FDC00017CC2A /* Camera.cpp */,
+				13637D801BD5FDC00017CC2A /* Camera.hpp */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
+		13637D7E1BD5FD9C0017CC2A /* Circle */ = {
+			isa = PBXGroup;
+			children = (
+				13637D7C1BD5FD8D0017CC2A /* Circle */,
+				13637D821BD5FDDD0017CC2A /* Circle.cpp */,
+				13637D831BD5FDDD0017CC2A /* Circle.hpp */,
+			);
+			name = Circle;
+			sourceTree = "<group>";
+		};
+		13637D861BD5FE0E0017CC2A /* Plane */ = {
+			isa = PBXGroup;
+			children = (
+				13637D851BD5FE080017CC2A /* Plane */,
+				13637D871BD5FE220017CC2A /* Plane.cpp */,
+				13637D881BD5FE220017CC2A /* Plane.hpp */,
+			);
+			name = Plane;
 			sourceTree = "<group>";
 		};
 		13869CAD1BD5C71100AC13D3 /* Window */ = {
@@ -189,10 +234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13637D841BD5FDDD0017CC2A /* Circle.cpp in Sources */,
 				130D1BC91BCB11E900CCF04A /* main.cpp in Sources */,
+				13637D891BD5FE220017CC2A /* Plane.cpp in Sources */,
 				139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */,
 				139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */,
 				13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */,
+				13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */,
 				13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
