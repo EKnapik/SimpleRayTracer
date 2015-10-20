@@ -9,9 +9,12 @@
 #include "RayTracer.hpp"
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
-//RayTracer::RayTracer(Scene *scene, Window *window) {
-//	this.scene = scene;
-//	this.window = window;
+RayTracer::RayTracer(Scene *scene, Window *window) {
+	this->scene = scene;
+	this->window = window;
+    setVertexData();
+    setupOpenGLCalls();
+}
 RayTracer::RayTracer() {
     setVertexData();
 	setupOpenGLCalls();
@@ -133,11 +136,12 @@ void RayTracer::raytraceScene(void) {
 }
 
 
-/*
+
 void RayTracer::changeScene(Scene *newScene) {
-	this.scene = newScene;
+	this->scene = newScene;
 }
 
+/*
 void RayTracer::sendTexture(void) {
 	// glTexImage(GL_TEXTURE_2D, ...)
 }

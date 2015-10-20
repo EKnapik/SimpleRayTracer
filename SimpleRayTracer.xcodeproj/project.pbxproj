@@ -149,7 +149,8 @@
 				13869CAF1BD5C77900AC13D3 /* Window.hpp */,
 			);
 			name = Window;
-			sourceTree = "<group>";
+			path = SimpleRayTracer;
+			sourceTree = SOURCE_ROOT;
 		};
 		13869CB11BD5C7E800AC13D3 /* Scene */ = {
 			isa = PBXGroup;
