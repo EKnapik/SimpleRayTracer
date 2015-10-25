@@ -81,4 +81,5 @@ private:
     is get this with ray marching then to take small incrememted steps for black
     hole.
   * also pencile line drawing cause each pixel can be set
+  * B-spline for camera movement
 */
