@@ -10,13 +10,13 @@
 		130D1BC91BCB11E900CCF04A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130D1BC81BCB11E900CCF04A /* main.cpp */; };
 		130D1BD01BCB120600CCF04A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BCF1BCB120600CCF04A /* OpenGL.framework */; };
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
-		13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D7F1BD5FDC00017CC2A /* Camera.cpp */; settings = {ASSET_TAGS = (); }; };
-		13637D841BD5FDDD0017CC2A /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D821BD5FDDD0017CC2A /* Circle.cpp */; settings = {ASSET_TAGS = (); }; };
-		13637D891BD5FE220017CC2A /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D871BD5FE220017CC2A /* Plane.cpp */; settings = {ASSET_TAGS = (); }; };
-		13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CAE1BD5C77900AC13D3 /* Window.cpp */; settings = {ASSET_TAGS = (); }; };
-		13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CB21BD5C85000AC13D3 /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
-		139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */; settings = {ASSET_TAGS = (); }; };
-		139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */; settings = {ASSET_TAGS = (); }; };
+		13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D7F1BD5FDC00017CC2A /* Camera.cpp */; };
+		13637D841BD5FDDD0017CC2A /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D821BD5FDDD0017CC2A /* Circle.cpp */; };
+		13637D891BD5FE220017CC2A /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D871BD5FE220017CC2A /* Plane.cpp */; };
+		13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CAE1BD5C77900AC13D3 /* Window.cpp */; };
+		13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CB21BD5C85000AC13D3 /* Scene.cpp */; };
+		139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */; };
+		139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */; };
 		139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E81BD2FFD700C65037 /* RayTracer.frag */; };
 		139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
 /* End PBXBuildFile section */
@@ -53,6 +53,7 @@
 		13869CAF1BD5C77900AC13D3 /* Window.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Window.hpp; path = Window/Window.hpp; sourceTree = "<group>"; };
 		13869CB21BD5C85000AC13D3 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = Scene/Scene.cpp; sourceTree = "<group>"; };
 		13869CB31BD5C85000AC13D3 /* Scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Scene.hpp; path = Scene/Scene.hpp; sourceTree = "<group>"; };
+		138DC86B1BDD8E1C00E6A767 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		138FAF3D1BCB2B70005F8625 /* RayTracer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RayTracer; sourceTree = "<group>"; };
 		139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RayTracer.cpp; path = RayTracer/RayTracer.cpp; sourceTree = "<group>"; };
 		139AD8E11BD2F6EE00C65037 /* RayTracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RayTracer.hpp; path = RayTracer/RayTracer.hpp; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 				13869CB11BD5C7E800AC13D3 /* Scene */,
 				13869CAD1BD5C71100AC13D3 /* Window */,
 				139AD8D31BD2F47700C65037 /* RayTracer */,
+				138DC86B1BDD8E1C00E6A767 /* TODO */,
 			);
 			path = SimpleRayTracer;
 			sourceTree = "<group>";

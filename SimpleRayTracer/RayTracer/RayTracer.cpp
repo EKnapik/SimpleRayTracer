@@ -140,6 +140,11 @@ void RayTracer::renderToWindow(void) {
 
 void RayTracer::raytraceScene(void) {
 	renderToWindow();
+    /*
+     setup
+     for each cell run setColor
+     shudown
+     */
 }
 
 
