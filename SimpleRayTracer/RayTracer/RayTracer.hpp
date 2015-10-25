@@ -23,6 +23,7 @@
 class RayTracer {
 public:
     RayTracer(Scene *scenePtr, Window *windowPtr);
+    RayTracer(Scene *scenePtr);
     RayTracer();
     void raytraceScene(void);
     void changeScene(Scene *newScene);

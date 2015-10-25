@@ -15,6 +15,13 @@ RayTracer::RayTracer(Scene *scene, Window *window) {
     setVertexData();
     setupOpenGLCalls();
 }
+
+RayTracer::RayTracer(Scene *scene) {
+    this->scene = scene;
+    setVertexData();
+    setupOpenGLCalls();
+}
+
 RayTracer::RayTracer() {
     setVertexData();
 	setupOpenGLCalls();
