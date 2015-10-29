@@ -26,3 +26,9 @@ hole.
 * also pencile line drawing cause each pixel can be set
 * B-spline for camera movement
 
+Rehy (Ray) light scattering where if something is running on a VR headset we should
+be able to mimic how light travels through an eye before hitting the image plane
+Nieve method would be going through a sphere and initially having refraction and other
+rays and if you are really into it should be able to easily model some eye disease issues
+which skew vison. This should give depth of field if we tweek the initial eye sphere.
+
