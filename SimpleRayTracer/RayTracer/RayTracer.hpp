@@ -13,6 +13,7 @@
 #include "shaderSetup.hpp"
 #include "Window.hpp"
 #include "Scene.hpp"
+#include "Ray.hpp"
 
 /*
  This draws two triangles over the entire rendering scene then given a scene
@@ -30,6 +31,7 @@ public:
     
 private:
     void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
+    void shootRay(Ray ray, int depth);
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
     void populateMatrix(void);
@@ -53,11 +55,26 @@ private:
 #endif /* RayTracer_hpp */
 
 /*
- setColor():<- public setColor(pixel, depth) <- recursive one
+ setColor():<- public
     Given camera and cell position will shoot a ray into the scene to ask
     something from the scene. Things that can be asked from the scene:
-        Nearest object
+        Nearest object and dist to that object
             I guess this would have gravity info if I follow that path
         Intersect
             returns what object is intersected and at what t t
+ 
+ Vect4 Color shootRay(Ray ray, int depth):
+    // polls scene for nearest object marching untill hit
+    // @ hit possibly spawns more rays at a depth + 1
+    // does stuff to color depending on ray color, object intsected and stuff
+    // returns color
+ 
 */
+
+
+
+
+
+
+
+
