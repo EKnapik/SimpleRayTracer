@@ -64,20 +64,22 @@ void RayTracer::setVertexData(void) {
     pixelData[0] = 255; // bottom left R
     pixelData[1] = 0; // bottom left G
     pixelData[2] = 0; // bottom left B
+    pixelData[3] = 255; // Alpha
     
-    pixelData[3] = 0; // bottom right R
-    pixelData[4] = 255; // bottom right G
-    pixelData[5] = 0; // bottom right B
-    pixelData[6] = 0; // nothing
-    pixelData[7] = 0; // nothing
+    pixelData[4] = 0; // bottom right R
+    pixelData[5] = 255; // bottom right G
+    pixelData[6] = 0; // bottom right B
+    pixelData[7] = 255; // Alpha
     
     pixelData[8] = 255; // top left R
     pixelData[9] = 0; // top left G
     pixelData[10] = 255; // top left B
+    pixelData[11] = 255; // Alpha
     
-    pixelData[11] = 0; // top right R
-    pixelData[12] = 0; // top right G
-    pixelData[13] = 255; // top right B
+    pixelData[12] = 0; // top right R
+    pixelData[13] = 0; // top right G
+    pixelData[14] = 255; // top right B
+    pixelData[15] = 255; // Alpha
 }
 
 void RayTracer::setupOpenGLCalls(void) {
@@ -99,7 +101,7 @@ void RayTracer::setupOpenGLCalls(void) {
 	glGenTextures(1, &texBuffer);
 	glBindTexture(GL_TEXTURE_2D, texBuffer);
 	glActiveTexture(GL_TEXTURE0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixelData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -137,21 +139,45 @@ void RayTracer::renderToWindow(void) {
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 }
 
-
 void RayTracer::raytraceScene(void) {
 	renderToWindow();
     /*
      setup
-     for each cell run setColor
+     populate matrix
      shudown
+     renderToWindow()
      */
 }
-
-
 
 void RayTracer::changeScene(Scene *newScene) {
 	this->scene = newScene;
 }
+
+// populates the matrix at the current time in the scene
+// optionally could send the setColor function to N threads for the
+// matrix population
+void RayTracer::populateMatrix(void) {
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            setColor(row, col);
+        }
+    }
+}
+
+
+void RayTracer::setColor(int row, int col) {
+    // usig to camera and matrix index create a ray and get the color
+    // then set the color values appropriately in the matrix
+}
+
+
+
+
+
+
+
+
+
 
 /*
 void RayTracer::sendTexture(void) {

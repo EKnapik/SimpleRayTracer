@@ -30,7 +30,7 @@ public:
     void changeScene(Scene *newScene);
     
 private:
-    void setColor(int x, int y); // <- that is run per pixel updating the 3D matrix
+    void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix
     void shootRay(Ray ray, int depth);
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
@@ -47,7 +47,7 @@ private:
     GLfloat vertexData[20]; // set in construction
     GLushort elementData[6];
     // some 3D byte array for the texture data
-    GLubyte pixelData[14];
+    GLubyte pixelData[16];
     int height, width; // these will be covered by the window when that is fixed
     Scene *scene;
     Window *window;
