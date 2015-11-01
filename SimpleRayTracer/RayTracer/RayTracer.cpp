@@ -165,9 +165,12 @@ void RayTracer::populateMatrix(void) {
 }
 
 
+// could just write shaders for this function
 void RayTracer::setColor(int row, int col) {
     // usig to camera and matrix index create a ray and get the color
     // then set the color values appropriately in the matrix
+    // mkray
+    // color = shoot ray
 }
 
 
