@@ -41,7 +41,7 @@ void RayTracer::changeScene(Scene *newScene) {
     this->scene = newScene;
 }
 
-
+// relies on height and width
 // could just write shaders for this function
 void RayTracer::setColor(int row, int col) {
     // usig to camera and matrix index create a ray and get the color

@@ -14,6 +14,7 @@
 #include "Window.hpp"
 #include "Scene.hpp"
 #include "Ray.hpp"
+#include "Vec4.hpp"
 
 /*
  This draws two triangles over the entire rendering scene then given a scene
