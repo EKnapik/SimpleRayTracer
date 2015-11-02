@@ -27,60 +27,39 @@ RayTracer::RayTracer() {
 	setupOpenGLCalls();
 }
 
-void RayTracer::setVertexData(void) {
-    // define the 4 points of square in counter clockwise order
-    //			     x,    y,   z,   u,   v
-    vertexData[0] = -1.0;
-    vertexData[1] = 1.0;
-    vertexData[2] = 0.0;
-    vertexData[3] = 0.0;
-    vertexData[4] = 1.0;
-    vertexData[5] = -1.0;
-    vertexData[6] = -1.0;
-    vertexData[7] = 0.0;
-    vertexData[8] = 0.0;
-    vertexData[9] = 0.0;
-    vertexData[10] = 1.0;
-    vertexData[11] = -1.0;
-    vertexData[12] = 0.0;
-    vertexData[13] = 1.0;
-    vertexData[14] = 0.0;
-    vertexData[15] = 1.0;
-    vertexData[16] = 1.0;
-    vertexData[17] = 0.0;
-    vertexData[18] = 1.0;
-    vertexData[19] = 1.0;
-    numVerts = 4;
-    elementData[0] = 0;
-    elementData[1] = 1;
-    elementData[2] = 2;
-    elementData[3] = 3;
-    elementData[4] = 0;
-    elementData[5] = 2;
-    
-    // Set the texture data should be a 4 squares
-    width = 2;
-    height = 2;
-    pixelData[0] = 255; // bottom left R
-    pixelData[1] = 0; // bottom left G
-    pixelData[2] = 0; // bottom left B
-    pixelData[3] = 255; // Alpha
-    
-    pixelData[4] = 0; // bottom right R
-    pixelData[5] = 255; // bottom right G
-    pixelData[6] = 0; // bottom right B
-    pixelData[7] = 255; // Alpha
-    
-    pixelData[8] = 255; // top left R
-    pixelData[9] = 0; // top left G
-    pixelData[10] = 255; // top left B
-    pixelData[11] = 255; // Alpha
-    
-    pixelData[12] = 0; // top right R
-    pixelData[13] = 0; // top right G
-    pixelData[14] = 255; // top right B
-    pixelData[15] = 255; // Alpha
+void RayTracer::raytraceScene(void) {
+    renderToWindow();
+    /*
+     setup
+     populate matrix
+     shudown
+     renderToWindow()
+     */
 }
+
+void RayTracer::changeScene(Scene *newScene) {
+    this->scene = newScene;
+}
+
+
+// could just write shaders for this function
+void RayTracer::setColor(int row, int col) {
+    // usig to camera and matrix index create a ray and get the color
+    // then set the color values appropriately in the matrix
+    // mkray
+    // color = shoot ray
+}
+
+
+void RayTracer::shootRay(Ray ray, int depth) {
+    if (depth <= 0) {
+        return;
+    }
+    
+    
+    
+}
+
 
 void RayTracer::setupOpenGLCalls(void) {
 	int dataSize = numVerts * 5 * sizeof(GLfloat);
@@ -139,19 +118,6 @@ void RayTracer::renderToWindow(void) {
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 }
 
-void RayTracer::raytraceScene(void) {
-	renderToWindow();
-    /*
-     setup
-     populate matrix
-     shudown
-     renderToWindow()
-     */
-}
-
-void RayTracer::changeScene(Scene *newScene) {
-	this->scene = newScene;
-}
 
 // populates the matrix at the current time in the scene
 // optionally could send the setColor function to N threads for the
@@ -164,23 +130,70 @@ void RayTracer::populateMatrix(void) {
     }
 }
 
+// Using Threads
+void RayTracer::setupThreads(void) {
+    return;
+}
 
-// could just write shaders for this function
-void RayTracer::setColor(int row, int col) {
-    // usig to camera and matrix index create a ray and get the color
-    // then set the color values appropriately in the matrix
-    // mkray
-    // color = shoot ray
+void RayTracer::shutdownThreads(void) {
+    return;
 }
 
 
-
-
-
-
-
-
-
+void RayTracer::setVertexData(void) {
+    // define the 4 points of square in counter clockwise order
+    //			     x,    y,   z,   u,   v
+    vertexData[0] = -1.0;
+    vertexData[1] = 1.0;
+    vertexData[2] = 0.0;
+    vertexData[3] = 0.0;
+    vertexData[4] = 1.0;
+    vertexData[5] = -1.0;
+    vertexData[6] = -1.0;
+    vertexData[7] = 0.0;
+    vertexData[8] = 0.0;
+    vertexData[9] = 0.0;
+    vertexData[10] = 1.0;
+    vertexData[11] = -1.0;
+    vertexData[12] = 0.0;
+    vertexData[13] = 1.0;
+    vertexData[14] = 0.0;
+    vertexData[15] = 1.0;
+    vertexData[16] = 1.0;
+    vertexData[17] = 0.0;
+    vertexData[18] = 1.0;
+    vertexData[19] = 1.0;
+    numVerts = 4;
+    elementData[0] = 0;
+    elementData[1] = 1;
+    elementData[2] = 2;
+    elementData[3] = 3;
+    elementData[4] = 0;
+    elementData[5] = 2;
+    
+    // Set the texture data should be a 4 squares
+    width = 2;
+    height = 2;
+    pixelData[0] = 255; // bottom left R
+    pixelData[1] = 0; // bottom left G
+    pixelData[2] = 0; // bottom left B
+    pixelData[3] = 255; // Alpha
+    
+    pixelData[4] = 0; // bottom right R
+    pixelData[5] = 255; // bottom right G
+    pixelData[6] = 0; // bottom right B
+    pixelData[7] = 255; // Alpha
+    
+    pixelData[8] = 255; // top left R
+    pixelData[9] = 0; // top left G
+    pixelData[10] = 255; // top left B
+    pixelData[11] = 255; // Alpha
+    
+    pixelData[12] = 0; // top right R
+    pixelData[13] = 0; // top right G
+    pixelData[14] = 255; // top right B
+    pixelData[15] = 255; // Alpha
+}
 
 /*
 void RayTracer::sendTexture(void) {
