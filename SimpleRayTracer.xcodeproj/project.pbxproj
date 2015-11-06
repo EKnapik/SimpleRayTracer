@@ -57,6 +57,7 @@
 		13869CB31BD5C85000AC13D3 /* Scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Scene.hpp; path = Scene/Scene.hpp; sourceTree = "<group>"; };
 		138BAACE1BE7019C0043BCDB /* Vec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec4.cpp; path = Vec4/Vec4.cpp; sourceTree = "<group>"; };
 		138BAACF1BE7019C0043BCDB /* Vec4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Vec4.hpp; path = Vec4/Vec4.hpp; sourceTree = "<group>"; };
+		138BAAD11BE7055D0043BCDB /* Vec4 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Vec4; sourceTree = "<group>"; };
 		138DC86B1BDD8E1C00E6A767 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		138FAF3D1BCB2B70005F8625 /* RayTracer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RayTracer; sourceTree = "<group>"; };
 		139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RayTracer.cpp; path = RayTracer/RayTracer.cpp; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 		138BAACD1BE701710043BCDB /* Vec4 */ = {
 			isa = PBXGroup;
 			children = (
+				138BAAD11BE7055D0043BCDB /* Vec4 */,
 				138BAACE1BE7019C0043BCDB /* Vec4.cpp */,
 				138BAACF1BE7019C0043BCDB /* Vec4.hpp */,
 			);
