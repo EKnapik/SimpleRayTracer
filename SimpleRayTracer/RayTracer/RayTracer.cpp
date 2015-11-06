@@ -48,6 +48,10 @@ void RayTracer::setColor(int row, int col) {
     // then set the color values appropriately in the matrix
     // mkray
     // color = shoot ray
+    
+    // every thing is 4 data entries
+    // (row * column width) + 
+    
 }
 
 
@@ -83,8 +87,8 @@ void RayTracer::setupOpenGLCalls(void) {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// Create shader program and find variable locations in shader program
 	shaderProgram = shaderSetup("RayTracer.vert", "RayTracer.frag");
@@ -147,22 +151,26 @@ void RayTracer::setVertexData(void) {
     vertexData[1] = 1.0;
     vertexData[2] = 0.0;
     vertexData[3] = 0.0;
-    vertexData[4] = 1.0;
+    vertexData[4] = 0.0;
+    
     vertexData[5] = -1.0;
     vertexData[6] = -1.0;
     vertexData[7] = 0.0;
     vertexData[8] = 0.0;
-    vertexData[9] = 0.0;
+    vertexData[9] = 1.0;
+    
     vertexData[10] = 1.0;
     vertexData[11] = -1.0;
     vertexData[12] = 0.0;
     vertexData[13] = 1.0;
-    vertexData[14] = 0.0;
+    vertexData[14] = 1.0;
+    
     vertexData[15] = 1.0;
     vertexData[16] = 1.0;
     vertexData[17] = 0.0;
     vertexData[18] = 1.0;
-    vertexData[19] = 1.0;
+    vertexData[19] = 0.0;
+    
     numVerts = 4;
     elementData[0] = 0;
     elementData[1] = 1;
@@ -174,24 +182,24 @@ void RayTracer::setVertexData(void) {
     // Set the texture data should be a 4 squares
     width = 2;
     height = 2;
-    pixelData[0] = 255; // bottom left R
-    pixelData[1] = 0; // bottom left G
-    pixelData[2] = 0; // bottom left B
+    pixelData[0] = 255; // top left R
+    pixelData[1] = 0; // top left G
+    pixelData[2] = 0; // top left B
     pixelData[3] = 255; // Alpha
     
-    pixelData[4] = 0; // bottom right R
-    pixelData[5] = 255; // bottom right G
-    pixelData[6] = 0; // bottom right B
+    pixelData[4] = 0; // top right R
+    pixelData[5] = 255; // top right G
+    pixelData[6] = 0; // top right B
     pixelData[7] = 255; // Alpha
     
-    pixelData[8] = 255; // top left R
-    pixelData[9] = 0; // top left G
-    pixelData[10] = 255; // top left B
+    pixelData[8] = 255; // bot left R
+    pixelData[9] = 0; // bot left G
+    pixelData[10] = 255; // bot left B
     pixelData[11] = 255; // Alpha
     
-    pixelData[12] = 0; // top right R
-    pixelData[13] = 0; // top right G
-    pixelData[14] = 255; // top right B
+    pixelData[12] = 0; // bot right R
+    pixelData[13] = 0; // bot right G
+    pixelData[14] = 255; // bot right B
     pixelData[15] = 255; // Alpha
 }
 
