@@ -50,18 +50,18 @@ void RayTracer::setColor(int row, int col) {
     // color = shoot ray
     
     // every thing is 4 data entries
-    // (row * column width) + 
+    // (row * (columnWidth*4))+column then iterate 1->4 for each rgba value 
     
 }
 
 
-void RayTracer::shootRay(Ray ray, int depth) {
+Vec4 RayTracer::shootRay(Ray ray, int depth) {
     if (depth <= 0) {
-        return;
+        return Vec4();
     }
     
     
-    
+    return Vec4();
 }
 
 
