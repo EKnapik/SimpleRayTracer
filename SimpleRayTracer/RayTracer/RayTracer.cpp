@@ -43,16 +43,19 @@ void RayTracer::changeScene(Scene *newScene) {
 
 // relies on height and width
 // could just write shaders for this function
+// edits pixelData
 void RayTracer::setColor(int row, int col) {
     // usig to camera and matrix index create a ray and get the color
     // then set the color values appropriately in the matrix
     // mkray
     // color = shoot ray
-    
-    // every thing is 4 data entries
-    // (row * (columnWidth*4))+column then iterate 1->4 for each rgba value
-    // pixelData[]
-    int dataOffset = 0;
+    int dataOffset = (row * (4*width)) + (col * 4); // start of wher the color data should go
+    // do something to get the 4 color data values
+    // set the values
+    pixelData[dataOffset] = 0;
+    pixelData[dataOffset+1] = 0;
+    pixelData[dataOffset+2] = 0;
+    pixelData[dataOffset+3] = 0;
     
     
 }
@@ -185,6 +188,7 @@ void RayTracer::setVertexData(void) {
     // Set the texture data should be a 4 squares
     width = 2;
     height = 2;
+    pixelData = new GLubyte[16];
     pixelData[0] = 255; // top left R
     pixelData[1] = 0; // top left G
     pixelData[2] = 0; // top left B
