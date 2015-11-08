@@ -50,7 +50,10 @@ void RayTracer::setColor(int row, int col) {
     // color = shoot ray
     
     // every thing is 4 data entries
-    // (row * (columnWidth*4))+column then iterate 1->4 for each rgba value 
+    // (row * (columnWidth*4))+column then iterate 1->4 for each rgba value
+    // pixelData[]
+    int dataOffset = 0;
+    
     
 }
 
