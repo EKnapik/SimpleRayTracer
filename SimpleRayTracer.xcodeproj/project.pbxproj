@@ -22,6 +22,7 @@
 		139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
 		13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13AA682A1BE4318E009DDE59 /* Ray.cpp */; };
 		13FF888F1BF41ADD00B792EE /* Vec3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13FF888D1BF41ADD00B792EE /* Vec3.cpp */; };
+		13FF88941BF41F0B00B792EE /* Mat3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13FF88921BF41F0B00B792EE /* Mat3.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +76,9 @@
 		13FF888D1BF41ADD00B792EE /* Vec3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec3.cpp; path = Vec3/Vec3.cpp; sourceTree = "<group>"; };
 		13FF888E1BF41ADD00B792EE /* Vec3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Vec3.hpp; path = Vec3/Vec3.hpp; sourceTree = "<group>"; };
 		13FF88901BF41AFD00B792EE /* Vec3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Vec3; sourceTree = "<group>"; };
+		13FF88921BF41F0B00B792EE /* Mat3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mat3.cpp; path = Mat3/Mat3.cpp; sourceTree = "<group>"; };
+		13FF88931BF41F0B00B792EE /* Mat3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Mat3.hpp; path = Mat3/Mat3.hpp; sourceTree = "<group>"; };
+		13FF88951BF41F1900B792EE /* Mat3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Mat3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				13FF88911BF41EF200B792EE /* Mat3 */,
 				13FF888C1BF41AA500B792EE /* Vec3 */,
 				138BAACD1BE701710043BCDB /* Vec4 */,
 				13AA68291BE4317C009DDE59 /* Ray */,
@@ -221,6 +226,16 @@
 			name = Vec3;
 			sourceTree = "<group>";
 		};
+		13FF88911BF41EF200B792EE /* Mat3 */ = {
+			isa = PBXGroup;
+			children = (
+				13FF88951BF41F1900B792EE /* Mat3 */,
+				13FF88921BF41F0B00B792EE /* Mat3.cpp */,
+				13FF88931BF41F0B00B792EE /* Mat3.hpp */,
+			);
+			name = Mat3;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -286,6 +301,7 @@
 				130D1BC91BCB11E900CCF04A /* main.cpp in Sources */,
 				13637D891BD5FE220017CC2A /* Plane.cpp in Sources */,
 				139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */,
+				13FF88941BF41F0B00B792EE /* Mat3.cpp in Sources */,
 				139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */,
 				13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */,
 				13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */,
