@@ -41,21 +41,21 @@ void RayTracer::changeScene(Scene *newScene) {
     this->scene = newScene;
 }
 
-// relies on height and width
-// could just write shaders for this function
-// edits pixelData
+
+// Uses the height and width of the RayTracer to determine the pixelData offset
+// to set the approprate values.
+// Values are determined by using the current scene to create rays shooting them
+// into the scene with a variable bounce depth
 void RayTracer::setColor(int row, int col) {
-    // usig to camera and matrix index create a ray and get the color
-    // then set the color values appropriately in the matrix
-    // mkray
-    // color = shoot ray
     int dataOffset = (row * (4*width)) + (col * 4); // start of wher the color data should go
-    // do something to get the 4 color data values
+    Ray ray;
+    Vec4 color = shootRay(ray, 1);
+    
     // set the values
-    pixelData[dataOffset] = 0;
-    pixelData[dataOffset+1] = 0;
-    pixelData[dataOffset+2] = 0;
-    pixelData[dataOffset+3] = 0;
+    pixelData[dataOffset] = color.x;
+    pixelData[dataOffset+1] = color.y;
+    pixelData[dataOffset+2] = color.z;
+    pixelData[dataOffset+3] = color.w;
     
     
 }
@@ -63,11 +63,15 @@ void RayTracer::setColor(int row, int col) {
 
 Vec4 RayTracer::shootRay(Ray ray, int depth) {
     if (depth <= 0) {
-        return Vec4();
+        return Vec4(0.0);
     }
     
+    // get object interset
+    // do something with that object's color
+    // spawn more rays and mix colors
+    // return color
     
-    return Vec4();
+    return Vec4(0.0);
 }
 
 

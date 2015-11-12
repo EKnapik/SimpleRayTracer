@@ -11,8 +11,22 @@
 
 #include <stdio.h>
 
+
+// rgba stored respectively xyza
 class Vec4 {
+public:
+    Vec4(float x);
+    Vec4(float x, float y, float z, float w);
+    int getR();
+    int getG();
+    int getB();
+    int getA();
+    float x, y, z, w;
+private:
+    int floatToInt(float fValue);
     
 };
+
+// Need to write the operation overloaders for this class
 
 #endif /* Vec4_hpp */
