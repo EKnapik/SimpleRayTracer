@@ -21,6 +21,7 @@
 		139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E81BD2FFD700C65037 /* RayTracer.frag */; };
 		139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
 		13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13AA682A1BE4318E009DDE59 /* Ray.cpp */; };
+		13FF888F1BF41ADD00B792EE /* Vec3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13FF888D1BF41ADD00B792EE /* Vec3.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +72,9 @@
 		13CD82961BD1CDA600ABF00F /* Ray */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Ray; sourceTree = "<group>"; };
 		13CD82981BD1CDA600ABF00F /* Scene */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scene; sourceTree = "<group>"; };
 		13CD82991BD1CDA600ABF00F /* Window */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Window; sourceTree = "<group>"; };
+		13FF888D1BF41ADD00B792EE /* Vec3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec3.cpp; path = Vec3/Vec3.cpp; sourceTree = "<group>"; };
+		13FF888E1BF41ADD00B792EE /* Vec3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Vec3.hpp; path = Vec3/Vec3.hpp; sourceTree = "<group>"; };
+		13FF88901BF41AFD00B792EE /* Vec3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Vec3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				13FF888C1BF41AA500B792EE /* Vec3 */,
 				138BAACD1BE701710043BCDB /* Vec4 */,
 				13AA68291BE4317C009DDE59 /* Ray */,
 				13637D861BD5FE0E0017CC2A /* Plane */,
@@ -206,6 +211,16 @@
 			name = Ray;
 			sourceTree = "<group>";
 		};
+		13FF888C1BF41AA500B792EE /* Vec3 */ = {
+			isa = PBXGroup;
+			children = (
+				13FF88901BF41AFD00B792EE /* Vec3 */,
+				13FF888D1BF41ADD00B792EE /* Vec3.cpp */,
+				13FF888E1BF41ADD00B792EE /* Vec3.hpp */,
+			);
+			name = Vec3;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -265,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13FF888F1BF41ADD00B792EE /* Vec3.cpp in Sources */,
 				13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */,
 				13637D841BD5FDDD0017CC2A /* Circle.cpp in Sources */,
 				130D1BC91BCB11E900CCF04A /* main.cpp in Sources */,

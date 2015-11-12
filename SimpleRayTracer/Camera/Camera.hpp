@@ -10,5 +10,16 @@
 #define Camera_hpp
 
 #include <stdio.h>
+#include "Vec3.hpp"
+
+class Camera {
+public:
+    Camera(Vec3 *pos, Vec3 *lookAtPoint, float roll);
+    Camera(Vec3 *pos, Vec3 *lookAtPoint);
+    
+    
+private:
+    
+};
 
 #endif /* Camera_hpp */

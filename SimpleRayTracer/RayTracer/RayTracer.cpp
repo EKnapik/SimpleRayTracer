@@ -48,8 +48,10 @@ void RayTracer::changeScene(Scene *newScene) {
 // into the scene with a variable bounce depth
 void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*width)) + (col * 4); // start of wher the color data should go
-    //Ray ray = Ray(Vec4(0.0), Vec4(0.0));
-    Vec4 *color = new Vec4(0.0);//= shootRay(ray, 1);
+    // scene getRayPos(row, col)
+    // scene getRayDir <- uses camera info
+    Ray *ray = new Ray(new Vec4(0.0), new Vec4(0.0));
+    Vec4 *color = shootRay(ray, 1);
     
     // set the values
     pixelData[dataOffset] = color->getR();
@@ -59,7 +61,7 @@ void RayTracer::setColor(int row, int col) {
 }
 
 
-Vec4* RayTracer::shootRay(Ray ray, int depth) {
+Vec4* RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return new Vec4(0.0);
     }
