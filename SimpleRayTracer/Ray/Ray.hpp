@@ -10,8 +10,15 @@
 #define Ray_hpp
 
 #include <stdio.h>
+#include "Vec4.hpp"
 
 class Ray {
+public:
+    Ray(Vec4 *pos, Vec4 *dir);
+    Vec4 *pos;
+    Vec4 *dir;
+private:
+    
     // needs vector of initial position
     // vector of direction
     // color

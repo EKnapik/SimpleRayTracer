@@ -48,22 +48,20 @@ void RayTracer::changeScene(Scene *newScene) {
 // into the scene with a variable bounce depth
 void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*width)) + (col * 4); // start of wher the color data should go
-    Ray ray;
-    Vec4 color = shootRay(ray, 1);
+    //Ray ray = Ray(Vec4(0.0), Vec4(0.0));
+    Vec4 *color = new Vec4(0.0);//= shootRay(ray, 1);
     
     // set the values
-    pixelData[dataOffset] = color.x;
-    pixelData[dataOffset+1] = color.y;
-    pixelData[dataOffset+2] = color.z;
-    pixelData[dataOffset+3] = color.w;
-    
-    
+    pixelData[dataOffset] = color->getR();
+    pixelData[dataOffset+1] = color->getG();
+    pixelData[dataOffset+2] = color->getB();
+    pixelData[dataOffset+3] = color->getA();
 }
 
 
-Vec4 RayTracer::shootRay(Ray ray, int depth) {
+Vec4* RayTracer::shootRay(Ray ray, int depth) {
     if (depth <= 0) {
-        return Vec4(0.0);
+        return new Vec4(0.0);
     }
     
     // get object interset
@@ -71,7 +69,7 @@ Vec4 RayTracer::shootRay(Ray ray, int depth) {
     // spawn more rays and mix colors
     // return color
     
-    return Vec4(0.0);
+    return new Vec4(0.0);
 }
 
 
