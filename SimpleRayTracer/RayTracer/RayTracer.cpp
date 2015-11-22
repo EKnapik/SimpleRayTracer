@@ -113,7 +113,6 @@ void RayTracer::setupOpenGLCalls(void) {
 }
 
 void RayTracer::renderToWindow(void) {
-	glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(shaderProgram);
 	glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eBuffer);
