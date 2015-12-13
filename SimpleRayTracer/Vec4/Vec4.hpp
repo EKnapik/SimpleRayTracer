@@ -27,6 +27,10 @@ private:
     
 };
 
+// Vector4 can also be used as a vector 2 and a vector 3
 // Need to write the operation overloaders for this class
 
 #endif /* Vec4_hpp */
+
+
+// asdf
