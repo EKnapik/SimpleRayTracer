@@ -13,7 +13,15 @@
 
 
 class VectorBase {
-    
+public:
+    double X();
+    double Y();
+    double Z();
+    double W();
+    // operators
+private:
+    int size;
+    double *data;    
 };
 
 #endif /* VectorBase_hpp */
