@@ -14,14 +14,14 @@
 
 class VectorBase {
 public:
-    double X();
-    double Y();
-    double Z();
-    double W();
+    virtual double X() = 0;
+    virtual double Y() = 0;
+    virtual double Z() = 0;
+    virtual double W() = 0;
     // operators
-private:
+protected:
     int size;
-    double *data;    
+    double *data;
 };
 
 #endif /* VectorBase_hpp */

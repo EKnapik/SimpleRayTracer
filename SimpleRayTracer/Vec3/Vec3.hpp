@@ -10,12 +10,12 @@
 #define Vec3_hpp
 
 #include <stdio.h>
+#include "VectorBase.hpp"
 
-class Vec3 {
+class Vec3: public VectorBase{
 public:
-    Vec3(float x);
-    Vec3(float x, float y, float z);
-    float x, y, z;
+    Vec3(double x);
+    Vec3(double x, double y, double z);
     
 private:
     
