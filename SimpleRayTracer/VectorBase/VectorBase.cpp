@@ -58,3 +58,34 @@ void VectorBase::print() {
     }
     printf("\n");
 }
+
+
+double VectorBase::dot(VectorBase *vec1, VectorBase *vec2) {
+    double result = 0.0;
+    for(int i = 0; i < size; i++) {
+        result += (vec1->data[i] * vec2->data[i]);
+    }
+    return result;
+}
+
+
+double VectorBase::len(VectorBase *vec) {
+    double length = 0.0;
+    length = dot(vec, vec);
+    length = sqrt(length);
+    
+    return length;
+}
+
+
+double VectorBase::angle(VectorBase *vec1, VectorBase *vec2) {
+    double answer, val;
+    val = 180.0 / 3.14159265;
+    answer = dot(vec1, vec2) / len(vec1) / len(vec2);
+    answer = acos(answer) * val;
+    
+    return answer;
+}
+
+
+

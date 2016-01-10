@@ -24,6 +24,11 @@ Vec3::Vec3(double x, double y, double z) {
     data[2] = z;
 }
 
+Vec3* Vec3::normalize(Vec3 *vec) {
+    double length = len(vec);
+    return *vec / length;
+}
+
 // Add
 Vec3* Vec3::operator+(const Vec3 *vector) {
     Vec3 *res = new Vec3(0.0);
@@ -57,5 +62,14 @@ Vec3* Vec3::operator*(const double scale) {
     res->data[0] = this->data[0] * scale;
     res->data[1] = this->data[1] * scale;
     res->data[2] = this->data[2] * scale;
+    return res;
+}
+
+// vector / scale
+Vec3* Vec3::operator/(const double scale) {
+    Vec3 *res = new Vec3(0.0);
+    res->data[0] = this->data[0] / scale;
+    res->data[1] = this->data[1] / scale;
+    res->data[2] = this->data[2] / scale;
     return res;
 }

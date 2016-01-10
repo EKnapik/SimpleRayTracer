@@ -10,6 +10,7 @@
 #define VectorBase_hpp
 
 #include <stdio.h>
+#include <math.h>
 
 
 class VectorBase {
@@ -24,6 +25,9 @@ public:
     void setW(double w);
     void print();
     // operators
+    double dot(VectorBase *vec1, VectorBase *vec2);
+    double len(VectorBase *vec);
+    double angle(VectorBase *vec1, VectorBase *vec2);
 protected:
     int size;
     double *data;
