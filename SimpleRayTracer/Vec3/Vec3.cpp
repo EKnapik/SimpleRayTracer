@@ -32,18 +32,18 @@ Vec3* Vec3::normalize(Vec3 *vec) {
 // Add
 Vec3* Vec3::operator+(const Vec3 *vector) {
     Vec3 *res = new Vec3(0.0);
-    res->data[0] = this->data[0] + vector->data[0];
-    res->data[1] = this->data[1] + vector->data[1];
-    res->data[2] = this->data[2] + vector->data[2];
+    for(int i = 0; i < size; i++) {
+        res->data[i] = this->data[i] + vector->data[i];
+    }
     return res;
 }
 
 // Subtract
 Vec3* Vec3::operator-(const Vec3 *vector) {
     Vec3 *res = new Vec3(0.0);
-    res->data[0] = this->data[0] - vector->data[0];
-    res->data[1] = this->data[1] - vector->data[1];
-    res->data[2] = this->data[2] - vector->data[2];
+    for(int i = 0; i < size; i++) {
+        res->data[i] = this->data[i] - vector->data[i];
+    }
     return res;
 }
 
@@ -59,17 +59,17 @@ Vec3* Vec3::operator*(const Vec3 *vector) {
 // Scale
 Vec3* Vec3::operator*(const double scale) {
     Vec3 *res = new Vec3(0.0);
-    res->data[0] = this->data[0] * scale;
-    res->data[1] = this->data[1] * scale;
-    res->data[2] = this->data[2] * scale;
+    for(int i = 0; i < size; i++) {
+        res->data[i] = this->data[i] * scale;
+    }
     return res;
 }
 
 // vector / scale
 Vec3* Vec3::operator/(const double scale) {
     Vec3 *res = new Vec3(0.0);
-    res->data[0] = this->data[0] / scale;
-    res->data[1] = this->data[1] / scale;
-    res->data[2] = this->data[2] / scale;
+    for(int i = 0; i < size; i++) {
+        res->data[i] = this->data[i] / scale;
+    }
     return res;
 }

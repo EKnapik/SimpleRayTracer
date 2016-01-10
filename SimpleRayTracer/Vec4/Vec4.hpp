@@ -10,21 +10,21 @@
 #define Vec4_hpp
 
 #include <stdio.h>
+#include "VectorBase.hpp"
 
 
 // rgba stored respectively xyza
-class Vec4 {
+class Vec4: public VectorBase {
 public:
-    Vec4(float x);
-    Vec4(float x, float y, float z, float w);
-    int getR();
-    int getG();
-    int getB();
-    int getA();
-    float x, y, z, w;
-private:
-    int floatToInt(float fValue);
+    Vec4(double x);
+    Vec4(double x, double y, double z, double w);
+    Vec4* normalize(Vec4 *vec);
     
+    Vec4* operator+(const Vec4 *vector); // Add
+    Vec4* operator-(const Vec4 *vector); // Subtract
+    Vec4* operator*(const double scale); // Scale
+    Vec4* operator/(const double scale); // scale
+
 };
 
 // Vector4 can also be used as a vector 2 and a vector 3
