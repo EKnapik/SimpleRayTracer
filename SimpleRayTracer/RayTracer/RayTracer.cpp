@@ -54,10 +54,10 @@ void RayTracer::setColor(int row, int col) {
     Vec4 *color = shootRay(ray, 1);
     
     // set the values
-    pixelData[dataOffset] = color->getR();
-    pixelData[dataOffset+1] = color->getG();
-    pixelData[dataOffset+2] = color->getB();
-    pixelData[dataOffset+3] = color->getA();
+    pixelData[dataOffset] = color->X();
+    pixelData[dataOffset+1] = color->Y();
+    pixelData[dataOffset+2] = color->Z();
+    pixelData[dataOffset+3] = color->W();
 }
 
 
