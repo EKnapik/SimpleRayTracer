@@ -14,10 +14,15 @@
 
 class VectorBase {
 public:
-    virtual double X() = 0;
-    virtual double Y() = 0;
-    virtual double Z() = 0;
-    virtual double W() = 0;
+    double X();
+    double Y();
+    double Z();
+    double W();
+    void setX(double x);
+    void setY(double y);
+    void setZ(double z);
+    void setW(double w);
+    void print();
     // operators
 protected:
     int size;

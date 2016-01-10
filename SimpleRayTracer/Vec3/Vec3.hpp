@@ -17,7 +17,9 @@ public:
     Vec3(double x);
     Vec3(double x, double y, double z);
     
-private:
-    
+    Vec3* operator+(const Vec3 *vector); // Add
+    Vec3* operator-(const Vec3 *vector); // Subtract
+    Vec3* operator*(const Vec3 *vector); // Cross
+    Vec3* operator*(const double scale); // Scale
 };
 #endif /* Vec3_hpp */
