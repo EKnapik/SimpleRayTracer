@@ -191,7 +191,7 @@ void RayTracer::setVertexData(void) {
     // Set the texture data should be a 4 squares
     width = 2;
     height = 2;
-    pixelData = new GLubyte[16];
+    pixelData = new GLubyte[height * width * 4];
     pixelData[0] = 255; // top left R
     pixelData[1] = 0; // top left G
     pixelData[2] = 0; // top left B

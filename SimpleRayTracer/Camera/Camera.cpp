@@ -40,4 +40,5 @@ void Camera::createCamMatrix() {
     Vec3 *cw, *cp, *cu, *cv;
     
     
+    
 }
