@@ -10,6 +10,8 @@
 #define Camera_hpp
 
 #include <stdio.h>
+#include "glm/vec3.hpp"
+
 
 class Camera {
 public:

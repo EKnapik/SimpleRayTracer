@@ -10,7 +10,6 @@
 #include <OpenGL/gl.h>
 #include <iostream>
 #include "RayTracer.hpp"
-#include "glm/vec3.hpp"
 
 
 #define WINDOW_HEIGHT 512
@@ -23,17 +22,15 @@ RayTracer *rayTracer;
 
 int main(int argc, char * argv[]) {
     
-    glm::vec3 test = glm::vec3(2.0, 3.0, 4.0);
-    std::cout << test.y << std::endl;
     // Setup window statically because GLUT is poor at window and display render
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowSize(WINDOW_HEIGHT, WINDOW_WIDTH);
     glutCreateWindow("Simple Ray Tracer");
     glutDisplayFunc(display);
-    
     initOpenGL();
     
+    // Setup the ray tracer
     rayTracer = new RayTracer();
     
     glutMainLoop();
@@ -65,18 +62,3 @@ void display(void) {
 }
 
 
-/*
- Ideally there would be a main overal program that creates the scene of objects
- The rays would then shoot into the scene and color pixels
- 
- Create window:
- Create scene
- Create rayTracer that takes a scene
-    Create two triangles and draws to the screne
-    Create a texture from raytraced pixels what to draw
-        Simple Shader of setting texture CPU processing
-    Create a specific shader for the scene all hard coded
- Create a Display function <- hard coded to the window connection
-    Can Take a rayTracer to use.
-
-*/

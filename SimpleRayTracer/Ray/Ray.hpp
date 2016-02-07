@@ -10,15 +10,16 @@
 #define Ray_hpp
 
 #include <stdio.h>
+#include "glm/vec3.hpp"
 
 
 class Ray {
 public:
+    // create function
+    glm::vec3 pos;
+    glm::vec3 dir;
 private:
     
-    // needs vector of initial position
-    // vector of direction
-    // color
 };
 
 #endif /* Ray_hpp */

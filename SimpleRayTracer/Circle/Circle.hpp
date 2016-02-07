@@ -10,5 +10,11 @@
 #define Circle_hpp
 
 #include <stdio.h>
-
+    // create
+    // distance function
+    // intersect function
+    // normal
+    // material
+    // newPos
+    // newRadius
 #endif /* Circle_hpp */
