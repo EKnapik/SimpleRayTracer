@@ -7,10 +7,3 @@
 //
 
 #include "Ray.hpp"
-
-
-Ray::Ray(Vec4 *pos, Vec4 *dir) {
-    this->pos = pos;
-    this->dir = dir;
-}
-

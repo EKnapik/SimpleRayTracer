@@ -12,6 +12,9 @@
 #include <stdio.h>
 
 class Scene {
+public:
+    // array of objects
+    // 
     
 };
 

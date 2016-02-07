@@ -8,7 +8,7 @@
 
 #include "Camera.hpp"
 
-
+/*
 Camera::Camera(Vec3 *pos, Vec3 *lookAtPoint, float roll) {
     this->pos = pos;
     this->lookAtPoint = lookAtPoint;
@@ -42,3 +42,4 @@ void Camera::createCamMatrix() {
     
     
 }
+*/

@@ -10,6 +10,7 @@
 #include <OpenGL/gl.h>
 #include <iostream>
 #include "RayTracer.hpp"
+#include "glm/vec3.hpp"
 
 
 #define WINDOW_HEIGHT 512
@@ -22,6 +23,8 @@ RayTracer *rayTracer;
 
 int main(int argc, char * argv[]) {
     
+    glm::vec3 test = glm::vec3(2.0, 3.0, 4.0);
+    std::cout << test.y << std::endl;
     // Setup window statically because GLUT is poor at window and display render
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
