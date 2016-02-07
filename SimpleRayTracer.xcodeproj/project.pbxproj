@@ -10,6 +10,7 @@
 		130D1BC91BCB11E900CCF04A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130D1BC81BCB11E900CCF04A /* main.cpp */; };
 		130D1BD01BCB120600CCF04A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BCF1BCB120600CCF04A /* OpenGL.framework */; };
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
+		1339B52E1C6702B60011FA5A /* Geometric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1339B52C1C6702B60011FA5A /* Geometric.cpp */; };
 		13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D7F1BD5FDC00017CC2A /* Camera.cpp */; };
 		13637D841BD5FDDD0017CC2A /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D821BD5FDDD0017CC2A /* Circle.cpp */; };
 		13637D891BD5FE220017CC2A /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13637D871BD5FE220017CC2A /* Plane.cpp */; };
@@ -42,6 +43,8 @@
 		130D1BCF1BCB120600CCF04A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		130D1BD11BCB120D00CCF04A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		1339B5271C66E0030011FA5A /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glm; sourceTree = "<group>"; };
+		1339B52C1C6702B60011FA5A /* Geometric.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Geometric.cpp; path = Geometric/Geometric.cpp; sourceTree = "<group>"; };
+		1339B52D1C6702B60011FA5A /* Geometric.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Geometric.hpp; path = Geometric/Geometric.hpp; sourceTree = "<group>"; };
 		13637D7F1BD5FDC00017CC2A /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = Camera/Camera.cpp; sourceTree = "<group>"; };
 		13637D801BD5FDC00017CC2A /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Camera.hpp; path = Camera/Camera.hpp; sourceTree = "<group>"; };
 		13637D821BD5FDDD0017CC2A /* Circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Circle.cpp; path = Circle/Circle.cpp; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				1339B52B1C6702770011FA5A /* Geometric */,
 				1339B5271C66E0030011FA5A /* glm */,
 				13AA68291BE4317C009DDE59 /* Ray */,
 				13637D861BD5FE0E0017CC2A /* Plane */,
@@ -109,6 +113,15 @@
 				138DC86B1BDD8E1C00E6A767 /* TODO */,
 			);
 			path = SimpleRayTracer;
+			sourceTree = "<group>";
+		};
+		1339B52B1C6702770011FA5A /* Geometric */ = {
+			isa = PBXGroup;
+			children = (
+				1339B52C1C6702B60011FA5A /* Geometric.cpp */,
+				1339B52D1C6702B60011FA5A /* Geometric.hpp */,
+			);
+			name = Geometric;
 			sourceTree = "<group>";
 		};
 		13637D7D1BD5FD950017CC2A /* Camera */ = {
@@ -247,6 +260,7 @@
 				13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */,
 				13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */,
 				13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */,
+				1339B52E1C6702B60011FA5A /* Geometric.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
