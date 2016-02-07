@@ -8,8 +8,7 @@
 
 #include "Camera.hpp"
 
-/*
-Camera::Camera(Vec3 *pos, Vec3 *lookAtPoint, float roll) {
+Camera::Camera(glm::vec3 pos, glm::vec3 lookAtPoint, float roll) {
     this->pos = pos;
     this->lookAtPoint = lookAtPoint;
     this->roll = roll;
@@ -18,7 +17,7 @@ Camera::Camera(Vec3 *pos, Vec3 *lookAtPoint, float roll) {
 }
 
 
-Camera::Camera(Vec3 *pos, Vec3 *lookAtPoint) {
+Camera::Camera(glm::vec3 pos, glm::vec3 lookAtPoint) {
     this->pos = pos;
     this->lookAtPoint = lookAtPoint;
     this->roll = 0.0;
@@ -27,9 +26,9 @@ Camera::Camera(Vec3 *pos, Vec3 *lookAtPoint) {
 }
 
 
-Vec3* Camera::getRayDir(int row, int col) {
+glm::vec3 Camera::getRayDir(int row, int col) {
     //vec3 rayDir = camMat * normalize(vec3(p.xy, focalLen));
-    return new Vec3(0.0);
+    return glm::vec3(0.0);
 }
 
 
@@ -37,9 +36,8 @@ Vec3* Camera::getRayDir(int row, int col) {
 // Updates the camera matrix with the current position and lookAtPoint of the
 // Camera
 void Camera::createCamMatrix() {
-    Vec3 *cw, *cp, *cu, *cv;
+    glm::vec3 cw, cp, cu, cv;
     
     
     
 }
-*/
