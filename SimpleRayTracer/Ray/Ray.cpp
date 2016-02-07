@@ -7,3 +7,8 @@
 //
 
 #include "Ray.hpp"
+
+Ray::Ray(glm::vec3 pos, glm::vec3 dir) {
+    this->pos = pos;
+    this->dir = dir;
+}

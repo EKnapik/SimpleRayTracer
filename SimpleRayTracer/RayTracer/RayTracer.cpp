@@ -50,20 +50,20 @@ void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*width)) + (col * 4); // start of wher the color data should go
     // scene getRayPos(row, col)
     // scene getRayDir <- uses camera info
-    //Ray *ray = new Ray(new Vec4(0.0), new Vec4(0.0));
-    //Vec4 *color = shootRay(ray, 1);
+    Ray *ray = new Ray(glm::vec3(0.0), glm::vec3(0.0));
+    glm::vec4 color = shootRay(ray, 1);
     
     // set the values
-    //pixelData[dataOffset] = color->X();
-    //pixelData[dataOffset+1] = color->Y();
-    //pixelData[dataOffset+2] = color->Z();
-    //pixelData[dataOffset+3] = color->W();
+    pixelData[dataOffset] = color.x;
+    pixelData[dataOffset+1] = color.y;
+    pixelData[dataOffset+2] = color.z;
+    pixelData[dataOffset+3] = color.w;
 }
 
-/*
-Vec4* RayTracer::shootRay(Ray *ray, int depth) {
+
+glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
-        return new Vec4(0.0);
+        return glm::vec4(0.0);
     }
     
     // get object interset
@@ -71,9 +71,9 @@ Vec4* RayTracer::shootRay(Ray *ray, int depth) {
     // spawn more rays and mix colors
     // return color
     
-    return new Vec4(0.0);
+    return glm::vec4(0.0);
 }
-*/
+
 
 void RayTracer::setupOpenGLCalls(void) {
 	int dataSize = numVerts * 5 * sizeof(GLfloat);

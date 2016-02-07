@@ -16,6 +16,7 @@
 class Ray {
 public:
     // create function
+    Ray(glm::vec3 pos, glm::vec3 dir);
     glm::vec3 pos;
     glm::vec3 dir;
 private:

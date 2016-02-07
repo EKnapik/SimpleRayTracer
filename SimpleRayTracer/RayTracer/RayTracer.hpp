@@ -14,6 +14,8 @@
 #include "Window.hpp"
 #include "Scene.hpp"
 #include "Ray.hpp"
+#include "glm/vec4.hpp"
+#include "glm/vec3.hpp"
 
 /*
  This draws two triangles over the entire rendering scene then given a scene
@@ -31,7 +33,7 @@ public:
     
 private:
     void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix
-    // Vec4* shootRay(Ray *ray, int depth);
+    glm::vec4 shootRay(Ray *ray, int depth);
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
     void populateMatrix(void);
