@@ -9,6 +9,7 @@
 #ifndef RayTracer_hpp
 #define RayTracer_hpp
 #include <cstdio>
+#include <iostream>
 #include <OpenGL/gl.h>
 #include "shaderSetup.hpp"
 #include "Window.hpp"
@@ -40,6 +41,7 @@ private:
     void setupThreads(void);
     void shutdownThreads(void);
     void setVertexData(void);
+    void sendTexture(void);
     
     // render 2 triangles and texture
     GLuint shaderProgram;

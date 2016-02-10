@@ -7,3 +7,11 @@
 //
 
 #include "Scene.hpp"
+
+Scene::Scene() {
+    
+}
+
+Scene::Scene(Camera *camera) {
+    this->camera = camera;
+}

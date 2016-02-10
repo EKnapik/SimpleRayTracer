@@ -10,11 +10,14 @@
 #define Scene_hpp
 
 #include <stdio.h>
+#include "Camera.hpp"
 
 class Scene {
 public:
+    Scene();
+    Scene(Camera *camera);
+    Camera *camera;
     // array of objects
-    // 
     
 };
 

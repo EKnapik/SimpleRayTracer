@@ -10,23 +10,30 @@
 #define Camera_hpp
 
 #include <stdio.h>
+#include <math.h>
 #include "glm/vec3.hpp"
 #include "glm/mat3x3.hpp"
 #include "glm/glm.hpp"
+
 
 
 class Camera {
 public:
     Camera(glm::vec3 pos, glm::vec3 lookAtPoint, float roll);
     Camera(glm::vec3 pos, glm::vec3 lookAtPoint);
-    glm::vec3 getRayDir(int row, int col);
+    glm::vec3 getRayPos();
+    glm::vec3 getRayDir(int row, int col, int width, int height);
+    void setPos(glm::vec3 newPos);
+    void setLookAt(glm::vec3 newLookAt);
+    void setRoll(float newRollAngle);
+    void setFocalLen(float newFocalLen);
+    void createCamMatrix();
     
+private:
     glm::mat3x3 camMatrix;
     glm::vec3 pos;
     glm::vec3 lookAtPoint;
-    float roll, focalLen;
-private:
-    void createCamMatrix();
+    float rollAngle, focalLen;
     
 };
 
