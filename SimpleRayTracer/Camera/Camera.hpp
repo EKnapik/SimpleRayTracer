@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "glm/vec3.hpp"
 #include "glm/mat3x3.hpp"
+#include "glm/glm.hpp"
 
 
 class Camera {

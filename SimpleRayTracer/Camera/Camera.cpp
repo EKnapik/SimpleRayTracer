@@ -37,6 +37,8 @@ glm::vec3 Camera::getRayDir(int row, int col) {
 // Camera
 void Camera::createCamMatrix() {
     glm::vec3 cw, cp, cu, cv;
+    cw = glm::normalize(this->lookAtPoint - this->pos);
+    
     
     
     
