@@ -15,12 +15,11 @@
 
 class Ray {
 public:
-    // create function
     Ray(glm::vec3 pos, glm::vec3 dir);
+    ~Ray();
     glm::vec3 pos;
     glm::vec3 dir;
 private:
-    
 };
 
 #endif /* Ray_hpp */

@@ -35,12 +35,6 @@ void RayTracer::raytraceScene(void) {
     populateMatrix();
     renderToWindow();
     sendTexture();
-    /*
-     Using scene with objects and camera
-     shoot rays
-     set color
-     render to window
-     */
 }
 
 void RayTracer::changeScene(Scene *newScene) {
@@ -58,15 +52,14 @@ void RayTracer::setColor(int row, int col) {
     
     glm::vec4 color = shootRay(ray, 1);
     
-    int var = (row * 255) / 512;
-    color = glm::vec4(var, var, var, 255);
+    color = glm::vec4(1.0, 0.0, 1.0, 1.0);
     // color = glm::vec4(float(row/height), float(row/height), float(row/height), 1.0);
     // color values are currently 0.0 -> 1.0 need to transform them
     // set the values
-    pixelData[dataOffset] = color.x;
-    pixelData[dataOffset+1] = color.y;
-    pixelData[dataOffset+2] = color.z;
-    pixelData[dataOffset+3] = color.w;
+    pixelData[dataOffset] = color.x * 255.0;
+    pixelData[dataOffset+1] = color.y * 255.0;
+    pixelData[dataOffset+2] = color.z * 255.0;
+    pixelData[dataOffset+3] = color.w * 255.0;
     
     delete ray;
 }
@@ -203,27 +196,6 @@ void RayTracer::setVertexData(void) {
     this->width = 512;
     this->height = 512;
     pixelData = new GLubyte[height * width * 4];
-    /*
-    pixelData[0] = 255; // bot left R
-    pixelData[1] = 0; // bot left G
-    pixelData[2] = 0; // bot left B
-    pixelData[3] = 255; // Alpha
-    
-    pixelData[4] = 0; // bot right R
-    pixelData[5] = 255; // bot right G
-    pixelData[6] = 0; // bot right B
-    pixelData[7] = 255; // Alpha
-    
-    pixelData[8] = 255; // top left R
-    pixelData[9] = 0; // top left G
-    pixelData[10] = 255; // top left B
-    pixelData[11] = 255; // Alpha
-    
-    pixelData[12] = 0; // top right R
-    pixelData[13] = 0; // top right G
-    pixelData[14] = 255; // top right B
-    pixelData[15] = 255; // Alpha
-     */
 }
 
 void RayTracer::sendTexture(void) {
@@ -237,7 +209,27 @@ void RayTracer::sendTexture(void) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-
+/*
+ pixelData[0] = 255; // bot left R
+ pixelData[1] = 0; // bot left G
+ pixelData[2] = 0; // bot left B
+ pixelData[3] = 255; // Alpha
+ 
+ pixelData[4] = 0; // bot right R
+ pixelData[5] = 255; // bot right G
+ pixelData[6] = 0; // bot right B
+ pixelData[7] = 255; // Alpha
+ 
+ pixelData[8] = 255; // top left R
+ pixelData[9] = 0; // top left G
+ pixelData[10] = 255; // top left B
+ pixelData[11] = 255; // Alpha
+ 
+ pixelData[12] = 0; // top right R
+ pixelData[13] = 0; // top right G
+ pixelData[14] = 255; // top right B
+ pixelData[15] = 255; // Alpha
+ */
 
 
 
