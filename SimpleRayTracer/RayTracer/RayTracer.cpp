@@ -10,20 +10,28 @@
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 RayTracer::RayTracer(Scene *scene, Window *window) {
+    this->width = 800;
+    this->height = 450;
 	this->scene = scene;
 	this->window = window;
     setVertexData();
+    populateMatrix();
     setupOpenGLCalls();
 }
 
 RayTracer::RayTracer(Scene *scene) {
+    this->width = 800;
+    this->height = 450;
     this->scene = scene;
     setVertexData();
+    populateMatrix();
     setupOpenGLCalls();
 }
 
 // Default test scene
 RayTracer::RayTracer() {
+    this->width = 800;
+    this->height = 450;
     Camera *camera = new Camera(glm::vec3(0.0, 1.0, 1.0), glm::vec3(0.0, 1.0, -1.0));
     this->scene = new Scene(camera);
     setVertexData();
@@ -192,9 +200,6 @@ void RayTracer::setVertexData(void) {
     elementData[4] = 0;
     elementData[5] = 2;
     
-    // Set the texture data should be a 4 squares
-    this->width = 512;
-    this->height = 512;
     pixelData = new GLubyte[height * width * 4];
 }
 

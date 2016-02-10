@@ -12,8 +12,9 @@
 #include "RayTracer.hpp"
 
 
-#define WINDOW_HEIGHT 512
-#define WINDOW_WIDTH 512
+// 16 x 9
+#define WINDOW_HEIGHT 450
+#define WINDOW_WIDTH 800
 
 void initOpenGL(void);
 void display(void);
@@ -25,7 +26,7 @@ int main(int argc, char * argv[]) {
     // Setup window statically because GLUT is poor at window and display render
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(WINDOW_HEIGHT, WINDOW_WIDTH);
+    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutCreateWindow("Simple Ray Tracer");
     glutDisplayFunc(display);
     initOpenGL();

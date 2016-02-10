@@ -9,31 +9,41 @@
 #include "Circle.hpp"
 
 Circle::Circle(glm::vec3 pos, float radius) {
-    
+    this->pos = pos;
+    this->radius = radius;
+    this->color = glm::vec3(0.0, 1.0, 1.0);
+}
+
+Circle::Circle(glm::vec3 pos, float radius, glm::vec3 color) {
+    this->pos = pos;
+    this->radius = radius;
+    this->color = color;
 }
 
 
 glm::vec3 Circle::getNormal(glm::vec3 pos) {
-    
-    return glm::vec3(0.0);
+    return (pos - this->pos) / this->radius;
 };
 
 
-glm::vec3 Circle::getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) {
-    
-    return glm::vec3(0.0);
+float Circle::getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) {
+    glm::vec3 oc = rayOr - this->pos;
+    float b = glm::dot(oc, rayDir);
+    float c = glm::dot(oc, oc) - (this->radius*this->radius);
+    float h = b*b - c;
+    if( h < 0.0 ) return -1.0;
+    float t = -b - sqrt(h);
+    return t;
 }
 
 
-glm::vec3 Circle::getDistance(glm::vec3 pos) {
-    
-    return glm::vec3(0.0);
+float Circle::getDistance(glm::vec3 pos) {
+    return (glm::length(pos - this->pos) - this->radius);
 }
 
 
 glm::vec3 Circle::getColor(glm::vec3 pos) {
-    
-    return glm::vec3(0.0);
+    return this->color;
 }
 
 

@@ -10,16 +10,20 @@
 #define Circle_hpp
 
 #include <stdio.h>
+#include <math.h>
 #include "Geometric.hpp"
 #include "glm/vec3.hpp"
+#include "glm/glm.hpp"
 
 class Circle: public Geometric {
 public:
     Circle(glm::vec3 pos, float radius);
-    glm::vec3 getNormal(glm::vec3 pos) = 0;
-    glm::vec3 getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) = 0;
-    glm::vec3 getDistance(glm::vec3 pos) = 0;
-    glm::vec3 getColor(glm::vec3 pos) = 0;
+    Circle(glm::vec3 pos, float radius, glm::vec3 color);
+    
+    glm::vec3 getNormal(glm::vec3 pos);
+    float getIntersect(glm::vec3 rayOr, glm::vec3 rayDir);
+    float getDistance(glm::vec3 pos);
+    glm::vec3 getColor(glm::vec3 pos);
     void setRadius(float radius);
     void setPos(glm::vec3 pos);
     void setColor(glm::vec3 color);
