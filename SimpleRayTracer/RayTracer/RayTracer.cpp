@@ -26,8 +26,8 @@ RayTracer::RayTracer(Scene *scene) {
 RayTracer::RayTracer() {
     Camera *camera = new Camera(glm::vec3(0.0, 1.0, 1.0), glm::vec3(0.0, 1.0, -1.0));
     this->scene = new Scene(camera);
-    populateMatrix();
     setVertexData();
+    populateMatrix();
 	setupOpenGLCalls();
 }
 
@@ -52,14 +52,14 @@ void RayTracer::setColor(int row, int col) {
     
     glm::vec4 color = shootRay(ray, 1);
     
-    color = glm::vec4(1.0, 0.0, 1.0, 1.0);
+    color = glm::vec4(0.0, 1.0, 1.0, 1.0);
     // color = glm::vec4(float(row/height), float(row/height), float(row/height), 1.0);
     // color values are currently 0.0 -> 1.0 need to transform them
     // set the values
-    pixelData[dataOffset] = color.x * 255.0;
-    pixelData[dataOffset+1] = color.y * 255.0;
-    pixelData[dataOffset+2] = color.z * 255.0;
-    pixelData[dataOffset+3] = color.w * 255.0;
+    pixelData[dataOffset] = (color.x * 255);
+    pixelData[dataOffset+1] = (color.y * 255);
+    pixelData[dataOffset+2] = (color.z * 255);
+    pixelData[dataOffset+3] = (color.w * 255);
     
     delete ray;
 }

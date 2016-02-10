@@ -77,5 +77,5 @@ void Camera::createCamMatrix() {
     cp = glm::vec3(sin(radianAngle), cos(radianAngle), 0.0); // temp up
     cu = glm::normalize(glm::cross(cw, cp)); // right vector
     cv = glm::normalize(glm::cross(cu, cw)); // up vector
-    camMatrix = glm::mat3(cu, cv, cw);
+    this->camMatrix = glm::mat3(cu, cv, cw);
 }
