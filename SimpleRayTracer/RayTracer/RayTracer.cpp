@@ -72,17 +72,50 @@ void RayTracer::setColor(int row, int col) {
 }
 
 
+float myClamp(float value, float min, float max) {
+    if(value < min) {
+        return min;
+    }
+    if(value > max) {
+        return max;
+    }
+    return value;
+}
+
 glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec4(0.0);
     }
     Geometric *objHit = scene->intersectCast(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
-    // do something with that object's color
-    // spawn more rays and mix colors
-    // return color
+    glm::vec3 nor = objHit->getNormal(posHit);
+    glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.00001)*ray->dir);
+    glm::vec3 reflectEye = glm::reflect(-ray->dir, nor); // rayDir is the eye to position
+    glm::vec3 lightDir = normalize(scene->light->pos - posHit);
+    glm::vec3 material = objHit->getColor(posHit);
+    Ray *shadowRay = new Ray(posShadow, lightDir);
+    float specCoeff, diffCoeff, ambCoeff;
+    float spec, diff, shadow;
+    glm::vec3 amb;
     
-    return glm::vec4(objHit->getColor(posHit), 1.0);
+    glm::vec3 brdf;
+    ambCoeff = 0.1;
+    diffCoeff = 1.2;
+    specCoeff = 1.2;
+    shadow = scene->intersectCast(shadowRay)->timeHit;
+    delete shadowRay;
+    if(shadow > 0.0) {
+        shadow = 0.1;
+    } else {
+        shadow = 1.0;
+    }
+    amb = ambCoeff*glm::vec3(1.0, 1.0, 1.0);
+    diff = shadow*diffCoeff*myClamp(glm::dot(nor,lightDir), 0.0, 1.0);
+    spec = shadow*specCoeff*glm::pow(myClamp(glm::dot(reflectEye,lightDir), 0.0, 1.0), 40.0);
+    brdf = material*scene->light->color*(diff+spec);
+    brdf += amb;
+    
+    return glm::vec4(brdf, 1.0);
 }
 
 

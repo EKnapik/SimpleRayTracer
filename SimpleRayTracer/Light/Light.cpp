@@ -8,6 +8,11 @@
 
 #include "Light.hpp"
 
+Light::Light() {
+    this->pos = glm::vec3(1.5, 5.0, 6.0);
+    this->color = glm::vec3(1.0, 0.9, 0.7);
+}
+
 Light::Light(glm::vec3 pos, glm::vec3 color) {
     this->pos = pos;
     this->color = color;

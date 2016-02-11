@@ -18,6 +18,7 @@
 #include "Ray.hpp"
 #include "glm/vec4.hpp"
 #include "glm/vec3.hpp"
+#include "glm/glm.hpp"
 
 /*
  This draws two triangles over the entire rendering scene then given a scene

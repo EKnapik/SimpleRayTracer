@@ -17,6 +17,7 @@
 #include "Ray.hpp"
 #include "Plane.hpp"
 #include "Circle.hpp"
+#include "Light.hpp"
 
 
 
@@ -30,6 +31,7 @@ public:
     Geometric* intersectCast(Ray *ray);
     
     Camera *camera;
+    Light *light;
     int numObjects;
     Geometric **shapes;
 private:

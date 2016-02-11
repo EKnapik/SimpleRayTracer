@@ -12,6 +12,7 @@
 Scene::Scene() {
     this->baseBackground = new Background();
     this->camera = new Camera(glm::vec3(1.0, 1.1, 2.0), glm::vec3(1.0, 1.1, -1.0));
+    this->light = new Light();
     this->numObjects = 3;
     this->shapes = new Geometric *[numObjects];
     this->shapes[0] = new Plane();
@@ -23,6 +24,7 @@ Scene::Scene(Camera *camera) {
     this->baseBackground = new Background();
     this->numObjects = 0;
     this->camera = camera;
+    this->light = new Light();
 }
 
 Scene::~Scene() {
