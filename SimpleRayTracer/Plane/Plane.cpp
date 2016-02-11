@@ -36,12 +36,19 @@ glm::vec3 Plane::getNormal() {
     return this->normal;
 }
 
+// if the denom is zero then the ray and plane are parallel
 float Plane::getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) {
-    return 0;
+    float denom = glm::dot(rayDir, this->normal);
+    if(denom == 0) {
+        return -1.0;
+    }
+    return (glm::dot((this->pos - rayOr), this->normal) / denom);
 }
 
 float Plane::getDistance(glm::vec3 pos) {
-    return 0;
+    glm::vec3 pq = glm::vec3(pos - this->pos);
+    float scale = glm::dot(pq, this->normal) / glm::dot(this->normal, this->normal);
+    return scale;
 }
 
 // returns checkard color grid
