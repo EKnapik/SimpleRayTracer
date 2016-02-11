@@ -20,6 +20,7 @@ public:
     glm::vec3 pos;
     glm::vec3 dir;
     float curRefIndex = 1.0;
+    bool inside = false;
 private:
 };
 

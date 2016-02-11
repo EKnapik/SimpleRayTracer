@@ -23,7 +23,7 @@ Scene::Scene() {
     this->shapes[1]->reflective = true;
     this->shapes[2] = new Circle(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(0.2, 0.1, 0.8));
     this->shapes[2]->transmitive = true;
-    this->shapes[2]->refractIndex = 4.0;
+    this->shapes[2]->refractIndex = 1.517;
 }
 
 Scene::Scene(Camera *camera) {

@@ -115,13 +115,23 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     }
     if(objHit->transmitive) {
         glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.0001)*ray->dir);
-        glm::vec3 transDir = float(ray->curRefIndex/objHit->refractIndex) * ray->dir; // not done finding this yet
+        float hitRef = objHit->refractIndex;
+        if(ray->inside) {
+            hitRef = 1.0;
+        }
+        
+        glm::vec3 transDir = float(ray->curRefIndex/hitRef) * ray->dir; // not done finding this yet
         float inAngle = acos(glm::dot(-ray->dir, nor));
-        float scale = (ray->curRefIndex/objHit->refractIndex)*glm::dot(-ray->dir, nor);
-        scale -= ((ray->curRefIndex/objHit->refractIndex)*(ray->curRefIndex/objHit->refractIndex))*(1-(cos(inAngle)*cos(inAngle)));
+        float scale = (ray->curRefIndex/hitRef)*glm::dot(-ray->dir, nor);
+        scale -= ((ray->curRefIndex/hitRef)*(ray->curRefIndex/hitRef))*(1-(cos(inAngle)*cos(inAngle)));
         transDir += scale*nor;
         transDir = glm::normalize(transDir);
+        
         Ray *transRay = new Ray(posIn, transDir);
+        if(!ray->inside) {
+            transRay->inside = true;
+        }
+        transRay->curRefIndex = hitRef;
         glm::vec3 transColor = shootRay(transRay, depth-1);
         delete transRay;
         if(glm::length(transColor) != 0) {
