@@ -56,8 +56,8 @@ void RayTracer::changeScene(Scene *newScene) {
 void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
     Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->height, this->width));
-    
-    glm::vec4 color = shootRay(ray, 1.0);
+    int depth = 2;
+    glm::vec4 color = glm::vec4(shootRay(ray, depth), 1.0);
     // Color values may have been returned as greater than 1.0;
     if(color.x > 1.0) {
         color.x = 1.0;
@@ -90,9 +90,9 @@ float myClamp(float value, float min, float max) {
     return value;
 }
 
-glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
+glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
-        return glm::vec4(0.0);
+        return glm::vec3(0.0);
     }
     Geometric *objHit = scene->intersectCast(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
@@ -101,6 +101,17 @@ glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
     glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
     glm::vec3 lightDir = normalize(scene->light->pos - posHit);
     glm::vec3 material = objHit->getColor(posHit);
+    
+    if(objHit->reflective) {
+        Ray *reflectiveRay = new Ray(posHit, reflectEye);
+        glm::vec3 reflectColor = shootRay(reflectiveRay, depth-1);
+        delete reflectiveRay;
+        if(glm::length(reflectColor) != 0) {
+            material = glm::mix(material, reflectColor, 0.8); // again how reflective should be set by the object
+        }
+    }
+    
+    
     Ray *shadowRay = new Ray(posShadow, lightDir);
     float specCoeff, diffCoeff, ambCoeff;
     float spec, diff, shadow;
@@ -125,7 +136,7 @@ glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
     brdf = scene->light->color*material*(diff+spec);
     brdf += amb;
     
-    return glm::vec4(brdf, 1.0);
+    return brdf;
 }
 
 
