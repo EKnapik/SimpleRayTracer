@@ -29,10 +29,16 @@ public:
     void setNormal(glm::vec3 normal);
     void setPos(glm::vec3 pos);
     void setColor(glm::vec3 color);
+    void setxLimit(glm::vec2 newxLim);
+    void setyLimit(glm::vec2 newyLim);
+    void setzLimit(glm::vec2 newzLim);
 private:
     glm::vec3 pos;
     glm::vec3 normal;
     glm::vec3 color;
+    glm::vec2 xLimit = glm::vec2(-10000, 10000);
+    glm::vec2 yLimit = glm::vec2(-10000, 10000);
+    glm::vec2 zLimit = glm::vec2(-10000, 10000);
     // lamda material function
 };
 

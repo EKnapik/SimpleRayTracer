@@ -132,21 +132,20 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     
     
     Ray *shadowRay = new Ray(posShadow, lightDir);
+    Geometric *shadowObj = scene->intersectCast(shadowRay);
     float specCoeff, diffCoeff, ambCoeff;
     float spec, diff, shadow;
     glm::vec3 amb;
     glm::vec3 brdf;
     
-    
     ambCoeff = 0.1; // scene property
     // These should be assigned per object
     diffCoeff = 1.2;
     specCoeff = 1.0;
-    Geometric *shadowObj = scene->intersectCast(shadowRay);
     shadow = shadowObj->timeHit;
     delete shadowRay;
     if(shadowObj->transmitive) {
-        shadow = 0.7;
+        shadow = 0.75;
     } else if(shadow > 0.0) {
         shadow = 0.1;
     } else {

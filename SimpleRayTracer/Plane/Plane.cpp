@@ -42,7 +42,19 @@ float Plane::getIntersect(Ray *ray) {
     if(denom == 0) {
         return -1.0;
     }
-    return (glm::dot((this->pos - ray->pos), this->normal) / denom);
+    float retT = glm::dot((this->pos - ray->pos), this->normal) / denom;
+    glm::vec3 hitPos = ray->pos + (retT*ray->dir);
+    if(hitPos.x < xLimit.x || hitPos.x > xLimit.y) {
+        return -1.0;
+    }
+    if(hitPos.y < yLimit.x || hitPos.y > yLimit.y) {
+        return -1.0;
+    }
+    if(hitPos.z < zLimit.x || hitPos.z > zLimit.y) {
+        return -1.0;
+    }
+    
+    return retT;
 }
 
 float Plane::getDistance(glm::vec3 pos) {
@@ -77,3 +89,16 @@ void Plane::setPos(glm::vec3 pos) {
 void Plane::setColor(glm::vec3 color) {
     this->color = color;
 }
+
+void Plane::setxLimit(glm::vec2 newxLim) {
+    this->xLimit = newxLim;
+}
+
+void Plane::setyLimit(glm::vec2 newyLim) {
+    this->yLimit = newyLim;
+}
+
+void Plane::setzLimit(glm::vec2 newzLim) {
+    this->zLimit = newzLim;
+}
+
