@@ -7,12 +7,13 @@
 //
 
 #include "Camera.hpp"
+#include <iostream>
 
 Camera::Camera(glm::vec3 pos, glm::vec3 lookAtPoint, float roll) {
     this->pos = pos;
     this->lookAtPoint = lookAtPoint;
     this->rollAngle = roll;
-    this->focalLen = 1.0;
+    this->focalLen = 1.5;
     createCamMatrix();
 }
 
@@ -21,7 +22,7 @@ Camera::Camera(glm::vec3 pos, glm::vec3 lookAtPoint) {
     this->pos = pos;
     this->lookAtPoint = lookAtPoint;
     this->rollAngle = 0.0;
-    this->focalLen = 1.0;
+    this->focalLen = 1.5;
     createCamMatrix();
 }
 
@@ -33,18 +34,17 @@ glm::vec3 Camera::getRayPos() {
 
 // pos(0,0) translates to uv(0,0)
 // pos(N,M) translates to uv(1,1)
-glm::vec3 Camera::getRayDir(int row, int col, int width, int height) {
+glm::vec3 Camera::getRayDir(int row, int col, int height, int width) {
     // convert to 0 -> 1.0 (normalize)
-    float fmtRow = float(row / height);
-    float fmtCol = float(col / width);
+    float fmtRow = float(row) / float(height);
+    float fmtCol = float(col) / float(width);
     // convert to -1.0 -> 1.0 screen space
     fmtRow = (2*fmtRow) - 1.0;
     fmtCol = (2*fmtCol) - 1.0;
     // multiply by the aspect ratio
-    fmtRow *= float(width / height);
-    fmtCol *= float(width / height);
+    fmtCol *= float(width) / float(height);
     
-    return camMatrix * glm::normalize(glm::vec3(fmtRow, fmtCol, focalLen));
+    return camMatrix * glm::normalize(glm::vec3(fmtCol, fmtRow, focalLen));
 }
 
 

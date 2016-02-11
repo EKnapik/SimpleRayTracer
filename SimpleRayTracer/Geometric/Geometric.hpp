@@ -11,12 +11,13 @@
 
 #include <stdio.h>
 #include "glm/vec3.hpp"
+#include "Ray.hpp"
 
 
 class Geometric {
 public:
     virtual glm::vec3 getNormal(glm::vec3 pos) = 0;
-    virtual float getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) = 0;
+    virtual float getIntersect(Ray *ray) = 0;
     virtual float getDistance(glm::vec3 pos) = 0;
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
     float timeHit = 0;

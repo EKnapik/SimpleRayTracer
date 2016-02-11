@@ -15,7 +15,7 @@ glm::vec3 Background::getNormal(glm::vec3 pos) {
     return glm::vec3(0.0);
 }
 
-float Background::getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) {
+float Background::getIntersect(Ray *ray) {
     return -1.0;
 }
 

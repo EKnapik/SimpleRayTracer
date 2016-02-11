@@ -22,8 +22,8 @@ public:
     Plane(glm::vec3 pos, glm::vec3 normal);
     Plane(glm::vec3 pos, glm::vec3 normal, glm::vec3 color);
     
-    glm::vec3 getNormal();
-    float getIntersect(glm::vec3 rayOr, glm::vec3 rayDir);
+    glm::vec3 getNormal(glm::vec3 pos);
+    float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
     void setNormal(glm::vec3 normal);

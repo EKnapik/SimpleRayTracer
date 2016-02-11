@@ -32,8 +32,7 @@ RayTracer::RayTracer(Scene *scene) {
 RayTracer::RayTracer() {
     this->width = 800;
     this->height = 450;
-    Camera *camera = new Camera(glm::vec3(0.0, 1.0, 1.0), glm::vec3(0.0, 1.0, -1.0));
-    this->scene = new Scene(camera);
+    this->scene = new Scene(); // loads the default scene
     setVertexData();
     populateMatrix();
 	setupOpenGLCalls();
@@ -56,11 +55,11 @@ void RayTracer::changeScene(Scene *newScene) {
 // into the scene with a variable bounce depth
 void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
-    Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->width, this->height));
+    Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->height, this->width));
     
     glm::vec4 color = shootRay(ray, 1.0);
     
-    color = glm::vec4(0.0, 1.0, 1.0, 1.0);
+    // color = glm::vec4(0.0, 1.0, 1.0, 1.0);
     // color = glm::vec4(float(row/height), float(row/height), float(row/height), 1.0);
     // color values are currently 0.0 -> 1.0 need to transform them
     // set the values
@@ -77,13 +76,13 @@ glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec4(0.0);
     }
-    Geometric *objHit;
-    
+    Geometric *objHit = scene->intersectCast(ray);
+    glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
     // do something with that object's color
     // spawn more rays and mix colors
     // return color
     
-    return glm::vec4(0.0);
+    return glm::vec4(objHit->getColor(posHit), 1.0);
 }
 
 

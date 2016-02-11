@@ -14,6 +14,9 @@
 #include "Geometric.hpp"
 #include "Background.hpp"
 #include "glm/vec3.hpp"
+#include "Ray.hpp"
+#include "Plane.hpp"
+#include "Circle.hpp"
 
 
 
@@ -21,9 +24,10 @@ class Scene {
 public:
     Scene();
     Scene(Camera *camera);
+    ~Scene();
     
-    Geometric* intersectMarch(glm::vec3 rayOr, glm::vec3 rayDir);
-    Geometric* intersectCast(glm::vec3 rayOr, glm::vec3 rayDir);
+    Geometric* intersectMarch(Ray *ray);
+    Geometric* intersectCast(Ray *ray);
     
     Camera *camera;
     int numObjects;

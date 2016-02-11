@@ -18,7 +18,7 @@ public:
     Background();
     
     glm::vec3 getNormal(glm::vec3 pos);
-    float getIntersect(glm::vec3 rayOr, glm::vec3 rayDir);
+    float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
     void setColor(glm::vec3 color);

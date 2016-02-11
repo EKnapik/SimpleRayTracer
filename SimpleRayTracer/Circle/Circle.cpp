@@ -26,9 +26,9 @@ glm::vec3 Circle::getNormal(glm::vec3 pos) {
 };
 
 
-float Circle::getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) {
-    glm::vec3 oc = rayOr - this->pos;
-    float b = glm::dot(oc, rayDir);
+float Circle::getIntersect(Ray *ray) {
+    glm::vec3 oc = ray->pos - this->pos;
+    float b = glm::dot(oc, ray->dir);
     float c = glm::dot(oc, oc) - (this->radius*this->radius);
     float h = b*b - c;
     if( h < 0.0 ) return -1.0;

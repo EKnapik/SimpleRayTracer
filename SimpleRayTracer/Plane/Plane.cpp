@@ -32,17 +32,20 @@ Plane::Plane(glm::vec3 pos, glm::vec3 normal, glm::vec3 color) {
     this->color = color;
 }
 
-glm::vec3 Plane::getNormal() {
+glm::vec3 Plane::getNormal(glm::vec3 pos) {
     return this->normal;
 }
 
 // if the denom is zero then the ray and plane are parallel
-float Plane::getIntersect(glm::vec3 rayOr, glm::vec3 rayDir) {
-    float denom = glm::dot(rayDir, this->normal);
+float Plane::getIntersect(Ray *ray) {
+    return -ray->pos.y/ray->dir.y;
+    /*
+    float denom = glm::dot(ray->dir, this->normal);
     if(denom == 0) {
         return -1.0;
     }
-    return (glm::dot((this->pos - rayOr), this->normal) / denom);
+    return (glm::dot((this->pos - ray->pos), this->normal) / denom);
+     */
 }
 
 float Plane::getDistance(glm::vec3 pos) {
