@@ -22,7 +22,6 @@ public:
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
     void setColor(glm::vec3 color);
-    float timeHit = -1.0;
 private:
     glm::vec3 color;
 };

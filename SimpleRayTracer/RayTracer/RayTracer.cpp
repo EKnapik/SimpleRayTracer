@@ -96,6 +96,9 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     }
     Geometric *objHit = scene->intersectCast(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
+    if(objHit->timeHit < 0) {
+        return objHit->getColor(posHit);
+    }
     glm::vec3 nor = objHit->getNormal(posHit);
     glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.00001)*ray->dir);
     glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
@@ -266,31 +269,6 @@ void RayTracer::sendTexture(void) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
-
-/*
- pixelData[0] = 255; // bot left R
- pixelData[1] = 0; // bot left G
- pixelData[2] = 0; // bot left B
- pixelData[3] = 255; // Alpha
- 
- pixelData[4] = 0; // bot right R
- pixelData[5] = 255; // bot right G
- pixelData[6] = 0; // bot right B
- pixelData[7] = 255; // Alpha
- 
- pixelData[8] = 255; // top left R
- pixelData[9] = 0; // top left G
- pixelData[10] = 255; // top left B
- pixelData[11] = 255; // Alpha
- 
- pixelData[12] = 0; // top right R
- pixelData[13] = 0; // top right G
- pixelData[14] = 255; // top right B
- pixelData[15] = 255; // Alpha
- */
-
-
-
 
 
 

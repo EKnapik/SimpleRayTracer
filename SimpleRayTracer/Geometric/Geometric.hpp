@@ -20,7 +20,7 @@ public:
     virtual float getIntersect(Ray *ray) = 0;
     virtual float getDistance(glm::vec3 pos) = 0;
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
-    float timeHit = 0;
+    float timeHit = -1.0;
     bool reflective = false;
 };
 

@@ -35,15 +35,19 @@ Scene::~Scene() {
     delete[] shapes;
 }
 
+
+// NOT WORKING CURRENTLY
 Geometric* Scene::intersectMarch(Ray *ray) {
     float tmin = 0.0;
     float tmax = 60.0;
     float t = tmin;
     
-    float const precis = 0.00002;
+    float const precis = 0.002;
     int const steps = 100;
     Geometric *returnShape = this->baseBackground;
-    
+    if(numObjects == 0) {
+        return returnShape;
+    }
     
     for(int i = 0; i < steps; i++) {
         float dist = tmax;
@@ -62,7 +66,7 @@ Geometric* Scene::intersectMarch(Ray *ray) {
         t += dist;
     }
     
-    if( t>tmax || numObjects == 0) {
+    if( t>tmax ) {
         return this->baseBackground;
     }
     returnShape->timeHit = t;
@@ -77,7 +81,7 @@ Geometric* Scene::intersectCast(Ray *ray) {
     
     for(int i = 0; i < this->numObjects; i++) {
         tempT = shapes[i]->getIntersect(ray);
-        if(tempT < resT && tempT > 0) {
+        if(tempT > 0 && tempT < resT) {
             resT = tempT;
             returnShape = shapes[i];
             returnShape->timeHit = resT;

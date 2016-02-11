@@ -8,7 +8,11 @@
 
 #include "Background.hpp"
 Background::Background() {
-    this->color = glm::vec3(0.0);
+    // black
+    // this->color = glm::vec3(0.0);
+    
+    // cornflour blue
+    this->color = glm::vec3(0.39, 0.61, 0.94);
 }
 
 glm::vec3 Background::getNormal(glm::vec3 pos) {
