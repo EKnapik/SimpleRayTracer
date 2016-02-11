@@ -38,14 +38,11 @@ glm::vec3 Plane::getNormal(glm::vec3 pos) {
 
 // if the denom is zero then the ray and plane are parallel
 float Plane::getIntersect(Ray *ray) {
-    return -ray->pos.y/ray->dir.y;
-    /*
     float denom = glm::dot(ray->dir, this->normal);
     if(denom == 0) {
         return -1.0;
     }
     return (glm::dot((this->pos - ray->pos), this->normal) / denom);
-     */
 }
 
 float Plane::getDistance(glm::vec3 pos) {
@@ -56,8 +53,12 @@ float Plane::getDistance(glm::vec3 pos) {
 
 // returns checkard color grid
 glm::vec3 Plane::getColor(glm::vec3 pos) {
+    // The Floor function isn't working with negative values
+    // NO idea why this is happening
     float tileSize = 2.0;
-    int tile = floor(tileSize*pos.x) + floor(tileSize*pos.z);
+    float tempx = tileSize * (pos.x + 1000);
+    float tempz = tileSize * (pos.z + 1000);
+    int tile = floor(tempx) + floor(tempz);
     tile = tile % 2;
     if(tile > 0.0) {
         return glm::vec3(0.9, 0.1, 0.1);
