@@ -58,7 +58,7 @@ void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
     Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->width, this->height));
     
-    glm::vec4 color = shootRay(ray, 1);
+    glm::vec4 color = shootRay(ray, 1.0);
     
     color = glm::vec4(0.0, 1.0, 1.0, 1.0);
     // color = glm::vec4(float(row/height), float(row/height), float(row/height), 1.0);
@@ -77,8 +77,8 @@ glm::vec4 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec4(0.0);
     }
+    Geometric *objHit;
     
-    // get object interset
     // do something with that object's color
     // spawn more rays and mix colors
     // return color

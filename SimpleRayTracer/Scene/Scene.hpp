@@ -11,14 +11,25 @@
 
 #include <stdio.h>
 #include "Camera.hpp"
+#include "Geometric.hpp"
+#include "Background.hpp"
+#include "glm/vec3.hpp"
+
+
 
 class Scene {
 public:
     Scene();
     Scene(Camera *camera);
-    Camera *camera;
-    // array of objects
     
+    Geometric* intersectMarch(glm::vec3 rayOr, glm::vec3 rayDir);
+    Geometric* intersectCast(glm::vec3 rayOr, glm::vec3 rayDir);
+    
+    Camera *camera;
+    int numObjects;
+    Geometric **shapes;
+private:
+    Background *baseBackground;
 };
 
 #endif /* Scene_hpp */

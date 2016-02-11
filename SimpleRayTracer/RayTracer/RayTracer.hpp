@@ -13,6 +13,7 @@
 #include <OpenGL/gl.h>
 #include "shaderSetup.hpp"
 #include "Window.hpp"
+#include "Geometric.hpp"
 #include "Scene.hpp"
 #include "Ray.hpp"
 #include "glm/vec4.hpp"
