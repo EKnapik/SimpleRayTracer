@@ -41,13 +41,12 @@ Scene::~Scene() {
 }
 
 
-// NOT WORKING CURRENTLY
 Geometric* Scene::intersectMarch(Ray *ray) {
     float tmin = 0.0;
     float tmax = 60.0;
     float t = tmin;
     
-    float const precis = 0.002;
+    float const precis = 0.0001;
     int const steps = 100;
     Geometric *returnShape = this->baseBackground;
     if(numObjects == 0) {
@@ -58,7 +57,7 @@ Geometric* Scene::intersectMarch(Ray *ray) {
         float dist = tmax;
         float distTemp;
         for(int j = 0; j < numObjects; j++) {
-            distTemp = shapes[j]->getDistance(ray->pos);
+            distTemp = shapes[j]->getDistance(ray->pos + t*ray->dir);
             if(distTemp < dist) {
                 dist = distTemp;
                 returnShape = shapes[j];

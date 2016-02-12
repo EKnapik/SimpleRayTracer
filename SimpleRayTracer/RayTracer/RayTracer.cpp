@@ -56,7 +56,7 @@ void RayTracer::changeScene(Scene *newScene) {
 void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
     Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->height, this->width));
-    int depth = 4;
+    int depth = 2;
     glm::vec4 color = glm::vec4(shootRay(ray, depth), 1.0);
     // Color values may have been returned as greater than 1.0;
     if(color.x > 1.0) {
@@ -94,13 +94,13 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec3(-1.0);
     }
-    Geometric *objHit = scene->intersectCast(ray);
+    Geometric *objHit = scene->intersectMarch(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
     if(objHit->timeHit < 0) {
         return objHit->getColor(posHit);
     }
     glm::vec3 nor = objHit->getNormal(posHit);
-    glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.0001)*ray->dir);
+    glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.001)*ray->dir);
     glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
     glm::vec3 lightDir = normalize(scene->light->pos - posHit);
     glm::vec3 material = objHit->getColor(posHit);
@@ -115,13 +115,11 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
         }
     }
     if(objHit->transmitive) {
-        glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.0001)*ray->dir);
+        glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.001)*ray->dir);
         float hitRef = objHit->refractIndex;
-        /*
         if(ray->inside) {
             hitRef = 1.0;
         }
-         */
         // total internal refraction check
         if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
             glm::vec3 transDir;
@@ -132,11 +130,9 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
             transDir = glm::normalize(transDir);
             
             Ray *transRay = new Ray(posIn, transDir);
-            /*
             if(!ray->inside) {
                 transRay->inside = true;
             }
-             */
             transRay->curRefIndex = hitRef;
             glm::vec3 transColor = shootRay(transRay, depth-1);
             delete transRay;

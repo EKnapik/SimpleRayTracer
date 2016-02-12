@@ -22,7 +22,7 @@ Circle::Circle(glm::vec3 pos, float radius, glm::vec3 color) {
 
 
 glm::vec3 Circle::getNormal(glm::vec3 pos) {
-    return (pos - this->pos) / this->radius;
+    return glm::normalize((pos - this->pos) / this->radius);
 };
 
 
