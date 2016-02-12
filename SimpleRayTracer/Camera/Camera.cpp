@@ -44,7 +44,7 @@ glm::vec3 Camera::getRayDir(int row, int col, int height, int width) {
     // multiply by the aspect ratio
     fmtCol *= float(width) / float(height);
     
-    return camMatrix * glm::normalize(glm::vec3(fmtCol, fmtRow, focalLen));
+    return glm::normalize(camMatrix * glm::normalize(glm::vec3(fmtCol, fmtRow, focalLen)));
 }
 
 

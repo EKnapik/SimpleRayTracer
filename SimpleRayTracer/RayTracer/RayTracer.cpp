@@ -92,7 +92,7 @@ float myClamp(float value, float min, float max) {
 
 glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
-        return glm::vec3(0.0);
+        return glm::vec3(-1.0);
     }
     Geometric *objHit = scene->intersectCast(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
@@ -109,34 +109,41 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
         Ray *reflectiveRay = new Ray(posShadow, reflectEye);
         glm::vec3 reflectColor = shootRay(reflectiveRay, depth-1);
         delete reflectiveRay;
-        if(glm::length(reflectColor) != 0) {
+        if(reflectColor.x >= 0) {
             material = glm::mix(material, reflectColor, 0.8); // again how reflective should be set by the object
+            // brdf += reflectColor; // some do this instead of mix
         }
     }
     if(objHit->transmitive) {
         glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.0001)*ray->dir);
         float hitRef = objHit->refractIndex;
+        /*
         if(ray->inside) {
             hitRef = 1.0;
         }
-        
-        glm::vec3 transDir = float(ray->curRefIndex/hitRef) * ray->dir; // not done finding this yet
-        float inAngle = acos(glm::dot(-ray->dir, nor));
-        float scale = (ray->curRefIndex/hitRef)*glm::dot(-ray->dir, nor);
-        scale -= ((ray->curRefIndex/hitRef)*(ray->curRefIndex/hitRef))*(1-(cos(inAngle)*cos(inAngle)));
-        transDir += scale*nor;
-        transDir = glm::normalize(transDir);
-        
-        Ray *transRay = new Ray(posIn, transDir);
-        if(!ray->inside) {
-            transRay->inside = true;
-        }
-        transRay->curRefIndex = hitRef;
-        glm::vec3 transColor = shootRay(transRay, depth-1);
-        delete transRay;
-        if(glm::length(transColor) != 0) {
-            // material = glm::mix(material, transColor, 0.95);
-            material = transColor;
+         */
+        // total internal refraction check
+        if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
+            glm::vec3 transDir;
+            float nRatio = ray->curRefIndex / hitRef;
+            float sqrtVal = sqrt(1-(nRatio*nRatio*(1-pow(glm::dot(nor, ray->dir),2))));
+            float scale = (nRatio*glm::dot(nor, ray->dir)) - sqrtVal;
+            transDir = scale*nor - nRatio*ray->dir;
+            transDir = glm::normalize(transDir);
+            
+            Ray *transRay = new Ray(posIn, transDir);
+            /*
+            if(!ray->inside) {
+                transRay->inside = true;
+            }
+             */
+            transRay->curRefIndex = hitRef;
+            glm::vec3 transColor = shootRay(transRay, depth-1);
+            delete transRay;
+            if(transColor.x >= 0) {
+                material = glm::mix(material, transColor, 0.95);
+                // material += transColor;
+            }
         }
     }
     
