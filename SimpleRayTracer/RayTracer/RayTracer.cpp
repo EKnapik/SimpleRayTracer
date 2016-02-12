@@ -145,6 +145,7 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
         float hitRef = objHit->refractIndex;
         if(ray->inside) {
             hitRef = 1.0;
+            nor = -nor;
         }
         // total internal refraction check
         if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
@@ -160,7 +161,7 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
              if(!ray->inside) {
              transRay->inside = true;
              }
-             ************************************/
+            ************************************/
             transRay->curRefIndex = hitRef;
             glm::vec3 transColor = shootRay(transRay, depth-1);
             delete transRay;
