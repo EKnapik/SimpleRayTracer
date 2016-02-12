@@ -7,6 +7,7 @@
 //
 
 #include "Circle.hpp"
+#include <iostream>
 
 Circle::Circle(glm::vec3 pos, float radius) {
     this->pos = pos;
@@ -33,6 +34,9 @@ float Circle::getIntersect(Ray *ray) {
     float h = b*b - c;
     if( h < 0.0 ) return -1.0;
     float t = -b - sqrt(h);
+    if(ray->inside) {
+        return -b + sqrt(h);
+    }
     return t;
 }
 

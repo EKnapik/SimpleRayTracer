@@ -56,7 +56,7 @@ void RayTracer::changeScene(Scene *newScene) {
 void RayTracer::setColor(int row, int col) {
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
     Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->height, this->width));
-    int depth = 2;
+    int depth = 5;
     glm::vec4 color = glm::vec4(shootRay(ray, depth), 1.0);
     // Color values may have been returned as greater than 1.0;
     if(color.x > 1.0) {
@@ -94,7 +94,7 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec3(-1.0);
     }
-    Geometric *objHit = scene->intersectMarch(ray);
+    Geometric *objHit = scene->intersectCast(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
     if(objHit->timeHit < 0) {
         return objHit->getColor(posHit);
@@ -104,45 +104,6 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
     glm::vec3 lightDir = normalize(scene->light->pos - posHit);
     glm::vec3 material = objHit->getColor(posHit);
-    
-    if(objHit->reflective) {
-        Ray *reflectiveRay = new Ray(posShadow, reflectEye);
-        glm::vec3 reflectColor = shootRay(reflectiveRay, depth-1);
-        delete reflectiveRay;
-        if(reflectColor.x >= 0) {
-            material = glm::mix(material, reflectColor, 0.8); // again how reflective should be set by the object
-            // brdf += reflectColor; // some do this instead of mix
-        }
-    }
-    if(objHit->transmitive) {
-        glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.001)*ray->dir);
-        float hitRef = objHit->refractIndex;
-        if(ray->inside) {
-            hitRef = 1.0;
-        }
-        // total internal refraction check
-        if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
-            glm::vec3 transDir;
-            float nRatio = ray->curRefIndex / hitRef;
-            float sqrtVal = sqrt(1-(nRatio*nRatio*(1-pow(glm::dot(nor, ray->dir),2))));
-            float scale = (nRatio*glm::dot(nor, ray->dir)) - sqrtVal;
-            transDir = scale*nor - nRatio*ray->dir;
-            transDir = glm::normalize(transDir);
-            
-            Ray *transRay = new Ray(posIn, transDir);
-            if(!ray->inside) {
-                transRay->inside = true;
-            }
-            transRay->curRefIndex = hitRef;
-            glm::vec3 transColor = shootRay(transRay, depth-1);
-            delete transRay;
-            if(transColor.x >= 0) {
-                material = glm::mix(material, transColor, 0.95);
-                // material += transColor;
-            }
-        }
-    }
-    
     
     Ray *shadowRay = new Ray(posShadow, lightDir);
     Geometric *shadowObj = scene->intersectCast(shadowRay);
@@ -170,6 +131,46 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     brdf = scene->light->color*material*(diff+spec);
     brdf += amb;
     
+    
+    if(objHit->reflective) {
+        Ray *reflectiveRay = new Ray(posShadow, reflectEye);
+        glm::vec3 reflectColor = shootRay(reflectiveRay, depth-1);
+        delete reflectiveRay;
+        if(reflectColor.x >= 0) {
+            brdf += float(0.5)*reflectColor; // some do this instead of mix
+        }
+    }
+    if(objHit->transmitive) {
+        glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.001)*ray->dir);
+        float hitRef = objHit->refractIndex;
+        if(ray->inside) {
+            hitRef = 1.0;
+        }
+        // total internal refraction check
+        if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
+            glm::vec3 transDir;
+            float nRatio = ray->curRefIndex / hitRef;
+            float sqrtVal = sqrt(1-(nRatio*nRatio*(1-pow(glm::dot(nor, ray->dir),2))));
+            float scale = (nRatio*glm::dot(nor, ray->dir)) - sqrtVal;
+            transDir = scale*nor - nRatio*ray->dir;
+            transDir = glm::normalize(transDir);
+            
+            Ray *transRay = new Ray(posIn, transDir);
+            /****************************************
+             if(!ray->inside) {
+             transRay->inside = true;
+             }
+             ************************************/
+            transRay->curRefIndex = hitRef;
+            glm::vec3 transColor = shootRay(transRay, depth-1);
+            delete transRay;
+            if(transColor.x >= 0) {
+                brdf += float(0.8)*transColor;
+            }
+        }
+    }
+    
+
     return brdf;
 }
 
