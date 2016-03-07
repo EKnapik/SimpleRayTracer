@@ -37,7 +37,7 @@ public:
     Window *window;
     
     // Rendering Flags
-    bool superSampling;
+    int samplingLevel;
     
 private:
     void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix

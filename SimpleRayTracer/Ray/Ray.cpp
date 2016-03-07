@@ -13,6 +13,11 @@ Ray::Ray(glm::vec3 pos, glm::vec3 dir) {
     this->dir = dir;
 }
 
+Ray::Ray() {
+    this->pos = glm::vec3(0.0);
+    this->dir = glm::vec3(0.0);
+}
+
 Ray::~Ray() {
     // Nothing needs to be done for deconstruction
 }

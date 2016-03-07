@@ -11,7 +11,7 @@
 
 RayTracer::RayTracer(Scene *scene, Window *window) {
     // Set Defaults
-    this->superSampling = false;
+    this->samplingLevel = 1;
     this->width = 800;
     this->height = 450;
 	this->scene = scene;
@@ -23,7 +23,7 @@ RayTracer::RayTracer(Scene *scene, Window *window) {
 
 RayTracer::RayTracer(Scene *scene) {
     // Set Defaults
-    this->superSampling = false;
+    this->samplingLevel = 1;
     this->width = 800;
     this->height = 450;
     this->scene = scene;
@@ -35,7 +35,7 @@ RayTracer::RayTracer(Scene *scene) {
 // Default test scene
 RayTracer::RayTracer() {
     // Set Defaults
-    this->superSampling = false;
+    this->samplingLevel = 1;
     this->width = 800;
     this->height = 450;
     this->scene = new Scene(); // loads the default scene
@@ -62,32 +62,53 @@ void RayTracer::changeScene(Scene *newScene) {
 // Supersampling can be done here by treating the pixel grid as if it were
 // doubled or tripled or more then there are 4, 9 or more rays shot per pixel
 // this adds computation time but no greater memory impact
+// SAMPLING:
+//  Supersampling can be done as part of the ray tracer. THe defualt is sampling
+//  level of 1 but that can be increased. The sampling is uniform super sampling
+//  where the amount of rays per pixel is the sampling level squared.
 void RayTracer::setColor(int row, int col) {
-    if(!this->superSampling) {
-        int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
-        Ray *ray = new Ray(scene->camera->getRayPos(), scene->camera->getRayDir(row, col, this->height, this->width));
-        int depth = 5;
-        glm::vec4 color = glm::vec4(shootRay(ray, depth), 1.0);
-        // Color values may have been returned as greater than 1.0;
-        if(color.x > 1.0) {
-            color.x = 1.0;
-        }
-        if(color.y > 1.0) {
-            color.y = 1.0;
-        }
-        if(color.z > 1.0) {
-            color.z = 1.0;
-        }
+    int depth = 5; // THE DEPTH OF RAY RECURSION
     
-        // color values are currently 0.0 -> 1.0 need to transform them
-        // set the values
-        pixelData[dataOffset] = (color.x * 255);
-        pixelData[dataOffset+1] = (color.y * 255);
-        pixelData[dataOffset+2] = (color.z * 255);
-        pixelData[dataOffset+3] = (color.w * 255);
+    int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
+    int rowPrime, colPrime, rowEnd, colEnd, widthPrime, heightPrime;
+    glm::vec4 totalColor = glm::vec4(0.0);
+    glm::vec4 color = glm::vec4(0.0);
+    Ray *ray = new Ray();
+    widthPrime = this->width * this->samplingLevel;
+    heightPrime = this->height * this->samplingLevel;
+    ray->pos = scene->camera->getRayPos();
     
-        delete ray;
+    rowPrime = row * this->samplingLevel;
+    rowEnd = rowPrime + this->samplingLevel;
+    for(;rowPrime < rowEnd; rowPrime++) {
+        colPrime = col * this->samplingLevel;
+        colEnd = colPrime + this->samplingLevel;
+        for(;colPrime < colEnd; colPrime++) {
+            ray->dir = scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
+            color = glm::vec4(shootRay(ray, depth), 1.0);
+            // Color values may have been returned as greater than 1.0;
+            if(color.x > 1.0) {
+                color.x = 1.0;
+            }
+            if(color.y > 1.0) {
+                color.y = 1.0;
+            }
+            if(color.z > 1.0) {
+                color.z = 1.0;
+            }
+            totalColor += color;
+        }
     }
+    
+    totalColor = totalColor / float(this->samplingLevel * this->samplingLevel);
+    // color values are currently 0.0 -> 1.0 need to transform them
+    // set the values
+    pixelData[dataOffset] = (totalColor.x * 255);
+    pixelData[dataOffset+1] = (totalColor.y * 255);
+    pixelData[dataOffset+2] = (totalColor.z * 255);
+    pixelData[dataOffset+3] = (totalColor.w * 255);
+    
+    delete ray;
 }
 
 
