@@ -33,6 +33,8 @@ public:
     RayTracer();
     void raytraceScene(void);
     void changeScene(Scene *newScene);
+    Scene *scene;
+    Window *window;
     
 private:
     void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix
@@ -55,8 +57,8 @@ private:
     // some 3D byte array for the texture data
     GLubyte *pixelData;
     int height, width; // these will be covered by the window when that is fixed
-    Scene *scene;
-    Window *window;
+    
+    
 };
 #endif /* RayTracer_hpp */
 

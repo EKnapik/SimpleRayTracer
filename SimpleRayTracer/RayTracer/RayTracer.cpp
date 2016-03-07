@@ -41,7 +41,7 @@ RayTracer::RayTracer() {
 void RayTracer::raytraceScene(void) {
     populateMatrix();
     renderToWindow();
-    sendTexture();
+    sendTexture(); // Every time the scene changes the texture must be resent
 }
 
 void RayTracer::changeScene(Scene *newScene) {
@@ -90,6 +90,7 @@ float myClamp(float value, float min, float max) {
     return value;
 }
 
+
 glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec3(-1.0);
@@ -111,11 +112,16 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     float spec, diff, shadow;
     glm::vec3 amb;
     glm::vec3 brdf;
+    float hitRef = objHit->refractIndex;
+    if(ray->inside) {
+        hitRef = 1.0;
+        nor = -nor;
+    }
     
     ambCoeff = 0.1; // scene property
     // These should be assigned per object
-    diffCoeff = 1.2;
-    specCoeff = 1.0;
+    diffCoeff = .9454545;
+    specCoeff = .545454;
     shadow = shadowObj->timeHit;
     delete shadowRay;
     if(shadowObj->transmitive) {
@@ -142,11 +148,8 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     }
     if(objHit->transmitive) {
         glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.001)*ray->dir);
-        float hitRef = objHit->refractIndex;
-        if(ray->inside) {
-            hitRef = 1.0;
-            nor = -nor;
-        }
+        
+        
         // total internal refraction check
         if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
             glm::vec3 transDir;
@@ -156,17 +159,20 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
             transDir = scale*nor - nRatio*ray->dir;
             transDir = glm::normalize(transDir);
             
+            transDir = glm::refract(ray->dir, nor, ray->curRefIndex/hitRef);
+            
             Ray *transRay = new Ray(posIn, transDir);
-            /****************************************
+            //****************************************
              if(!ray->inside) {
              transRay->inside = true;
              }
-            ************************************/
+            //************************************/
             transRay->curRefIndex = hitRef;
             glm::vec3 transColor = shootRay(transRay, depth-1);
             delete transRay;
             if(transColor.x >= 0) {
-                brdf += float(0.8)*transColor;
+                // brdf += float(0.8)*transColor;
+                brdf = mix(brdf, transColor, 0.95);
             }
         }
     }

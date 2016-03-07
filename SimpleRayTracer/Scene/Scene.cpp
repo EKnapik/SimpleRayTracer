@@ -21,7 +21,7 @@ Scene::Scene() {
     this->shapes[0] = plane;
     this->shapes[1] = new Circle(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.3));
     this->shapes[1]->reflective = true;
-    this->shapes[2] = new Circle(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(0.1));
+    this->shapes[2] = new Circle(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(0.1, 0.7, 0.2));
     this->shapes[2]->transmitive = true;
     this->shapes[2]->refractIndex = 1.517;
 }

@@ -28,7 +28,6 @@ public:
     void setPos(glm::vec3 pos);
     void setColor(glm::vec3 color);
 private:
-    glm::vec3 pos;
     float radius;
     glm::vec3 color;
     // lamda material function

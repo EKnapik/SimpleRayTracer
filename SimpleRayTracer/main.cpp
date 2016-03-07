@@ -57,6 +57,7 @@ void display(void) {
     // poll events
     // bind and draw
     rayTracer->raytraceScene();
+    rayTracer->scene->shapes[1]->pos.y += 0.01;
     
     glutSwapBuffers();
     glutPostRedisplay();
