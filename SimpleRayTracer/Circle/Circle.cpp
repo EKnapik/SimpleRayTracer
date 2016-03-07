@@ -13,12 +13,16 @@ Circle::Circle(glm::vec3 pos, float radius) {
     this->pos = pos;
     this->radius = radius;
     this->color = glm::vec3(0.0, 1.0, 1.0);
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 Circle::Circle(glm::vec3 pos, float radius, glm::vec3 color) {
     this->pos = pos;
     this->radius = radius;
     this->color = color;
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 

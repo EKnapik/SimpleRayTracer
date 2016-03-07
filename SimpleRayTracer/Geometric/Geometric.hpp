@@ -21,6 +21,9 @@ public:
     virtual float getDistance(glm::vec3 pos) = 0;
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
     glm::vec3 pos;
+    // lighting
+    float diffCoeff;
+    float specCoeff;
     float timeHit = -1.0;
     float refractIndex = 1.0;
     bool reflective = false;

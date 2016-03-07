@@ -34,6 +34,8 @@ public:
     Light *light;
     int numObjects;
     Geometric **shapes;
+    
+    float ambientCoeff;
 private:
     Background *baseBackground;
 };

@@ -24,6 +24,8 @@ Scene::Scene() {
     this->shapes[2] = new Circle(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(0.1, 0.7, 0.2));
     this->shapes[2]->transmitive = true;
     this->shapes[2]->refractIndex = 1.517;
+    
+    this->ambientCoeff = 0.1;
 }
 
 Scene::Scene(Camera *camera) {
@@ -31,6 +33,7 @@ Scene::Scene(Camera *camera) {
     this->numObjects = 0;
     this->camera = camera;
     this->light = new Light();
+    this->ambientCoeff = 0.1;
 }
 
 Scene::~Scene() {

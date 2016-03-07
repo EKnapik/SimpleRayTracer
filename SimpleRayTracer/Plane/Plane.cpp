@@ -12,24 +12,32 @@ Plane::Plane() {
     this->pos = glm::vec3(0.0);
     this->normal = glm::vec3(0.0, 1.0, 0.0);
     this->color = glm::vec3(0.8);
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 Plane::Plane(glm::vec3 pos) {
     this->pos = pos;
     this->normal = glm::vec3(0.0, 1.0, 0.0);
     this->color = glm::vec3(0.8);
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 Plane::Plane(glm::vec3 pos, glm::vec3 normal) {
     this->pos = pos;
     this->normal = glm::normalize(normal);
     this->color = glm::vec3(0.8);
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 Plane::Plane(glm::vec3 pos, glm::vec3 normal, glm::vec3 color) {
     this->pos = pos;
     this->normal = glm::normalize(normal);
     this->color = color;
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 glm::vec3 Plane::getNormal(glm::vec3 pos) {
