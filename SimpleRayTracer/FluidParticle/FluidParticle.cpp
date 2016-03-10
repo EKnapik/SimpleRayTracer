@@ -82,4 +82,27 @@ glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParti
 }
 
 
+/* Since we know the particles that are close to this one we can do collision
+ * collision detection with the nearby particles
+ * The collision 'mirror' reflection was taken from a paper that uses the twice
+ * the checking distance for collision, the distance to the collision, the normal
+ * it is similar to a perfect mirror reflection but through testing looks better
+ * for water
+ */
+void FluidParticle::collisionDetection(FluidParticle **fluidParticles, int numParticles) {
+    float distToParticle;
+    float checkValue;
+    for(int i = 0; i < numParticles; i++) {
+        distToParticle = fluidParticles[i]->getDistance(this->pos) - this->radius;
+        if(distToParticle <= 0.1) {
+            checkValue = glm::dot(this->velocity,fluidParticles[i]->getNormal(this->pos));
+            if(checkValue < 0) { // collision will happen
+                // fix velocity by reversing it by 'mirror' reflection
+                this->velocity += COLLISION_DAMPENING * float(0.02-distToParticle) * fluidParticles[i]->getNormal(this->pos);
+            }
+        }
+    }
+}
+
+
 
