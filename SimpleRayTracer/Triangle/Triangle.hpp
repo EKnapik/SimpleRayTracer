@@ -30,7 +30,7 @@ public:
     
     // Collision
     bool doesCollideWith(Geometric *obj);
-    void mirrorCollisionHandling(Geometric *obj);
+    void mirrorCollisionHandling(Geometric *obj, float timeStep);
     
     glm::vec3 v1;
     glm::vec3 v2;
@@ -42,3 +42,12 @@ public:
 };
 
 #endif /* Triangle_hpp */
+
+
+/*
+ * My idea right now is to have basic geometric object be moveable that is
+ * I can just adjust their position and everything will work. However this
+ * does not work for triangles because they are in the scene description
+ * but the physics engine should not be moving the triangle but the model
+ * itself which in turn will move the triangles.
+ */

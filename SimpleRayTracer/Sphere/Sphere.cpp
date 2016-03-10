@@ -68,19 +68,19 @@ glm::vec3 Sphere::getColor(glm::vec3 pos) {
 
 bool Sphere::doesCollideWith(Geometric *obj) {
     float dist = obj->getDistance(this->pos) - this->radius;
-    if(dist < 0.0001) {
+    if(dist < 0.001) {
         return true;
     }
     return false;
 }
 
-void Sphere::mirrorCollisionHandling(Geometric *obj) {
+void Sphere::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     float dist = obj->getDistance(this->pos) - this->radius;
     glm::vec3 nor = obj->getNormal(this->pos);
     float normalCheck = glm::dot(this->velocity, nor);
     if(dist < 0.001 && normalCheck < 0) {
         // reverse velocity
-        this->pos -= this->velocity * float(0.002);
+        this->pos -= this->velocity * timeStep;
         this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);
     }
 }

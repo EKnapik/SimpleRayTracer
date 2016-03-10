@@ -22,8 +22,8 @@ Scene::Scene() {
     this->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.3));
     this->shapes[1]->reflective = true;
     this->shapes[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(0.1, 0.1, 0.8));
-    //this->shapes[2]->transmitive = true;
-    //this->shapes[2]->refractIndex = 1.517;
+    this->shapes[2]->transmitive = true;
+    this->shapes[2]->refractIndex = 1.517;
     
     this->ambientCoeff = 0.1;
 }
@@ -97,3 +97,24 @@ Geometric* Scene::intersectCast(Ray *ray) {
     
     return returnShape;
 }
+
+
+/*
+ this->baseBackground = new Background();
+ this->camera = new Camera(glm::vec3(1.0, 1.1, 2.0), glm::vec3(1.0, 1.1, -1.0));
+ this->light = new Light();
+ this->numObjects = 3;
+ this->shapes = new Geometric *[numObjects];
+ Plane *plane = new Plane();
+ plane->setxLimit(glm::vec2(-5, 3));
+ plane->setzLimit(glm::vec2(-10, 5));
+ this->shapes[0] = plane;
+ this->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.3));
+ this->shapes[1]->reflective = true;
+ this->shapes[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(0.1, 0.1, 0.8));
+ this->shapes[2]->transmitive = true;
+ this->shapes[2]->refractIndex = 1.517;
+ 
+ this->ambientCoeff = 0.1;
+*/
+

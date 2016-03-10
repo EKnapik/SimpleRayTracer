@@ -9,7 +9,6 @@
 #ifndef FluidParticle_hpp
 #define FluidParticle_hpp
 
-#include <stdio.h>
 #include "Sphere.hpp"
 #include "FluidMath.hpp"
 
@@ -21,14 +20,15 @@
 
 class FluidParticle: protected Sphere {
 public:
+    FluidParticle(glm::vec3 pos);
     FluidParticle(glm::vec3 pos, float radius);
     
-    void updateParticle(float timeDelta, FluidParticle **fluidParticles, int numParticles);
+    void updateParticle(float timeStep, FluidParticle **fluidParticles, int numParticles);
     void updateDensity(FluidParticle **fluidParticles, int numParticles);
     void updatePressure();
     glm::vec3 gradPressureOverDensity(FluidParticle **fluidParticles, int numParticles);
     glm::vec3 viscosityGradSquaredVelocity(FluidParticle **fluidParticles, int numParticles);
-    void collisionDetection(FluidParticle **fluidParticles, int numParticles);
+    void collisionDetection(FluidParticle **fluidParticles, int numParticles, float timeStep);
     
     // position covered by inheritance
     float density;

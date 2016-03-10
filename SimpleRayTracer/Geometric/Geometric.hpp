@@ -25,7 +25,9 @@ public:
     
     virtual bool doesCollideWith(Geometric *obj) = 0;
     // TODO: This Function is very similar for all shapes and shouldn't be virtual
-    virtual void mirrorCollisionHandling(Geometric *obj) = 0;
+    virtual void mirrorCollisionHandling(Geometric *obj, float timeStep) = 0;
+    //virtual void applyPhysics(float timeStep) = 0;
+    bool movable = false;
     
     glm::vec3 pos;
     glm::vec3 velocity;

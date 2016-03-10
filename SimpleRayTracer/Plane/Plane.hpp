@@ -29,7 +29,7 @@ public:
     glm::vec3 getColor(glm::vec3 pos);
     // Collision
     bool doesCollideWith(Geometric *obj);
-    void mirrorCollisionHandling(Geometric *obj);
+    void mirrorCollisionHandling(Geometric *obj, float timeStep);
     
     void setNormal(glm::vec3 normal);
     void setPos(glm::vec3 pos);

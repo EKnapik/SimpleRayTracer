@@ -17,6 +17,7 @@
 		137D9FAC1C91444E00137ACF /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FAA1C91444E00137ACF /* Sphere.cpp */; };
 		137D9FB41C91517600137ACF /* FluidParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FB21C91517600137ACF /* FluidParticle.cpp */; };
 		137D9FB81C9155F500137ACF /* FluidMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FB61C9155F500137ACF /* FluidMath.cpp */; };
+		1381C6621C91EDCA008732DB /* PhysicsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1381C6601C91EDCA008732DB /* PhysicsEngine.cpp */; };
 		13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CAE1BD5C77900AC13D3 /* Window.cpp */; };
 		13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CB21BD5C85000AC13D3 /* Scene.cpp */; };
 		1391B5961C6C112F000BE3E1 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1391B5941C6C112F000BE3E1 /* Light.cpp */; };
@@ -63,6 +64,8 @@
 		137D9FB31C91517600137ACF /* FluidParticle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FluidParticle.hpp; path = FluidParticle/FluidParticle.hpp; sourceTree = "<group>"; };
 		137D9FB61C9155F500137ACF /* FluidMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FluidMath.cpp; path = FluidMath/FluidMath.cpp; sourceTree = "<group>"; };
 		137D9FB71C9155F500137ACF /* FluidMath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FluidMath.hpp; path = FluidMath/FluidMath.hpp; sourceTree = "<group>"; };
+		1381C6601C91EDCA008732DB /* PhysicsEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsEngine.cpp; path = PhysicsEngine/PhysicsEngine.cpp; sourceTree = "<group>"; };
+		1381C6611C91EDCA008732DB /* PhysicsEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PhysicsEngine.hpp; path = PhysicsEngine/PhysicsEngine.hpp; sourceTree = "<group>"; };
 		13869CAE1BD5C77900AC13D3 /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Window.cpp; path = Window/Window.cpp; sourceTree = "<group>"; };
 		13869CAF1BD5C77900AC13D3 /* Window.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Window.hpp; path = Window/Window.hpp; sourceTree = "<group>"; };
 		13869CB21BD5C85000AC13D3 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = Scene/Scene.cpp; sourceTree = "<group>"; };
@@ -116,6 +119,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				1381C65B1C91ECFF008732DB /* PhysicsEngine */,
 				137D9FB51C9155CA00137ACF /* FluidMath */,
 				137D9FB11C91515D00137ACF /* FluidParticle */,
 				137D9FA31C90934600137ACF /* Mesh */,
@@ -206,6 +210,15 @@
 				137D9FB71C9155F500137ACF /* FluidMath.hpp */,
 			);
 			name = FluidMath;
+			sourceTree = "<group>";
+		};
+		1381C65B1C91ECFF008732DB /* PhysicsEngine */ = {
+			isa = PBXGroup;
+			children = (
+				1381C6601C91EDCA008732DB /* PhysicsEngine.cpp */,
+				1381C6611C91EDCA008732DB /* PhysicsEngine.hpp */,
+			);
+			name = PhysicsEngine;
 			sourceTree = "<group>";
 		};
 		13869CAD1BD5C71100AC13D3 /* Window */ = {
@@ -337,6 +350,7 @@
 				139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */,
 				137D9FA61C90937400137ACF /* Triangle.cpp in Sources */,
 				13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */,
+				1381C6621C91EDCA008732DB /* PhysicsEngine.cpp in Sources */,
 				137D9FB81C9155F500137ACF /* FluidMath.cpp in Sources */,
 				13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */,
 				13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */,

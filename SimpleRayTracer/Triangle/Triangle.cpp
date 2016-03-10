@@ -20,13 +20,13 @@ bool Triangle::doesCollideWith(Geometric *obj) {
     return false;
 }
 
-void Triangle::mirrorCollisionHandling(Geometric *obj) {
+void Triangle::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     float dist = obj->getDistance(this->pos);
     glm::vec3 nor = obj->getNormal(this->pos);
     float normalCheck = glm::dot(this->velocity, nor);
     if(dist < 0.001 && normalCheck < 0) {
         // reverse velocity
-        this->pos -= this->velocity * float(0.02);
+        this->pos -= this->velocity * timeStep;
         this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);
     }
 }

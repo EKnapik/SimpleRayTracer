@@ -39,6 +39,6 @@ bool Background::doesCollideWith(Geometric *obj) {
     return false;
 }
 
-void Background::mirrorCollisionHandling(Geometric *obj) {
+void Background::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     // NO-OP
 }

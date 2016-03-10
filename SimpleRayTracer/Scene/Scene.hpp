@@ -12,12 +12,14 @@
 #include <stdio.h>
 #include "Camera.hpp"
 #include "Geometric.hpp"
+#include "Mesh.hpp"
 #include "Background.hpp"
 #include "glm/vec3.hpp"
 #include "Ray.hpp"
 #include "Plane.hpp"
-#include "Sphere.hpp"
 #include "Light.hpp"
+#include "Sphere.hpp"
+#inlcude "FluidParticle.hpp"
 
 
 /* This should be given a file of some sort then will make the array of objects
@@ -36,8 +38,15 @@ public:
     
     Camera *camera;
     Light *light;
+    
     int numObjects;
     Geometric **shapes;
+    
+    int numParticles;
+    //Particle **particles;
+    
+    int numMeshes;
+    Mesh **meshes;
     
     float ambientCoeff;
 private:

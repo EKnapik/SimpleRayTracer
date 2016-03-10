@@ -25,7 +25,7 @@ public:
     void setColor(glm::vec3 color);
     // Collision
     bool doesCollideWith(Geometric *obj);
-    void mirrorCollisionHandling(Geometric *obj);
+    void mirrorCollisionHandling(Geometric *obj, float timeStep);
 private:
     glm::vec3 color;
 };

@@ -8,6 +8,12 @@
 
 #include "FluidParticle.hpp"
 
+FluidParticle::FluidParticle(glm::vec3) {
+    this->pos = pos;
+    this->radius = 0.01;
+    this->color = glm::vec3(0.38, 0.82, 0.96); // aqua blue
+}
+
 FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
     this->pos = pos;
     this->radius = radius;
@@ -18,7 +24,7 @@ FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
  * This is applying the physics for this particle for this time delta
  * the current particle should not be in the array of particles given
  */
-void FluidParticle::updateParticle(float timeDelta, FluidParticle **fluidParticles, int numParticles) {
+void FluidParticle::updateParticle(float timeStep, FluidParticle **fluidParticles, int numParticles) {
     updateDensity(fluidParticles, numParticles);
     updatePressure();
     glm::vec3 gravity = glm::vec3(0.0, -9.8, 0.0);
@@ -28,10 +34,10 @@ void FluidParticle::updateParticle(float timeDelta, FluidParticle **fluidParticl
     // solve for the change in velocity at this time according to Navier-Stokes
     glm::vec3 dvdt = gravity - pressureTerm + velocityTerm;
     // Update with Semi-implicit Euler integration
-    this->velocity = dvdt * timeDelta;
-    this->pos = this->velocity * timeDelta;
+    this->velocity = dvdt * timeStep;
+    this->pos = this->velocity * timeStep;
     // doing fluid fluid collision detection here
-    collisionDetection(fluidParticles, numParticles);
+    collisionDetection(fluidParticles, numParticles, timeStep);
 }
 
 /*
@@ -92,18 +98,9 @@ glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParti
  * it is similar to a perfect mirror reflection but through testing looks better
  * for water
  */
-void FluidParticle::collisionDetection(FluidParticle **fluidParticles, int numParticles) {
-    float distToParticle;
-    float checkValue;
+void FluidParticle::collisionDetection(FluidParticle **fluidParticles, int numParticles, float timeStep) {
     for(int i = 0; i < numParticles; i++) {
-        distToParticle = fluidParticles[i]->getDistance(this->pos) - this->radius;
-        if(distToParticle <= 0.01) { // did we collide with the particle?
-            checkValue = glm::dot(this->velocity,fluidParticles[i]->getNormal(this->pos));
-            if(checkValue < 0) { // collision will happen
-                // fix velocity by reversing it by 'mirror' reflection
-                this->velocity += COLLISION_DAMPENING * float(0.02-distToParticle) * fluidParticles[i]->getNormal(this->pos);
-            }
-        }
+        mirrorCollisionHandling(fluidParticles[i], timeStep);
     }
 }
 
