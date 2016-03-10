@@ -13,13 +13,14 @@
 #include "glm/vec3.hpp"
 #include "Ray.hpp"
 
-
 class Geometric {
 public:
     virtual glm::vec3 getNormal(glm::vec3 pos) = 0;
     virtual float getIntersect(Ray *ray) = 0;
     virtual float getDistance(glm::vec3 pos) = 0;
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
+    virtual bool doesCollideWith(Geometric *obj) = 0;
+    virtual void mirrorCollisionHandling(Geometric *obj) = 0;
     glm::vec3 pos;
     glm::vec3 color;
     // lighting
@@ -29,6 +30,7 @@ public:
     float refractIndex = 1.0;
     bool reflective = false;
     bool transmitive = false;
+
 };
 
 #endif /* Geometric_hpp */

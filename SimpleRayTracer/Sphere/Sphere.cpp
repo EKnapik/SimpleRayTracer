@@ -63,6 +63,21 @@ glm::vec3 Sphere::getColor(glm::vec3 pos) {
 }
 
 
+bool Sphere::doesCollideWith(Geometric *obj) {
+    float dist = obj->getDistance(this->pos) - this->radius;
+    if(dist < 0.001) {
+        return true;
+    }
+    return false;
+}
+
+void Sphere::mirrorCollisionHandling(Geometric *obj) {
+    if(doesCollideWith(obj)) {
+        
+    }
+}
+
+
 void Sphere::setRadius(float radius) {
     this->radius = radius;
 }

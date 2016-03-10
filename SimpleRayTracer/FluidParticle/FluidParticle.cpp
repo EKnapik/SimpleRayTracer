@@ -15,6 +15,7 @@ FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
 }
 
 /*
+ * This is applying the physics for this particle for this time delta
  * the current particle should not be in the array of particles given
  */
 void FluidParticle::updateParticle(float timeDelta, FluidParticle **fluidParticles, int numParticles) {
@@ -29,6 +30,8 @@ void FluidParticle::updateParticle(float timeDelta, FluidParticle **fluidParticl
     // Update with Semi-implicit Euler integration
     this->velocity = dvdt * timeDelta;
     this->pos = this->velocity * timeDelta;
+    // doing fluid fluid collision detection here
+    collisionDetection(fluidParticles, numParticles);
 }
 
 /*
@@ -94,7 +97,7 @@ void FluidParticle::collisionDetection(FluidParticle **fluidParticles, int numPa
     float checkValue;
     for(int i = 0; i < numParticles; i++) {
         distToParticle = fluidParticles[i]->getDistance(this->pos) - this->radius;
-        if(distToParticle <= 0.1) {
+        if(distToParticle <= 0.01) {
             checkValue = glm::dot(this->velocity,fluidParticles[i]->getNormal(this->pos));
             if(checkValue < 0) { // collision will happen
                 // fix velocity by reversing it by 'mirror' reflection
