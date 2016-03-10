@@ -80,7 +80,7 @@ void Sphere::mirrorCollisionHandling(Geometric *obj) {
     float normalCheck = glm::dot(this->velocity, nor);
     if(dist < 0.001 && normalCheck < 0) {
         // reverse velocity
-        this->pos -= this->velocity * float(0.02);
+        this->pos -= this->velocity * float(0.002);
         this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);
     }
 }

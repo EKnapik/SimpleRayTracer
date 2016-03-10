@@ -13,7 +13,7 @@
 #include "glm/vec3.hpp"
 #include "Ray.hpp"
 
-#define COLLISION_DAMPENING float(0.8)
+#define COLLISION_DAMPENING float(0.9)
 #define COLLISION_CONSTANT_C float(1)
 
 class Geometric {
