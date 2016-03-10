@@ -17,6 +17,7 @@
 
 class Sphere: public Geometric {
 public:
+    Sphere();
     Sphere(glm::vec3 pos, float radius);
     Sphere(glm::vec3 pos, float radius, glm::vec3 color);
     
@@ -27,7 +28,7 @@ public:
     void setRadius(float radius);
     void setPos(glm::vec3 pos);
     void setColor(glm::vec3 color);
-private:
+protected:
     float radius;
     // lamda material function
 };

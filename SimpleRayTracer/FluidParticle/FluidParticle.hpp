@@ -11,14 +11,23 @@
 
 #include <stdio.h>
 #include "Sphere.hpp"
+#include "FluidMath.hpp"
 
-class FluidParticle: public Sphere {
+#define FLUID_PARTICLE_MASS 1.0
+#define FLUID_CONSTANT_K 9999999
+#define FLUID_RESTING_DENSITY 1.0
+#define FLUID_FRICTION_MU 1
+#define FLUID_H_VALUE 2
+
+class FluidParticle: protected Sphere {
 public:
-    FluidParticle(glm::vec3 pos);
+    FluidParticle(glm::vec3 pos, float radius);
     
-    void updateParticle(float timeDelta, FluidParticle *fluidParticles, int numParticles);
-    void updateDensity(FluidParticle *fluidParticles, int numParticles);
+    void updateParticle(float timeDelta, FluidParticle **fluidParticles, int numParticles);
+    void updateDensity(FluidParticle **fluidParticles, int numParticles);
     void updatePressure();
+    glm::vec3 gradPressureOverDensity(FluidParticle **fluidParticles, int numParticles);
+    glm::vec3 viscosityGradSquaredVelocity(FluidParticle **fluidParticles, int numParticles);
     
     // position covered by inheritance
     glm::vec3 velocity;
