@@ -29,7 +29,6 @@ public:
     void setColor(glm::vec3 color);
 private:
     float radius;
-    glm::vec3 color;
     // lamda material function
 };
 #endif /* Sphere_hpp */

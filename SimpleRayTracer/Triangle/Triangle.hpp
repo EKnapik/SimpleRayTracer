@@ -26,9 +26,13 @@ public:
     // subclasses... decisions decisions
     glm::vec3 getColor(glm::vec3 pos);
     
-    glm::vec3 x1;
-    glm::vec3 x2;
-    glm::vec3 x3;
+    glm::vec3 v1;
+    glm::vec3 v2;
+    glm::vec3 v3;
+    
+    glm::vec3 vn1;
+    glm::vec3 vn2;
+    glm::vec3 vn3;
 };
 
 #endif /* Triangle_hpp */
