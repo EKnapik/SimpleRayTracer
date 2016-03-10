@@ -96,8 +96,12 @@ bool Plane::doesCollideWith(Geometric *obj) {
 
 void Plane::mirrorCollisionHandling(Geometric *obj) {
     float dist = obj->getDistance(this->pos);
-    if(dist < 0.001) {
-        this->velocity += COLLISION_DAMPENING * float(0.002-dist) * obj->getNormal(this->pos);
+    glm::vec3 nor = obj->getNormal(this->pos);
+    float normalCheck = glm::dot(this->velocity, nor);
+    if(dist < 0.001 && normalCheck < 0) {
+        // reverse velocity
+        this->pos -= this->velocity * float(0.02);
+        this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);
     }
 }
 

@@ -76,11 +76,12 @@ bool Sphere::doesCollideWith(Geometric *obj) {
 
 void Sphere::mirrorCollisionHandling(Geometric *obj) {
     float dist = obj->getDistance(this->pos) - this->radius;
-    if(dist < 0.001) {
-        // move object outside of the intersection
-        
+    glm::vec3 nor = obj->getNormal(this->pos);
+    float normalCheck = glm::dot(this->velocity, nor);
+    if(dist < 0.001 && normalCheck < 0) {
         // reverse velocity
-        this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, obj->getNormal(this->pos));
+        this->pos -= this->velocity * float(0.02);
+        this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);
     }
 }
 

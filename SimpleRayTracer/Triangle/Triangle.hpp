@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "Geometric.hpp"
 #include "glm/vec3.hpp"
+#include "glm/glm.hpp"
 
 class Triangle: public Geometric{
 public:
