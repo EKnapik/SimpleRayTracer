@@ -18,7 +18,6 @@
 #define FLUID_RESTING_DENSITY 1.0
 #define FLUID_FRICTION_MU 1
 #define FLUID_H_VALUE 2
-#define COLLISION_DAMPENING float(0.8)
 
 class FluidParticle: protected Sphere {
 public:
@@ -32,7 +31,6 @@ public:
     void collisionDetection(FluidParticle **fluidParticles, int numParticles);
     
     // position covered by inheritance
-    glm::vec3 velocity;
     float density;
     float pressure;
     float mass;

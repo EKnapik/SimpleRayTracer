@@ -11,6 +11,7 @@
 
 Sphere::Sphere() {
     this->pos = glm::vec3(0.0);
+    this->velocity = glm::vec3(0.0);
     this->radius = 0.0;
     this->color = glm::vec3(0.0);
     this->diffCoeff = 0.5;
@@ -19,6 +20,7 @@ Sphere::Sphere() {
 
 Sphere::Sphere(glm::vec3 pos, float radius) {
     this->pos = pos;
+    this->velocity = glm::vec3(0.0);
     this->radius = radius;
     this->color = glm::vec3(0.0, 1.0, 1.0);
     this->diffCoeff = .9454545;
@@ -27,6 +29,7 @@ Sphere::Sphere(glm::vec3 pos, float radius) {
 
 Sphere::Sphere(glm::vec3 pos, float radius, glm::vec3 color) {
     this->pos = pos;
+    this->velocity = glm::vec3(0.0);
     this->radius = radius;
     this->color = color;
     this->diffCoeff = .9454545;
@@ -72,8 +75,9 @@ bool Sphere::doesCollideWith(Geometric *obj) {
 }
 
 void Sphere::mirrorCollisionHandling(Geometric *obj) {
-    if(doesCollideWith(obj)) {
-        
+    float dist = obj->getDistance(this->pos) - this->radius;
+    if(dist < 0.001) {
+        this->velocity += COLLISION_DAMPENING * float(0.002-dist) * obj->getNormal(this->pos);
     }
 }
 

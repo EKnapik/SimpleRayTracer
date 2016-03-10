@@ -22,10 +22,15 @@ public:
     Plane(glm::vec3 pos, glm::vec3 normal);
     Plane(glm::vec3 pos, glm::vec3 normal, glm::vec3 color);
     
+    // Geometric
     glm::vec3 getNormal(glm::vec3 pos);
     float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
+    // Collision
+    bool doesCollideWith(Geometric *obj);
+    void mirrorCollisionHandling(Geometric *obj);
+    
     void setNormal(glm::vec3 normal);
     void setPos(glm::vec3 pos);
     void setColor(glm::vec3 color);

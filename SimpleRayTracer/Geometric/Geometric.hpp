@@ -13,15 +13,18 @@
 #include "glm/vec3.hpp"
 #include "Ray.hpp"
 
+#define COLLISION_DAMPENING float(0.8)
+
 class Geometric {
 public:
     virtual glm::vec3 getNormal(glm::vec3 pos) = 0;
     virtual float getIntersect(Ray *ray) = 0;
     virtual float getDistance(glm::vec3 pos) = 0;
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
-    virtual bool doesCollideWith(Geometric *obj) = 0;
-    virtual void mirrorCollisionHandling(Geometric *obj) = 0;
+    virtual bool doesCollideWith(Geometric *obj);
+    virtual void mirrorCollisionHandling(Geometric *obj);
     glm::vec3 pos;
+    glm::vec3 velocity;
     glm::vec3 color;
     // lighting
     float diffCoeff;

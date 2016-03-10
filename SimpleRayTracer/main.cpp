@@ -57,7 +57,8 @@ void display(void) {
     // poll events
     // bind and draw
     rayTracer->raytraceScene();
-    //rayTracer->scene->shapes[1]->pos.y += 0.01;
+    rayTracer->scene->shapes[1]->velocity.y -= 9.8 * 0.1;
+    rayTracer->scene->shapes[1]->mirrorCollisionHandling(rayTracer->scene->shapes[0]);
     
     glutSwapBuffers();
     glutPostRedisplay();

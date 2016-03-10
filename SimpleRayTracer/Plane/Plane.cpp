@@ -86,6 +86,14 @@ glm::vec3 Plane::getColor(glm::vec3 pos) {
     return glm::vec3(0.9, 0.9, 0.1);
 }
 
+bool Plane::doesCollideWith(Geometric *obj) {
+    
+}
+
+void Plane::mirrorCollisionHandling(Geometric *obj) {
+    
+}
+
 void Plane::setNormal(glm::vec3 normal) {
     this->normal = glm::normalize(normal);
 }

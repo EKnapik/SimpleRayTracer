@@ -17,11 +17,15 @@ class Background: public Geometric {
 public:
     Background();
     
+    // Geometric
     glm::vec3 getNormal(glm::vec3 pos);
     float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
     void setColor(glm::vec3 color);
+    // Collision
+    bool doesCollideWith(Geometric *obj);
+    void mirrorCollisionHandling(Geometric *obj);
 private:
     glm::vec3 color;
 };

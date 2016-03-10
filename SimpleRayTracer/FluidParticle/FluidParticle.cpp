@@ -97,7 +97,7 @@ void FluidParticle::collisionDetection(FluidParticle **fluidParticles, int numPa
     float checkValue;
     for(int i = 0; i < numParticles; i++) {
         distToParticle = fluidParticles[i]->getDistance(this->pos) - this->radius;
-        if(distToParticle <= 0.01) {
+        if(distToParticle <= 0.01) { // did we collide with the particle?
             checkValue = glm::dot(this->velocity,fluidParticles[i]->getNormal(this->pos));
             if(checkValue < 0) { // collision will happen
                 // fix velocity by reversing it by 'mirror' reflection
