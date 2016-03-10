@@ -18,7 +18,7 @@
 #define FLUID_FRICTION_MU 1
 #define FLUID_H_VALUE 2
 
-class FluidParticle: protected Sphere {
+class FluidParticle: public Sphere {
 public:
     FluidParticle(glm::vec3 pos);
     FluidParticle(glm::vec3 pos, float radius);

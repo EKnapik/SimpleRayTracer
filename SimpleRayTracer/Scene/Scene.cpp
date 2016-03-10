@@ -43,7 +43,7 @@ Scene::~Scene() {
     delete[] shapes;
 }
 
-
+// MARCHES FOR GEOMETRICS AND PARTICLES
 Geometric* Scene::intersectMarch(Ray *ray) {
     float tmin = 0.0;
     float tmax = 60.0;
@@ -66,6 +66,13 @@ Geometric* Scene::intersectMarch(Ray *ray) {
                 returnShape = shapes[j];
             }
         }
+        for(int j = 0; j < numParticles; j++) {
+            distTemp = particles[j]->getDistance(ray->pos + t*ray->dir);
+            if(distTemp < dist) {
+                dist = distTemp;
+                returnShape = particles[j];
+            }
+        }
         
         if(dist < precis || t > tmax) {
             break;
@@ -80,7 +87,7 @@ Geometric* Scene::intersectMarch(Ray *ray) {
     return returnShape;
 }
 
-
+// INTERSECTS THE GEOMETRICS AND THE PARTICLES
 Geometric* Scene::intersectCast(Ray *ray) {
     float resT = 10000.0; // infinity kinda
     float tempT;
@@ -91,6 +98,15 @@ Geometric* Scene::intersectCast(Ray *ray) {
         if(tempT > 0 && tempT < resT) {
             resT = tempT;
             returnShape = shapes[i];
+            returnShape->timeHit = resT;
+        }
+    }
+    
+    for(int i = 0; i < this->numParticles; i++) {
+        tempT = particles[i]->getIntersect(ray);
+        if(tempT > 0 && tempT < resT) {
+            resT = tempT;
+            returnShape = particles[i];
             returnShape->timeHit = resT;
         }
     }

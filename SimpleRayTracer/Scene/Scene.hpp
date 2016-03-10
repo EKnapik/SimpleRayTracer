@@ -19,7 +19,7 @@
 #include "Plane.hpp"
 #include "Light.hpp"
 #include "Sphere.hpp"
-#inlcude "FluidParticle.hpp"
+#include "FluidParticle.hpp"
 
 
 /* This should be given a file of some sort then will make the array of objects
@@ -43,7 +43,7 @@ public:
     Geometric **shapes;
     
     int numParticles;
-    //Particle **particles;
+    FluidParticle **particles;
     
     int numMeshes;
     Mesh **meshes;
