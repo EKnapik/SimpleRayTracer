@@ -10,6 +10,7 @@
 #include <OpenGL/gl.h>
 #include <iostream>
 #include "RayTracer.hpp"
+#include "PhysicsEngine.hpp"
 
 
 // 16 x 9
@@ -22,6 +23,7 @@ void initOpenGL(void);
 void display(void);
 
 RayTracer *rayTracer;
+PhysicsEngine *physEngine;
 
 int main(int argc, char * argv[]) {
     
@@ -34,7 +36,9 @@ int main(int argc, char * argv[]) {
     initOpenGL();
     
     // Setup the ray tracer
-    rayTracer = new RayTracer();
+    Scene *scene = new Scene();
+    rayTracer = new RayTracer(scene);
+    physEngine = new PhysicsEngine(scene);
     
     glutMainLoop();
     return 0;
@@ -59,6 +63,8 @@ void display(void) {
     // poll events
     // bind and draw
     rayTracer->raytraceScene();
+    // physEngine->applyTimeStep(); // DO THE PHYSICS
+    
     //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
     //rayTracer->scene->shapes[1]->pos += rayTracer->scene->shapes[1]->velocity * float(0.02);
     //rayTracer->scene->shapes[1]->mirrorCollisionHandling(rayTracer->scene->shapes[0]);

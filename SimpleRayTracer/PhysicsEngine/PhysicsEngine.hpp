@@ -16,7 +16,6 @@
 
 class PhysicsEngine {
 public:
-    PhysicsEngine();
     PhysicsEngine(Scene *scene);
     void applyTimeStep();
     void applyTimeStep(float timeDelta);

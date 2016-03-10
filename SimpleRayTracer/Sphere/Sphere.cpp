@@ -14,8 +14,8 @@ Sphere::Sphere() {
     this->velocity = glm::vec3(0.0);
     this->radius = 0.0;
     this->color = glm::vec3(0.0);
-    this->diffCoeff = 0.5;
-    this->specCoeff = 0.5;
+    this->diffCoeff = 0.8;
+    this->specCoeff = 0.3;
 }
 
 Sphere::Sphere(glm::vec3 pos, float radius) {

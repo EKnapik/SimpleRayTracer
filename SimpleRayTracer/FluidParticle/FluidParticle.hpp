@@ -13,10 +13,11 @@
 #include "FluidMath.hpp"
 
 #define FLUID_PARTICLE_MASS 1.0
-#define FLUID_CONSTANT_K 9999999
+#define FLUID_CONSTANT_K 1.0
 #define FLUID_RESTING_DENSITY 1.0
-#define FLUID_FRICTION_MU 1
-#define FLUID_H_VALUE 2
+#define FLUID_FRICTION_MU 1.0
+#define FLUID_H_VALUE 2.0
+#define FLUID_RADIUS 0.1
 
 class FluidParticle: public Sphere {
 public:

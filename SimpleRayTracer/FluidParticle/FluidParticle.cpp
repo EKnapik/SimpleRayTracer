@@ -8,16 +8,16 @@
 
 #include "FluidParticle.hpp"
 
-FluidParticle::FluidParticle(glm::vec3) {
+FluidParticle::FluidParticle(glm::vec3 pos) {
     this->pos = pos;
-    this->radius = 0.01;
-    this->color = glm::vec3(0.38, 0.82, 0.96); // aqua blue
+    this->radius = FLUID_RADIUS;
+    this->color = glm::vec3(0.3, 0.82, 1.0); // aqua blue
 }
 
 FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
     this->pos = pos;
     this->radius = radius;
-    this->color = glm::vec3(0.38, 0.82, 0.96); // aqua blue
+    this->color = glm::vec3(0.3, 0.82, 1.0); // aqua blue
 }
 
 /*

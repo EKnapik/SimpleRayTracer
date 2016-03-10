@@ -8,10 +8,6 @@
 
 #include "PhysicsEngine.hpp"
 
-PhysicsEngine::PhysicsEngine() {
-    this->scene = new Scene();
-}
-
 
 PhysicsEngine::PhysicsEngine(Scene *scene) {
     this->scene = scene;
@@ -20,9 +16,6 @@ PhysicsEngine::PhysicsEngine(Scene *scene) {
 
 
 void PhysicsEngine::applyTimeStep() {
-    //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
-    //rayTracer->scene->shapes[1]->pos += rayTracer->scene->shapes[1]->velocity * float(0.02);
-    //rayTracer->scene->shapes[1]->mirrorCollisionHandling(rayTracer->scene->shapes[0]);
     applyTimeStep(DEFAULT_TIME_DELTA);
 }
 
