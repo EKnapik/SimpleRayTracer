@@ -33,6 +33,7 @@ RayTracer::RayTracer(Scene *scene) {
 }
 
 // Default test scene
+// Default ray tracer
 RayTracer::RayTracer() {
     // Set Defaults
     this->samplingLevel = 1;

@@ -16,7 +16,7 @@
 #include "glm/vec3.hpp"
 #include "Ray.hpp"
 #include "Plane.hpp"
-#include "Circle.hpp"
+#include "Sphere.hpp"
 #include "Light.hpp"
 
 

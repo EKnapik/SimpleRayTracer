@@ -1,15 +1,15 @@
 //
-//  Circle.cpp
+//  Sphere.cpp
 //  SimpleRayTracer
 //
 //  Created by Eric Knapik on 10/19/15.
 //  Copyright © 2015 EKnapik. All rights reserved.
 //
 
-#include "Circle.hpp"
+#include "Sphere.hpp"
 #include <iostream>
 
-Circle::Circle(glm::vec3 pos, float radius) {
+Sphere::Sphere(glm::vec3 pos, float radius) {
     this->pos = pos;
     this->radius = radius;
     this->color = glm::vec3(0.0, 1.0, 1.0);
@@ -17,7 +17,7 @@ Circle::Circle(glm::vec3 pos, float radius) {
     this->specCoeff = .545454;
 }
 
-Circle::Circle(glm::vec3 pos, float radius, glm::vec3 color) {
+Sphere::Sphere(glm::vec3 pos, float radius, glm::vec3 color) {
     this->pos = pos;
     this->radius = radius;
     this->color = color;
@@ -26,12 +26,12 @@ Circle::Circle(glm::vec3 pos, float radius, glm::vec3 color) {
 }
 
 
-glm::vec3 Circle::getNormal(glm::vec3 pos) {
+glm::vec3 Sphere::getNormal(glm::vec3 pos) {
     return glm::normalize((pos - this->pos) / this->radius);
 };
 
 
-float Circle::getIntersect(Ray *ray) {
+float Sphere::getIntersect(Ray *ray) {
     glm::vec3 oc = ray->pos - this->pos;
     float b = glm::dot(oc, ray->dir);
     float c = glm::dot(oc, oc) - (this->radius*this->radius);
@@ -45,26 +45,26 @@ float Circle::getIntersect(Ray *ray) {
 }
 
 
-float Circle::getDistance(glm::vec3 pos) {
+float Sphere::getDistance(glm::vec3 pos) {
     return (glm::length(pos - this->pos) - this->radius);
 }
 
 
-glm::vec3 Circle::getColor(glm::vec3 pos) {
+glm::vec3 Sphere::getColor(glm::vec3 pos) {
     return this->color;
 }
 
 
-void Circle::setRadius(float radius) {
+void Sphere::setRadius(float radius) {
     this->radius = radius;
 }
 
 
-void Circle::setPos(glm::vec3 pos) {
+void Sphere::setPos(glm::vec3 pos) {
     this->pos = pos;
 }
 
 
-void Circle::setColor(glm::vec3 color) {
+void Sphere::setColor(glm::vec3 color) {
     this->color = color;
 }
