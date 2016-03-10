@@ -68,7 +68,7 @@ glm::vec3 Sphere::getColor(glm::vec3 pos) {
 
 bool Sphere::doesCollideWith(Geometric *obj) {
     float dist = obj->getDistance(this->pos) - this->radius;
-    if(dist < 0.001) {
+    if(dist < 0.0001) {
         return true;
     }
     return false;
@@ -77,7 +77,10 @@ bool Sphere::doesCollideWith(Geometric *obj) {
 void Sphere::mirrorCollisionHandling(Geometric *obj) {
     float dist = obj->getDistance(this->pos) - this->radius;
     if(dist < 0.001) {
-        this->velocity += COLLISION_DAMPENING * float(0.002-dist) * obj->getNormal(this->pos);
+        // move object outside of the intersection
+        
+        // reverse velocity
+        this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, obj->getNormal(this->pos));
     }
 }
 

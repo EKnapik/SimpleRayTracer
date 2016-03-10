@@ -18,6 +18,7 @@ public:
     Triangle(glm::vec3 x1, glm::vec3 x2, glm::vec3 x3);
     
     // must be implemented because this extends Geometric
+    // Geometric
     glm::vec3 getNormal(glm::vec3 pos);
     float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
@@ -25,6 +26,10 @@ public:
     // knows the color this would be a forward backward relation between
     // subclasses... decisions decisions
     glm::vec3 getColor(glm::vec3 pos);
+    
+    // Collision
+    bool doesCollideWith(Geometric *obj);
+    void mirrorCollisionHandling(Geometric *obj);
     
     glm::vec3 v1;
     glm::vec3 v2;

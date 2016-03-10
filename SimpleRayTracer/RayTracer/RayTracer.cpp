@@ -68,7 +68,7 @@ void RayTracer::changeScene(Scene *newScene) {
 //  level of 1 but that can be increased. The sampling is uniform super sampling
 //  where the amount of rays per pixel is the sampling level squared.
 void RayTracer::setColor(int row, int col) {
-    int depth = 5; // THE DEPTH OF RAY RECURSION
+    int depth = 4; // THE DEPTH OF RAY RECURSION
     
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
     int rowPrime, colPrime, rowEnd, colEnd, widthPrime, heightPrime;

@@ -14,6 +14,7 @@
 #include "Ray.hpp"
 
 #define COLLISION_DAMPENING float(0.8)
+#define COLLISION_CONSTANT_C float(1)
 
 class Geometric {
 public:
@@ -21,8 +22,11 @@ public:
     virtual float getIntersect(Ray *ray) = 0;
     virtual float getDistance(glm::vec3 pos) = 0;
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
-    virtual bool doesCollideWith(Geometric *obj);
-    virtual void mirrorCollisionHandling(Geometric *obj);
+    
+    virtual bool doesCollideWith(Geometric *obj) = 0;
+    // TODO: This Function is very similar for all shapes and shouldn't be virtual
+    virtual void mirrorCollisionHandling(Geometric *obj) = 0;
+    
     glm::vec3 pos;
     glm::vec3 velocity;
     glm::vec3 color;

@@ -16,6 +16,8 @@
 #define WINDOW_HEIGHT 450
 #define WINDOW_WIDTH 800
 
+#define TIMESTEP float(0.02)
+
 void initOpenGL(void);
 void display(void);
 
@@ -57,7 +59,8 @@ void display(void) {
     // poll events
     // bind and draw
     rayTracer->raytraceScene();
-    rayTracer->scene->shapes[1]->velocity.y -= 9.8 * 0.1;
+    rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
+    rayTracer->scene->shapes[1]->pos += rayTracer->scene->shapes[1]->velocity * float(0.02);
     rayTracer->scene->shapes[1]->mirrorCollisionHandling(rayTracer->scene->shapes[0]);
     
     glutSwapBuffers();

@@ -34,3 +34,11 @@ glm::vec3 Background::getColor(glm::vec3 pos) {
 void Background::setColor(glm::vec3 color) {
     this->color = color;
 }
+
+bool Background::doesCollideWith(Geometric *obj) {
+    return false;
+}
+
+void Background::mirrorCollisionHandling(Geometric *obj) {
+    // NO-OP
+}

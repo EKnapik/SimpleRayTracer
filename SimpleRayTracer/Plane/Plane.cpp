@@ -87,11 +87,18 @@ glm::vec3 Plane::getColor(glm::vec3 pos) {
 }
 
 bool Plane::doesCollideWith(Geometric *obj) {
-    
+    float dist = obj->getDistance(this->pos);
+    if(dist < 0.001) {
+        return true;
+    }
+    return false;
 }
 
 void Plane::mirrorCollisionHandling(Geometric *obj) {
-    
+    float dist = obj->getDistance(this->pos);
+    if(dist < 0.001) {
+        this->velocity += COLLISION_DAMPENING * float(0.002-dist) * obj->getNormal(this->pos);
+    }
 }
 
 void Plane::setNormal(glm::vec3 normal) {
