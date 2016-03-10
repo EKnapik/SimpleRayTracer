@@ -14,8 +14,13 @@
 
 class FluidParticle: public Sphere {
 public:
+    FluidParticle(glm::vec3 pos);
     
-    glm::vec3 pos;
+    void updateParticle(float timeDelta, FluidParticle *fluidParticles, int numParticles);
+    void updateDensity(FluidParticle *fluidParticles, int numParticles);
+    void updatePressure();
+    
+    // position covered by inheritance
     glm::vec3 velocity;
     float density;
     float pressure;
