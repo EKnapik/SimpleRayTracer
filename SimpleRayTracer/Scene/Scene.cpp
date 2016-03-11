@@ -17,7 +17,7 @@ Scene::Scene() {
     this->numObjects = 1;
     this->shapes = new Geometric *[numObjects];
     Plane *plane = new Plane();
-    plane->setxLimit(glm::vec2(-5, 5));
+    plane->setxLimit(glm::vec2(-20, 20));
     plane->setzLimit(glm::vec2(-20, 20));
     this->shapes[0] = plane;
     

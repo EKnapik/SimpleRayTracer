@@ -12,12 +12,14 @@
 #include "Sphere.hpp"
 #include "FluidMath.hpp"
 
+// SETUP FOR WATER
+#define FLUID_NUM_PARTICLES 10
 #define FLUID_PARTICLE_MASS 1.0
 #define FLUID_CONSTANT_K 1.0
-#define FLUID_RESTING_DENSITY 1.0
 #define FLUID_FRICTION_MU 1.0
-#define FLUID_H_VALUE 2.0
-#define FLUID_RADIUS 0.1
+#define FLUID_H_VALUE 1.24
+#define FLUID_RADIUS 0.062035
+#define FLUID_REST_DENSITY 1000
 
 class FluidParticle: public Sphere {
 public:
@@ -32,9 +34,11 @@ public:
     void collisionDetection(FluidParticle **fluidParticles, int numParticles, float timeStep);
     
     // position covered by inheritance
+    int id;
     float density;
     float pressure;
     float mass;
+    float restDensity; // THIS IS BASED ON THE totalMass / totalVolume of fluid
 };
 
 #endif /* FluidParticle_hpp */

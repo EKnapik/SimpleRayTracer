@@ -24,6 +24,7 @@ void display(void);
 
 RayTracer *rayTracer;
 PhysicsEngine *physEngine;
+Scene *scene;
 
 int main(int argc, char * argv[]) {
     
@@ -36,7 +37,7 @@ int main(int argc, char * argv[]) {
     initOpenGL();
     
     // Setup the ray tracer
-    Scene *scene = new Scene();
+    scene = new Scene();
     rayTracer = new RayTracer(scene);
     physEngine = new PhysicsEngine(scene);
     
@@ -63,7 +64,8 @@ void display(void) {
     // poll events
     // bind and draw
     rayTracer->raytraceScene();
-    // physEngine->applyTimeStep(); // DO THE PHYSICS
+    physEngine->applyTimeStep(); // DO THE PHYSICS
+    //printf("X: %.2f, Y: %.2f, Z: %.2f\n",physEngine->scene->particles[0]->pos.x, physEngine->scene->particles[0]->pos.y, physEngine->scene->particles[0]->pos.z);
     
     //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
     //rayTracer->scene->shapes[1]->pos += rayTracer->scene->shapes[1]->velocity * float(0.02);

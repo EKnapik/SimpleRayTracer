@@ -12,7 +12,7 @@
 // W smoothing kernal quite arbitrary
 float W(glm::vec3 r, glm::vec3 rb, float h) {
     float scale = 315 / (64 * pi * pow(h,9));
-    float inner = (h*h) - glm::dot(r-rb, r-rb);
+    float inner = (h*h) - glm::dot((r-rb), (r-rb));
     return scale * pow(inner, 3);
 }
 
