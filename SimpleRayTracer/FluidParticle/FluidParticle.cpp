@@ -43,11 +43,12 @@ void FluidParticle::updateParticle(float timeStep, FluidParticle **fluidParticle
     // solve for the change in velocity at this time according to Navier-Stokes
     glm::vec3 dvdt = gravity - pressureTerm + velocityTerm;
     
+    // printf("Acceleration: %.2f, %.2f, %.2f\n", dvdt.x, dvdt.y, dvdt.z);
     // Update with Semi-implicit Euler integration
     this->velocity += dvdt * timeStep;
     this->pos += this->velocity * timeStep;
     // doing fluid fluid collision detection here
-    collisionDetection(fluidParticles, numParticles, timeStep);
+    // collisionDetection(fluidParticles, numParticles, timeStep);
 }
 
 /*

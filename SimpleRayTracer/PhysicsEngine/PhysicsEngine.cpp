@@ -57,4 +57,12 @@ void PhysicsEngine::applyTimeStep(float timeDelta) {
             }
         }
     }
+    // collide particles with the scene objects
+    for(int i = 0; i < this->scene->numParticles; i++) {
+        for(int j = 0; j < this->scene->numObjects; j++) {
+            if(i != j) {
+                this->scene->particles[i]->mirrorCollisionHandling(this->scene->shapes[j], DEFAULT_TIME_DELTA);
+            }
+        }
+    }
 }
