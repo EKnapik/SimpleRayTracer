@@ -40,7 +40,7 @@ void PhysicsEngine::applyTimeStep(float timeDelta) {
     }
     for(int i = 0; i < this->scene->numParticles; i++) {
         this->scene->particles[i]->updatePressure();
-        printf("ID: %d, Pressure: %.2f\n", this->scene->particles[i]->id, this->scene->particles[i]->pressure);
+        // printf("ID: %d, Pressure: %.2f\n", this->scene->particles[i]->id, this->scene->particles[i]->pressure);
     }
     // Now solve and move the particle
     for(int i = 0; i < this->scene->numParticles; i++) {

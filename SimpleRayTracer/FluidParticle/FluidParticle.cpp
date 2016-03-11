@@ -42,6 +42,7 @@ void FluidParticle::updateParticle(float timeStep, FluidParticle **fluidParticle
     
     // solve for the change in velocity at this time according to Navier-Stokes
     glm::vec3 dvdt = gravity - pressureTerm + velocityTerm;
+    
     // Update with Semi-implicit Euler integration
     this->velocity += dvdt * timeStep;
     this->pos += this->velocity * timeStep;
@@ -59,8 +60,6 @@ void FluidParticle::updateDensity(FluidParticle **fluidParticles, int numParticl
             density += fluidParticles[i]->mass * W(this->pos, fluidParticles[i]->pos, FLUID_H_VALUE);
         }
     }
-    
-    printf("Density: %.2f  ID: %d  RestD: %.2f\n", density, this->id, this->restDensity);
     this->density = density;
 }
 
@@ -77,11 +76,12 @@ glm::vec3 FluidParticle::gradPressureOverDensity(FluidParticle **fluidParticles,
     glm::vec3 result = glm::vec3(0.0);
     float pressureScale;
     for(int i = 0; i < numParticles; i++) {
-        pressureScale = (this->pressure / (this->density * this->density));
-        pressureScale += (fluidParticles[i]->pressure / (fluidParticles[i]->density * fluidParticles[i]->density));
-        result += fluidParticles[i]->mass * pressureScale * gradientW(this->pos, fluidParticles[i]->pos, FLUID_H_VALUE);
+        if(this->id != fluidParticles[i]->id) {
+            pressureScale = (this->pressure / (this->density * this->density));
+            pressureScale += (fluidParticles[i]->pressure / (fluidParticles[i]->density * fluidParticles[i]->density));
+            result += fluidParticles[i]->mass * pressureScale * gradientW(this->pos, fluidParticles[i]->pos, FLUID_H_VALUE);
+        }
     }
-    printf("Grad pressure over Density: (%.2f, %.2f, %.2f)\n", result.x, result.y, result.z);
     return result;
 }
 
@@ -94,8 +94,10 @@ glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParti
     float viscosityScale = FLUID_FRICTION_MU / this->density;
     glm::vec3 velocityVar;
     for(int i = 0; i < numParticles; i++) {
-        velocityVar = (fluidParticles[i]->velocity - this->velocity) / fluidParticles[i]->density;
-        result += fluidParticles[i]->mass * velocityVar * gradientSquaredW(this->pos, fluidParticles[i]->pos, FLUID_H_VALUE);
+        if(this->id != fluidParticles[i]->id) {
+            velocityVar = (fluidParticles[i]->velocity - this->velocity) / fluidParticles[i]->density;
+            result += fluidParticles[i]->mass * velocityVar * gradientSquaredW(this->pos, fluidParticles[i]->pos, FLUID_H_VALUE);
+        }
     }
     result *= viscosityScale;
     

@@ -13,7 +13,7 @@
 #include "FluidMath.hpp"
 
 // SETUP FOR WATER
-#define FLUID_NUM_PARTICLES 10
+#define FLUID_NUM_PARTICLES 2
 #define FLUID_PARTICLE_MASS 1.0
 #define FLUID_CONSTANT_K 1.0
 #define FLUID_FRICTION_MU 1.0
