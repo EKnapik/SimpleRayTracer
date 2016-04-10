@@ -35,6 +35,8 @@ public:
     // lighting
     float diffCoeff;
     float specCoeff;
+    float kR; // reflective coeff
+    float kT; // transmissive coeff
     float timeHit = -1.0;
     float refractIndex = 1.0;
     bool reflective = false;

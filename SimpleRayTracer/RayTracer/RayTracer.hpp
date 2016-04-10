@@ -41,7 +41,7 @@ public:
     
 private:
     void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix
-    glm::vec3 shootRay(Ray *ray, int depth);
+    glm::vec3 illuminate(Ray *ray, int depth);
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
     void populateMatrix(void);

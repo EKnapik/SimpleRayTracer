@@ -86,7 +86,7 @@ void RayTracer::setColor(int row, int col) {
         colEnd = colPrime + this->samplingLevel;
         for(;colPrime < colEnd; colPrime++) {
             ray->dir = scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
-            color = glm::vec4(shootRay(ray, depth), 1.0);
+            color = glm::vec4(illuminate(ray, depth), 1.0);
             // Color values may have been returned as greater than 1.0;
             if(color.x > 1.0) {
                 color.x = 1.0;
@@ -124,7 +124,15 @@ float myClamp(float value, float min, float max) {
 }
 
 
-glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
+/*
+    Return Color is:
+    the local illumination * Shadow test
+    if(reflect):
+        returnColor += illuminate(reflectRay) * kR
+    if(trans):
+        returnColor += illuminate(transRay) * kT
+ */
+glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec3(-1.0);
     }
@@ -144,7 +152,7 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     float specCoeff, diffCoeff, ambCoeff;
     float spec, diff, shadow;
     glm::vec3 amb;
-    glm::vec3 brdf;
+    glm::vec3 returnColor;
     float hitRef = objHit->refractIndex;
     if(ray->inside) {
         hitRef = 1.0;
@@ -167,16 +175,16 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
     amb = ambCoeff*glm::vec3(1.0, 1.0, 1.0);
     diff = shadow*diffCoeff*myClamp(glm::dot(nor,lightDir), 0.0, 1.0);
     spec = shadow*specCoeff*glm::pow(myClamp(glm::dot(reflectEye,lightDir), 0.0, 1.0), 20.0);
-    brdf = scene->light->color*material*(diff+spec);
-    brdf += amb;
+    returnColor = scene->light->color*material*(diff+spec);
+    returnColor += amb;
     
     
     if(objHit->reflective) {
         Ray *reflectiveRay = new Ray(posShadow, reflectEye);
-        glm::vec3 reflectColor = shootRay(reflectiveRay, depth-1);
+        glm::vec3 reflectColor = illuminate(reflectiveRay, depth-1);
         delete reflectiveRay;
         if(reflectColor.x >= 0) {
-            brdf += float(0.5)*reflectColor; // some do this instead of mix
+            returnColor += float(0.5)*reflectColor; // some do this instead of mix
         }
     }
     if(objHit->transmitive) {
@@ -201,17 +209,17 @@ glm::vec3 RayTracer::shootRay(Ray *ray, int depth) {
              }
             //************************************/
             transRay->curRefIndex = hitRef;
-            glm::vec3 transColor = shootRay(transRay, depth-1);
+            glm::vec3 transColor = illuminate(transRay, depth-1);
             delete transRay;
             if(transColor.x >= 0) {
-                // brdf += float(0.8)*transColor;
-                brdf = mix(brdf, transColor, 0.95);
+                // returnColor += float(0.8)*transColor;
+                returnColor = mix(returnColor, transColor, 0.95);
             }
         }
     }
     
 
-    return brdf;
+    return returnColor;
 }
 
 
@@ -244,7 +252,7 @@ void RayTracer::setupOpenGLCalls(void) {
 	shaderProgram = shaderSetup("RayTracer.vert", "RayTracer.frag");
 	if( !shaderProgram ) {
 		perror("ERROR SETTING UP SHADERS!!!!\n");
-		_exit(1);
+		exit(1);
 	}
 
 	vertPos = glGetAttribLocation(shaderProgram, "currVert");
