@@ -92,7 +92,7 @@ glm::vec3 FluidParticle::gradPressureOverDensity(FluidParticle **fluidParticles,
  */
 glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParticles, int numParticles) {
     glm::vec3 result = glm::vec3(0.0);
-    float viscosityScale = FLUID_FRICTION_MU / this->density;
+    float viscosityScale = FLUID_FRICTION_MU;
     glm::vec3 velocityVar;
     for(int i = 0; i < numParticles; i++) {
         if(this->id != fluidParticles[i]->id) {

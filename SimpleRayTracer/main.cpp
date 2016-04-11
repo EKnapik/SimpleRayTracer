@@ -17,7 +17,7 @@
 #define WINDOW_HEIGHT 450
 #define WINDOW_WIDTH 800
 
-#define TIMESTEP float(0.002)
+#define TIMESTEP float(0.0005)
 
 void initOpenGL(void);
 void display(void);

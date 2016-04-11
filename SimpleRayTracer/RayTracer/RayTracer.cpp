@@ -142,44 +142,12 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
         return objHit->getColor(posHit);
     }
     glm::vec3 nor = objHit->getNormal(posHit);
-    glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.001)*ray->dir);
-    glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
-    glm::vec3 lightDir = normalize(scene->light->pos - posHit);
-    glm::vec3 material = objHit->getColor(posHit);
-    
-    Ray *shadowRay = new Ray(posShadow, lightDir);
-    Geometric *shadowObj = scene->intersectCast(shadowRay);
-    float specCoeff, diffCoeff, ambCoeff;
-    float spec, diff, shadow;
-    glm::vec3 amb;
-    glm::vec3 returnColor;
-    float hitRef = objHit->refractIndex;
-    if(ray->inside) {
-        hitRef = 1.0;
-        nor = -nor;
-    }
-    
-    ambCoeff = scene->ambientCoeff; // scene property
-    // These should be assigned per object
-    diffCoeff = objHit->diffCoeff;
-    specCoeff = objHit->specCoeff;
-    shadow = shadowObj->timeHit;
-    delete shadowRay;
-    if(shadowObj->transmitive) {
-        shadow = 0.75;
-    } else if(shadow > 0.0) {
-        shadow = 0.1;
-    } else {
-        shadow = 1.0;
-    }
-    amb = ambCoeff*glm::vec3(1.0, 1.0, 1.0);
-    diff = shadow*diffCoeff*myClamp(glm::dot(nor,lightDir), 0.0, 1.0);
-    spec = shadow*specCoeff*glm::pow(myClamp(glm::dot(reflectEye,lightDir), 0.0, 1.0), 20.0);
-    returnColor = scene->light->color*material*(diff+spec);
-    returnColor += amb;
-    
-    
+    // Local Illumination
+    glm::vec3 returnColor = phongShading(ray, objHit);
+    // Global Illumination
     if(objHit->reflective) {
+        glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
+        glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.001)*ray->dir);
         Ray *reflectiveRay = new Ray(posShadow, reflectEye);
         glm::vec3 reflectColor = illuminate(reflectiveRay, depth-1);
         delete reflectiveRay;
@@ -189,7 +157,11 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
     }
     if(objHit->transmitive) {
         glm::vec3 posIn = ray->pos + (float(objHit->timeHit+0.001)*ray->dir);
-        
+        float hitRef = objHit->refractIndex;
+        if(ray->inside) {
+            hitRef = 1.0;
+            nor = -nor;
+        }
         
         // total internal refraction check
         if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
@@ -219,6 +191,53 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
     }
     
 
+    return returnColor;
+}
+
+
+
+glm::vec3 RayTracer::phongShading(Ray *inRay, Geometric *objHit) {
+    glm::vec3 posHit = inRay->pos + (objHit->timeHit*inRay->dir);
+    if(objHit->timeHit < 0) {
+        return objHit->getColor(posHit);
+    }
+    glm::vec3 nor = objHit->getNormal(posHit);
+    glm::vec3 posShadow = inRay->pos + (float(objHit->timeHit-0.001)*inRay->dir);
+    glm::vec3 reflectEye = glm::reflect(glm::normalize(inRay->dir), nor); // rayDir is the eye to position
+    glm::vec3 lightDir = normalize(scene->light->pos - posHit);
+    glm::vec3 material = objHit->getColor(posHit);
+    
+    Ray *shadowRay = new Ray(posShadow, lightDir);
+    Geometric *shadowObj = scene->intersectCast(shadowRay);
+    float specCoeff, diffCoeff, ambCoeff;
+    float spec, diff, shadow;
+    glm::vec3 amb;
+    glm::vec3 returnColor;
+    float hitRef = objHit->refractIndex;
+    if(inRay->inside) {
+        hitRef = 1.0;
+        nor = -nor;
+    }
+    
+    ambCoeff = scene->ambientCoeff; // scene property
+    // These should be assigned per object
+    diffCoeff = objHit->diffCoeff;
+    specCoeff = objHit->specCoeff;
+    shadow = shadowObj->timeHit;
+    delete shadowRay;
+    if(shadowObj->transmitive) {
+        shadow = 0.75;
+    } else if(shadow > 0.0) {
+        shadow = 0.1;
+    } else {
+        shadow = 1.0;
+    }
+    amb = ambCoeff*glm::vec3(1.0, 1.0, 1.0);
+    diff = shadow*diffCoeff*myClamp(glm::dot(nor,lightDir), 0.0, 1.0);
+    spec = shadow*specCoeff*glm::pow(myClamp(glm::dot(reflectEye,lightDir), 0.0, 1.0), 20.0);
+    returnColor = scene->light->color*material*(diff+spec);
+    returnColor += amb;
+    
     return returnColor;
 }
 

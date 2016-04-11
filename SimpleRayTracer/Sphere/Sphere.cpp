@@ -74,11 +74,15 @@ bool Sphere::doesCollideWith(Geometric *obj) {
     return false;
 }
 
+
+// TODDO:
+// MOVE THE OBJECT OUTSIDE OF THE OBJECT THEN ADJUST VELOCITY
+// DON'T STEP BACK A TIMESTEP
 void Sphere::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     float dist = obj->getDistance(this->pos) - this->radius;
     glm::vec3 nor = obj->getNormal(this->pos);
-    float normalCheck = glm::dot(this->velocity, nor);
-    if(dist < 0.001 && normalCheck < 0) {
+    //float normalCheck = glm::dot(this->velocity, nor);
+    if(dist < 0.0001) {
         // reverse velocity
         this->pos -= this->velocity * timeStep;
         this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);

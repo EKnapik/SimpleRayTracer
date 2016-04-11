@@ -21,7 +21,7 @@ Scene::Scene() {
     plane->setzLimit(glm::vec2(-20, 20));
     this->shapes[0] = plane;
     
-    this->numParticles = 2;
+    this->numParticles = 5;
     this->particles = new FluidParticle *[numParticles];
     float currPos = 0.0;
     
