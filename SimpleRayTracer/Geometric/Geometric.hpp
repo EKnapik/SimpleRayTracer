@@ -15,6 +15,7 @@
 
 #define COLLISION_DAMPENING float(0.9)
 #define COLLISION_CONSTANT_C float(1)
+enum ObjType {Triangle_type, Plane_type, Sphere_type};
 
 class Geometric {
 public:
@@ -32,6 +33,9 @@ public:
     glm::vec3 pos;
     glm::vec3 velocity;
     glm::vec3 color;
+    // Collision
+    ObjType type;
+    float collisionRadius;
     // lighting
     float diffCoeff;
     float specCoeff;

@@ -14,6 +14,7 @@ Plane::Plane() {
     this->color = glm::vec3(0.8);
     this->diffCoeff = .9454545;
     this->specCoeff = .545454;
+    this->type = Plane_type;
 }
 
 Plane::Plane(glm::vec3 pos) {
@@ -22,6 +23,7 @@ Plane::Plane(glm::vec3 pos) {
     this->color = glm::vec3(0.8);
     this->diffCoeff = .9454545;
     this->specCoeff = .545454;
+    this->type = Plane_type;
 }
 
 Plane::Plane(glm::vec3 pos, glm::vec3 normal) {
@@ -30,6 +32,7 @@ Plane::Plane(glm::vec3 pos, glm::vec3 normal) {
     this->color = glm::vec3(0.8);
     this->diffCoeff = .9454545;
     this->specCoeff = .545454;
+    this->type = Plane_type;
 }
 
 Plane::Plane(glm::vec3 pos, glm::vec3 normal, glm::vec3 color) {
@@ -38,6 +41,7 @@ Plane::Plane(glm::vec3 pos, glm::vec3 normal, glm::vec3 color) {
     this->color = color;
     this->diffCoeff = .9454545;
     this->specCoeff = .545454;
+    this->type = Plane_type;
 }
 
 glm::vec3 Plane::getNormal(glm::vec3 pos) {
@@ -100,7 +104,7 @@ void Plane::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     float normalCheck = glm::dot(this->velocity, nor);
     if(dist < 0.001 && normalCheck < 0) {
         // reverse velocity
-        this->pos -= this->velocity * timeStep;
+        this->pos += dist*glm::normalize(this->velocity);
         this->velocity = COLLISION_DAMPENING * glm::reflect(this->velocity, nor);
     }
 }
