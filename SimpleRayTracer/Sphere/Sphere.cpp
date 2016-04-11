@@ -44,7 +44,7 @@ Sphere::Sphere(glm::vec3 pos, float radius, glm::vec3 color) {
 
 
 glm::vec3 Sphere::getNormal(glm::vec3 pos) {
-    return glm::normalize((pos - this->pos) / this->radius);
+    return (pos - this->pos) / this->radius;
 };
 
 
@@ -63,7 +63,7 @@ float Sphere::getIntersect(Ray *ray) {
 
 
 float Sphere::getDistance(glm::vec3 pos) {
-    return (glm::length(pos - this->pos) - this->radius);
+    return (glm::length(pos - this->pos));// - this->radius);
 }
 
 
@@ -88,8 +88,8 @@ void Sphere::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     float dist = obj->getDistance(this->pos) - this->radius;
     glm::vec3 nor = obj->getNormal(this->pos);
     //float normalCheck = glm::dot(this->velocity, nor);
-    if(dist < 0.000) {
-        printf("Dist: %.5f\n", dist);
+    if(dist < 0.0) {
+        
         // move outside of the object and reverse velocity
         // TODO MOVE THE OBJECT TO THE EDGE. PLACE IT THERE DON'T ADD TO IT
         switch(obj->type) {
@@ -97,7 +97,7 @@ void Sphere::mirrorCollisionHandling(Geometric *obj, float timeStep) {
             case Plane_type: this->pos.y = obj->pos.y + this->radius;
                 break;
             // Sphere - Sphere collision
-            case Sphere_type: this->pos = obj->pos + (nor * collisionRadius);
+            case Sphere_type: this->pos += glm::normalize(this->velocity) * dist;
                 break;
             // Sphere - Triangle collision
             case Triangle_type:

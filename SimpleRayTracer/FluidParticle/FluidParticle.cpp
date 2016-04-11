@@ -14,6 +14,8 @@ FluidParticle::FluidParticle(glm::vec3 pos) {
     this->pos = pos;
     this->radius = FLUID_RADIUS;
     this->color = glm::vec3(0.3, 0.82, 1.0); // aqua blue
+    this->collisionRadius = FLUID_RADIUS;
+    this->type = Sphere_type;
     
     this->density = 0.0;
     this->pressure = 0.0;
@@ -22,9 +24,13 @@ FluidParticle::FluidParticle(glm::vec3 pos) {
 }
 
 FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
+    static int _id = 0;
+    this->id = _id++;
     this->pos = pos;
     this->radius = radius;
     this->color = glm::vec3(0.3, 0.82, 1.0); // aqua blue
+    this->collisionRadius = FLUID_RADIUS;
+    this->type = Sphere_type;
     
     this->density = 0.0;
     this->pressure = 0.0;
@@ -48,7 +54,7 @@ void FluidParticle::updateParticle(float timeStep, FluidParticle **fluidParticle
     this->velocity += dvdt * timeStep;
     this->pos += this->velocity * timeStep;
     // doing fluid fluid collision detection here
-    // collisionDetection(fluidParticles, numParticles, timeStep);
+    collisionDetection(fluidParticles, numParticles, timeStep);
 }
 
 /*
@@ -115,7 +121,9 @@ glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParti
  */
 void FluidParticle::collisionDetection(FluidParticle **fluidParticles, int numParticles, float timeStep) {
     for(int i = 0; i < numParticles; i++) {
-        mirrorCollisionHandling(fluidParticles[i], timeStep);
+        if(this->id != fluidParticles[i]->id) {
+            mirrorCollisionHandling(fluidParticles[i], timeStep);
+        }
     }
 }
 

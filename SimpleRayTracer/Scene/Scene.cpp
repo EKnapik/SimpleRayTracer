@@ -21,13 +21,13 @@ Scene::Scene() {
     plane->setzLimit(glm::vec2(-20, 20));
     this->shapes[0] = plane;
     
-    this->numParticles = 2;
+    this->numParticles = 1;
     this->particles = new FluidParticle *[numParticles];
     float currPos = 0.0;
     
     for(int i = 0; i < numParticles; i++) {
         this->particles[i] = new FluidParticle(glm::vec3(currPos, 1.0, 0.0));
-        currPos += 2*FLUID_RADIUS;
+        currPos += (2*FLUID_RADIUS) + 0.01;
     }
     
     
