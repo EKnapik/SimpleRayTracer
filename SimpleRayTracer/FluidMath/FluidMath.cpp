@@ -11,20 +11,31 @@
 
 // W smoothing kernal quite arbitrary
 float W(glm::vec3 r, glm::vec3 rb, float h) {
+    float radius = glm::length(r-rb);
     float scale = 315 / (64 * pi * pow(h,9));
-    float inner = (h*h) - glm::dot((r-rb), (r-rb));
+    float inner = (h*h) - (radius*radius);
     return scale * pow(inner, 3);
 }
 
 // The gradient of W smoothing kernal
 glm::vec3 gradientW(glm::vec3 r, glm::vec3 rb, float h) {
+    float radius = glm::length(r-rb);
     float scale = -45 / (pi * pow(h, 6));
     glm::vec3 vector = glm::normalize(r-rb);
-    return scale * vector * float(pow(h-glm::length(r-rb),2));
+    return scale * float(pow(h-radius,2)) * vector;
 }
 
 // the graident squared of W smoothing kernal
 float gradientSquaredW(glm::vec3 r, glm::vec3 rb, float h) {
-    float scale = 45 / (pi * pow(h, 2));
-    return scale * (h-glm::length(r-rb));
+    float radius = glm::length(r-rb);
+    float scale = 45 / (pi * pow(h, 6));
+    return scale * (h-radius);
 }
+
+/*
+ // check for 0 <= radius <=
+ float radius = glm::length(r-rb);
+ if(0 <= radius || radius <= h) {
+ return 0;
+ }
+*/
