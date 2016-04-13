@@ -9,6 +9,7 @@
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <iostream>
+#include <time.h>
 #include "RayTracer.hpp"
 #include "PhysicsEngine.hpp"
 
@@ -23,6 +24,7 @@ void display(void);
 RayTracer *rayTracer;
 PhysicsEngine *physEngine;
 Scene *scene;
+
 
 int main(int argc, char * argv[]) {
     
@@ -58,11 +60,15 @@ void initOpenGL(void) {
 
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
     // poll events
     // bind and draw
+    clock_t t;
+    
     rayTracer->raytraceScene();
+    t = clock();
     physEngine->applyTimeStep(); // DO THE PHYSICS
+    t = clock() - t;
+    printf("It took %d clicks (%f seconds).\n",t,((float)t)/CLOCKS_PER_SEC);
     //printf("X: %.2f, Y: %.2f, Z: %.2f\n",physEngine->scene->particles[0]->pos.x, physEngine->scene->particles[0]->pos.y, physEngine->scene->particles[0]->pos.z);
     
     //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
