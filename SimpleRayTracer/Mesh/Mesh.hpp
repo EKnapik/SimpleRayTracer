@@ -18,6 +18,7 @@ class Mesh {
     void addTriangle(Triangle *triangle);
     
     // move, scale and rotate mesh
+    void moveBy(glm::vec3 transVector);
     void moveTo(glm::vec3 newPos);
     void scale(float scaleFactor);
     void rotateX(float degrees);
