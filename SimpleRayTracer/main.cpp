@@ -63,12 +63,17 @@ void display(void) {
     // poll events
     // bind and draw
     clock_t t;
-    
+    t = clock();
+    float rayTime;
+    float physicsTime;
     rayTracer->raytraceScene();
+    t = clock() - t;
+    rayTime = t;
     t = clock();
     physEngine->applyTimeStep(); // DO THE PHYSICS
     t = clock() - t;
-    printf("It took %d clicks (%f seconds).\n",t,((float)t)/CLOCKS_PER_SEC);
+    physicsTime = t;
+    printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC, ((float)physicsTime)/CLOCKS_PER_SEC);
     //printf("X: %.2f, Y: %.2f, Z: %.2f\n",physEngine->scene->particles[0]->pos.x, physEngine->scene->particles[0]->pos.y, physEngine->scene->particles[0]->pos.z);
     
     //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
