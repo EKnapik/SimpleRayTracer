@@ -152,7 +152,7 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
         glm::vec3 reflectColor = illuminate(reflectiveRay, depth-1);
         delete reflectiveRay;
         if(reflectColor.x >= 0) {
-            returnColor += float(0.5)*reflectColor; // some do this instead of mix
+            returnColor += float(0.8)*reflectColor; // some do this instead of mix
         }
     }
     if(objHit->transmitive) {

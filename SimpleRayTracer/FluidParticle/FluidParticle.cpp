@@ -28,13 +28,15 @@ FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
     this->id = _id++;
     this->pos = pos;
     this->radius = radius;
-    this->color = glm::vec3(0.3, 0.82, 1.0); // aqua blue
-    this->collisionRadius = FLUID_RADIUS;
+    this->color = glm::vec3(0); // Black
+    this->collisionRadius = radius;
     this->type = Sphere_type;
     
     this->density = 0.0;
     this->pressure = 0.0;
-    this->mass = 1.0;
+    // MASS AND DENsity NEED TO BE CALCULATED
+    this->mass = FLUID_PARTICLE_MASS;
+    this->restDensity = FLUID_REST_DENSITY;
 }
 
 /*
@@ -43,18 +45,19 @@ FluidParticle::FluidParticle(glm::vec3 pos, float radius) {
  */
 void FluidParticle::updateParticle(float timeStep, FluidParticle **fluidParticles, int numParticles) {
     glm::vec3 gravity = glm::vec3(0.0, -9.8, 0.0);
-    glm::vec3 pressureTerm = gradPressureOverDensity(fluidParticles, numParticles);
-    glm::vec3 velocityTerm = viscosityGradSquaredVelocity(fluidParticles, numParticles);
     
     // solve for the change in velocity at this time according to Navier-Stokes
-    glm::vec3 dvdt = gravity - pressureTerm + velocityTerm;
+    glm::vec3 dvdt = gravity - this->pressureTerm + this->viscosityTerm;
     
     // printf("Acceleration: %.2f, %.2f, %.2f\n", dvdt.x, dvdt.y, dvdt.z);
     // Update with Semi-implicit Euler integration
     this->velocity += dvdt * timeStep;
+    // printf("TimeStep: %.2f\n", timeStep);
+    // printf("Velocity: %.2f, %.2f, %.2f\n", this->velocity.x, this->velocity.y, this->velocity.z);
     this->pos += this->velocity * timeStep;
+    // printf("Position: %.2f, %.2f, %.2f\n", this->pos.x, this->pos.y, this->pos.z);
     // doing fluid fluid collision detection here
-    collisionDetection(fluidParticles, numParticles, timeStep);
+    // collisionDetection(fluidParticles, numParticles, timeStep);
 }
 
 /*
@@ -75,11 +78,12 @@ void FluidParticle::updatePressure() {
     this->pressure = FLUID_CONSTANT_K * (this->density - this->restDensity);
 }
 
+
 /* The gradient pressure of a particle divided by the density of that particle
  * This is an estimation method using smoothing kernals
  * the current particle should not be in the array of particles given
  */
-glm::vec3 FluidParticle::gradPressureOverDensity(FluidParticle **fluidParticles, int numParticles) {
+void FluidParticle::updateGradPressureOverDensity(FluidParticle **fluidParticles, int numParticles) {
     glm::vec3 result = glm::vec3(0.0);
     float pressureScale;
     for(int i = 0; i < numParticles; i++) {
@@ -89,14 +93,14 @@ glm::vec3 FluidParticle::gradPressureOverDensity(FluidParticle **fluidParticles,
             result += fluidParticles[i]->mass * pressureScale * gradientW(this->pos, fluidParticles[i]->pos, FLUID_H_VALUE);
         }
     }
-    return result;
+    this->pressureTerm = result;
 }
 
 /* The viscosity times the squared gradient of velocity for a particle
  * This is an estimation method using smoothing kernals
  * the current particle should not be in the array of particles given
  */
-glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParticles, int numParticles) {
+void FluidParticle::updateViscosityGradSquaredVelocity(FluidParticle **fluidParticles, int numParticles) {
     glm::vec3 result = glm::vec3(0.0);
     float viscosityScale = FLUID_FRICTION_MU;
     glm::vec3 velocityVar;
@@ -108,7 +112,7 @@ glm::vec3 FluidParticle::viscosityGradSquaredVelocity(FluidParticle **fluidParti
     }
     result *= viscosityScale;
     
-    return result;
+    this->viscosityTerm = result;
 }
 
 

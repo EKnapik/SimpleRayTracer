@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Scene.hpp"
 
-#define DEFAULT_TIME_DELTA float(0.001)
+#define DEFAULT_TIME_DELTA float(0.005)
 
 class PhysicsEngine {
 public:
