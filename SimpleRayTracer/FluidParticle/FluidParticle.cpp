@@ -57,7 +57,7 @@ void FluidParticle::updateParticle(float timeStep, FluidParticle **fluidParticle
     this->pos += this->velocity * timeStep;
     // printf("Position: %.2f, %.2f, %.2f\n", this->pos.x, this->pos.y, this->pos.z);
     // doing fluid fluid collision detection here
-    // collisionDetection(fluidParticles, numParticles, timeStep);
+     collisionDetection(fluidParticles, numParticles, timeStep);
 }
 
 /*

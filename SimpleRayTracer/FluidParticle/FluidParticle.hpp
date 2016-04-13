@@ -13,11 +13,16 @@
 #include "FluidMath.hpp"
 
 // SETUP FOR WATER
-#define FLUID_NUM_PARTICLES 10
+/*
+ The H value is very dependant on the number of particles in the simulation
+ witht the value too low the kernel functions won't work properly and with it
+ too high the fluid will explode
+ */
+#define FLUID_NUM_PARTICLES 27
 #define FLUID_PARTICLE_MASS 0.02
 #define FLUID_CONSTANT_K 3.0
 #define FLUID_FRICTION_MU 3.5
-#define FLUID_H_VALUE .0625
+#define FLUID_H_VALUE .005
 #define FLUID_RADIUS 0.01685  // the particle's radius
 #define FLUID_REST_DENSITY 998.29
 

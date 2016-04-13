@@ -88,7 +88,7 @@ void Sphere::mirrorCollisionHandling(Geometric *obj, float timeStep) {
     float dist = obj->getDistance(this->pos) - this->radius;
     glm::vec3 nor = obj->getNormal(this->pos);
     //float normalCheck = glm::dot(this->velocity, nor);
-    if(dist < 0.0) {
+    if(dist < 0.00001) {
         
         // move outside of the object and reverse velocity
         // TODO MOVE THE OBJECT TO THE EDGE. PLACE IT THERE DON'T ADD TO IT

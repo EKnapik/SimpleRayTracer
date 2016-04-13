@@ -24,12 +24,34 @@ Scene::Scene() {
     
     this->numParticles = FLUID_NUM_PARTICLES;
     this->particles = new FluidParticle *[numParticles];
-    float currPos = 0.0;
     
-    for(int i = 0; i < numParticles; i++) {
-        this->particles[i] = new FluidParticle(glm::vec3(currPos, 1.0, 0.0));
-        currPos += (2*FLUID_RADIUS);
+    float currX = 0.0;
+    float currY = 0.4;
+    float currZ = 0.0;
+    
+    int tmp = powf(this->numParticles, float(1.0/3.0));
+    int count = 0;
+    for(int i = 0; i < tmp; i++) {
+        currZ = 0.0;
+        for(int j = 0; j < tmp; j++) {
+            currX = 0.0;
+            for(int w = 0; w < tmp; w++) {
+                this->particles[count] = new FluidParticle(glm::vec3(currX, currY, currZ));
+                count++;
+                currX += (2*FLUID_RADIUS);
+            }
+            currZ -= (2*FLUID_RADIUS);
+        }
+        currY += (2*FLUID_RADIUS);
     }
+    
+    /*
+    for(int i = 0; i < numParticles; i++) {
+        this->particles[i] = new FluidParticle(glm::vec3(currX, 1.0, 0.0));
+        currX += (2*FLUID_RADIUS);
+    }
+     */
+    
     
     
     this->ambientCoeff = 0.1;
