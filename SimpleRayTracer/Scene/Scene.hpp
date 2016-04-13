@@ -48,6 +48,11 @@ public:
     int numMeshes;
     Mesh **meshes;
     
+    // Spacial Data Structure:
+    void updateDataStrucutre();
+    void addMeshObj(Mesh *meshObj);
+    void addGeometricObj(Geometric *geomObj);
+    
     float ambientCoeff;
 private:
     Background *baseBackground;

@@ -16,11 +16,12 @@
 
 class Triangle: public Geometric{
 public:
-    Triangle(glm::vec3 x1, glm::vec3 x2, glm::vec3 x3);
+    Triangle(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3);
+    Triangle(glm::vec3 v1, glm::vec3 vNorm1, glm::vec3 v2, glm::vec3 vNorm2, glm::vec3 v3, glm::vec3 vNorm3);
     
     // must be implemented because this extends Geometric
     // Geometric
-    glm::vec3 getNormal(glm::vec3 pos);
+    glm::vec3 getNormal(glm::vec3 pos); // based on how the triangle is given
     float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     // color must be implemented but it makes sense that the mesh object
@@ -35,10 +36,10 @@ public:
     glm::vec3 v1;
     glm::vec3 v2;
     glm::vec3 v3;
-    
-    glm::vec3 vn1;
-    glm::vec3 vn2;
-    glm::vec3 vn3;
+private:
+    glm::vec3 vNorm1;
+    glm::vec3 vNorm2;
+    glm::vec3 vNorm3;
 };
 
 #endif /* Triangle_hpp */

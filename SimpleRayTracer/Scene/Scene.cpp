@@ -45,14 +45,11 @@ Scene::Scene() {
         currY += (2*FLUID_RADIUS);
     }
     
-    /*
-    for(int i = 0; i < numParticles; i++) {
-        this->particles[i] = new FluidParticle(glm::vec3(currX, 1.0, 0.0));
-        currX += (2*FLUID_RADIUS);
-    }
-     */
     
-    
+    //for(int i = 0; i < numParticles; i++) {
+    //    this->particles[i] = new FluidParticle(glm::vec3(currX, 1.0, 0.0));
+    //    currX += (2*FLUID_RADIUS);
+    //}
     
     this->ambientCoeff = 0.1;
 }
@@ -142,6 +139,20 @@ Geometric* Scene::intersectCast(Ray *ray) {
     }
     
     return returnShape;
+}
+
+void Scene::updateDataStrucutre() {
+    
+}
+
+
+void Scene::addMeshObj(Mesh *meshObj) {
+    
+}
+
+
+void Scene::addGeometricObj(Geometric *geomObj) {
+    
 }
 
 
