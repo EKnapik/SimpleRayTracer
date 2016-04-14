@@ -9,22 +9,28 @@
 #include "Mesh.hpp"
 
 Mesh::Mesh() {
-    
+    this->pos = glm::vec3(0.0, 0.0, 0.0);
+    this->numTriangles = 0;
 }
 
 
 Mesh::Mesh(Triangle *meshTriangles, int numTriangles) {
-    
+    this->pos = glm::vec3(0.0, 0.0, 0.0);
+    this->triangles = meshTriangles;
+    this->numTriangles = numTriangles;
 }
 
 
 void Mesh::addTriangle(Triangle *triangle) {
+    // expand the pointer
+    // add to numTriangles
     
 }
 
 // Uses the transVector to create the translation
 // matrix then multiplies all triangles by that matrix
 void Mesh::moveBy(glm::vec3 transVector) {
+    this->pos += transVector;
     glm::mat4 transMatrix = glm::translate(glm::mat4(1.0), transVector);
     glm::vec4 resultVector;
     for(int i = 0; i < this->numTriangles; i++) {

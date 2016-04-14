@@ -17,6 +17,10 @@ Triangle::Triangle(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3) {
     this->vNorm1 = surfaceNorm;
     this->vNorm2 = surfaceNorm;
     this->vNorm3 = surfaceNorm;
+    
+    this->color = glm::vec3(4.9, 0.1, 0.1);
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 Triangle::Triangle(glm::vec3 v1, glm::vec3 vNorm1, glm::vec3 v2, glm::vec3 vNorm2, glm::vec3 v3, glm::vec3 vNorm3) {
@@ -28,6 +32,10 @@ Triangle::Triangle(glm::vec3 v1, glm::vec3 vNorm1, glm::vec3 v2, glm::vec3 vNorm
     this->vNorm1 = vNorm1;
     this->vNorm2 = vNorm2;
     this->vNorm3 = vNorm3;
+    
+    this->color = glm::vec3(4.9, 0.1, 0.1);
+    this->diffCoeff = .9454545;
+    this->specCoeff = .545454;
 }
 
 // Interpolates between the three vertex normals to get the normal at this
@@ -53,51 +61,43 @@ glm::vec3 Triangle::getNormal(glm::vec3 pos) {
 // When calculating for triangle intersect the Barycentric coordinates can be
 // calculated and saved for this triangle so they do not need to be calculated
 // again when getting the normal.
+// U and V can be used for Barycentric Coordinates
 float Triangle::getIntersect(Ray *ray) {
-    float kEpsilon = 0.01; // Near Zero Value
+    float kEpsilon = 0.0001; // Near Zero Value
     
-    // compute surface normal
-    glm::vec3 surfaceNorm = glm::normalize(glm::cross(this->v2-this->v1, this->v3-this->v1));
+    glm::vec3 edge1 = this->v2 - this->v1;
+    glm::vec3 edge2 = this->v3 - this->v1;
+    glm::vec3 tVec, pVec, qVec;
+    float det, inv_det, U, V, T;
     
-    // check for ray parallel with triangle
-    float nDotRayDir = glm::dot(ray->dir, surfaceNorm);
-    if(nDotRayDir < kEpsilon) {
+    pVec = glm::cross(ray->dir, edge2);
+    det = glm::dot(edge1, pVec);
+    
+    // Cull Testing Method
+    if(det > -kEpsilon && det < kEpsilon) {
+        return -1.0;
+    }
+    inv_det = 1.0 / det;
+    
+    // calculate distance to ray origin
+    tVec = ray->pos - this->v1;
+    
+    // calculate U and test bounds
+    U = glm::dot(tVec, pVec) * inv_det;
+    if(U < 0.0 || U > 1.0) {
         return -1.0;
     }
     
-    float d = glm::dot(surfaceNorm, this->v1);
-    // compute t for when the ray hits the triangle plane
-    float t = (glm::dot(surfaceNorm, ray->pos) + d) / nDotRayDir;
-    // check if the triangle is in behind the ray
-    if (t < 0) {
-        return -1.0; // the triangle is behind the ray
+    // Test V parameter and Check Bounds
+    qVec = glm::cross(tVec, edge1);
+    V = glm::dot(ray->dir, qVec) * inv_det;
+    if(V < 0.0 || U+V > 1.0) {
+        return -1.0;
     }
     
-    // Compute Intersection Point
-    glm::vec3 intersectP = ray->pos + (t*ray->dir);
-    // Now check if P is within the triangle BARYCENTRIC OPTIMIZATION CAN GO HERE
-    glm::vec3 C; // Vector perpendicular to triangle's plane
-    
-    // edge 1
-    C = glm::cross((v2-v1), (intersectP-v1));
-    if(glm::dot(surfaceNorm, C) < 0) {
-        return -1.0; // P is on the right side
-    };
-    
-    // edge 2
-    C = glm::cross((v3-v2), (intersectP-v2));
-    if(glm::dot(surfaceNorm, C) < 0) {
-        return -1.0; // P is on the right side
-    };
-    
-    // edge 3
-    C = glm::cross((v1-v3), (intersectP-v3));
-    if(glm::dot(surfaceNorm, C) < 0) {
-        return -1.0; // P is on the right side
-    };
-    
-    // P is within triangle
-    return t;
+    // Calculate T
+    T = glm::dot(edge2, qVec) * inv_det;
+    return T;
 }
 
 
@@ -108,7 +108,7 @@ float Triangle::getDistance(glm::vec3 pos) {
 
 // Returns a nice red color
 glm::vec3 Triangle::getColor(glm::vec3 pos) {
-    return glm::vec3(0.9, 0.1, 0.1);
+    return this->color;
 }
 
 
