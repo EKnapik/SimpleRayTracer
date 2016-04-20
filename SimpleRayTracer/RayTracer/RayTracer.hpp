@@ -38,6 +38,7 @@ public:
     
     // Rendering Flags
     int samplingLevel;
+    int rayDepthLevel = 7; // THE DEPTH OF RAY RECURSION
     
 private:
     void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix

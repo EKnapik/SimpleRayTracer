@@ -35,6 +35,7 @@ public:
     
     Geometric* intersectMarch(Ray *ray);
     Geometric* intersectCast(Ray *ray);
+    Geometric* shadowCast(Ray *ray);
     
     Camera *camera;
     Light *light;

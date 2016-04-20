@@ -68,8 +68,6 @@ void RayTracer::changeScene(Scene *newScene) {
 //  level of 1 but that can be increased. The sampling is uniform super sampling
 //  where the amount of rays per pixel is the sampling level squared.
 void RayTracer::setColor(int row, int col) {
-    int depth = 4; // THE DEPTH OF RAY RECURSION
-    
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
     int rowPrime, colPrime, rowEnd, colEnd, widthPrime, heightPrime;
     glm::vec4 totalColor = glm::vec4(0.0);
@@ -87,7 +85,7 @@ void RayTracer::setColor(int row, int col) {
         for(;colPrime < colEnd; colPrime++) {
             // ray dir is normalized
             ray->dir = scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
-            color = glm::vec4(illuminate(ray, depth), 1.0);
+            color = glm::vec4(illuminate(ray, this->rayDepthLevel), 1.0);
             // Color values may have been returned as greater than 1.0;
             if(color.x > 1.0) {
                 color.x = 1.0;
@@ -226,7 +224,7 @@ glm::vec3 RayTracer::phongShading(Ray *inRay, Geometric *objHit) {
     shadow = shadowObj->timeHit;
     delete shadowRay;
     if(shadowObj->transmitive) {
-        shadow = 0.75;
+        shadow = 0.7;
     } else if(shadow > 0.0) {
         shadow = 0.1;
     } else {

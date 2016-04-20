@@ -128,6 +128,32 @@ Geometric* Scene::intersectCast(Ray *ray) {
     return returnShape;
 }
 
+Geometric* Scene::shadowCast(Ray *ray) {
+    float resT = 10000.0; // infinity kinda
+    float tempT;
+    Geometric *returnShape = this->baseBackground;
+    
+    for(int i = 0; i < this->numObjects; i++) {
+        tempT = shapes[i]->getIntersect(ray);
+        if(tempT > 0 && tempT < resT) {
+            resT = tempT;
+            returnShape = shapes[i];
+            returnShape->timeHit = resT;
+        }
+    }
+    
+    for(int i = 0; i < this->numParticles; i++) {
+        tempT = particles[i]->getIntersect(ray);
+        if(tempT > 0 && tempT < resT) {
+            resT = tempT;
+            returnShape = particles[i];
+            returnShape->timeHit = resT;
+        }
+    }
+    
+    return returnShape;
+}
+
 void Scene::updateDataStrucutre() {
     
 }
