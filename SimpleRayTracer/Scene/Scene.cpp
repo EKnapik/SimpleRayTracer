@@ -20,6 +20,11 @@ Scene::Scene() {
     plane->setxLimit(glm::vec2(-5, 3));
     plane->setzLimit(glm::vec2(-10, 5));
     this->shapes[0] = plane;
+    this->shapes[0]->ambCoeff = 0.15;
+    this->shapes[0]->diffCoeff = 0.95;
+    this->shapes[0]->specCoeff = 0.5;
+    this->shapes[0]->specExp = 20.0;
+    
     this->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
     this->shapes[1]->reflective = true;
     this->shapes[1]->ambCoeff = 0.15;
@@ -180,6 +185,11 @@ void Scene::addGeometricObj(Geometric *geomObj) {
  plane->setxLimit(glm::vec2(-5, 3));
  plane->setzLimit(glm::vec2(-10, 5));
  this->shapes[0] = plane;
+ this->shapes[0]->ambCoeff = 0.15;
+ this->shapes[0]->diffCoeff = 0.95;
+ this->shapes[0]->specCoeff = 0.5;
+ this->shapes[0]->specExp = 20.0;
+ 
  this->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
  this->shapes[1]->reflective = true;
  this->shapes[1]->ambCoeff = 0.15;
