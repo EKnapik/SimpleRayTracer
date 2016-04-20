@@ -39,11 +39,13 @@ public:
     // Collision
     ObjType type;
     float collisionRadius;
-    // lighting
-    float diffCoeff;
-    float specCoeff;
-    float kR; // reflective coeff
-    float kT; // transmissive coeff
+    // lighting with basic values
+    float diffCoeff = 0.7;
+    float specCoeff = 0.3;
+    float ambCoeff = 0.1;
+    float specExp = 20;
+    float kR = 0.75; // reflective coeff
+    float kT = 0.8; // transmissive coeff
     float timeHit = -1.0;
     float refractIndex = 1.0;
     bool reflective = false;

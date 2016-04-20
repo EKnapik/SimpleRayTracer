@@ -85,6 +85,7 @@ void RayTracer::setColor(int row, int col) {
         colPrime = col * this->samplingLevel;
         colEnd = colPrime + this->samplingLevel;
         for(;colPrime < colEnd; colPrime++) {
+            // ray dir is normalized
             ray->dir = scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
             color = glm::vec4(illuminate(ray, depth), 1.0);
             // Color values may have been returned as greater than 1.0;
@@ -146,13 +147,13 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
     glm::vec3 returnColor = phongShading(ray, objHit);
     // Global Illumination
     if(objHit->reflective) {
-        glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
+        glm::vec3 reflectEye = glm::reflect(ray->dir, nor); // rayDir is the eye to position
         glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.001)*ray->dir);
         Ray *reflectiveRay = new Ray(posShadow, reflectEye);
         glm::vec3 reflectColor = illuminate(reflectiveRay, depth-1);
         delete reflectiveRay;
         if(reflectColor.x >= 0) {
-            returnColor += float(0.8)*reflectColor; // some do this instead of mix
+            returnColor += objHit->kR*reflectColor; // some do this instead of mix
         }
     }
     if(objHit->transmitive) {
@@ -163,29 +164,32 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
             nor = -nor;
         }
         
-        // total internal refraction check
-        if(pow(glm::dot(nor, ray->dir),2) > 1-(pow(hitRef/ray->curRefIndex, 2))) {
-            glm::vec3 transDir;
-            float nRatio = ray->curRefIndex / hitRef;
-            float sqrtVal = sqrt(1-(nRatio*nRatio*(1-pow(glm::dot(nor, ray->dir),2))));
-            float scale = (nRatio*glm::dot(nor, ray->dir)) - sqrtVal;
-            transDir = scale*nor - nRatio*ray->dir;
+        float n_it = ray->curRefIndex / hitRef;
+        float radicand = 1 + (n_it*n_it*(pow(glm::dot(-ray->dir, nor), 2) - 1));
+        // total internal reflection check
+        if(radicand < 0) {
+            // Total internal reflection occured
+            glm::vec3 reflectEye = glm::reflect(glm::normalize(ray->dir), nor); // rayDir is the eye to position
+            glm::vec3 posShadow = ray->pos + (float(objHit->timeHit-0.001)*ray->dir);
+            Ray *reflectiveRay = new Ray(posShadow, reflectEye);
+            glm::vec3 reflectColor = illuminate(reflectiveRay, depth-1);
+            delete reflectiveRay;
+            if(reflectColor.x >= 0) {
+                returnColor += objHit->kT*reflectColor; // some do this instead of mix
+            }
+        } else {
+            // Total internal relfection didn't happen. Transmit ray normaly
+            glm::vec3 transDir = n_it*ray->dir + (((n_it*glm::dot(-ray->dir, nor)) - float(sqrt(radicand)))*nor);
             transDir = glm::normalize(transDir);
-            
-            transDir = glm::refract(ray->dir, nor, ray->curRefIndex/hitRef);
-            
             Ray *transRay = new Ray(posIn, transDir);
-            //****************************************
-             if(!ray->inside) {
-             transRay->inside = true;
-             }
-            //************************************/
+            if(!ray->inside) {
+                transRay->inside = true;
+            }
             transRay->curRefIndex = hitRef;
             glm::vec3 transColor = illuminate(transRay, depth-1);
             delete transRay;
             if(transColor.x >= 0) {
-                // returnColor += float(0.8)*transColor;
-                returnColor = mix(returnColor, transColor, 0.95);
+                returnColor += objHit->kT*transColor;
             }
         }
     }
@@ -209,7 +213,6 @@ glm::vec3 RayTracer::phongShading(Ray *inRay, Geometric *objHit) {
     
     Ray *shadowRay = new Ray(posShadow, lightDir);
     Geometric *shadowObj = scene->intersectCast(shadowRay);
-    float specCoeff, diffCoeff, ambCoeff;
     float spec, diff, shadow;
     glm::vec3 amb;
     glm::vec3 returnColor;
@@ -219,10 +222,7 @@ glm::vec3 RayTracer::phongShading(Ray *inRay, Geometric *objHit) {
         nor = -nor;
     }
     
-    ambCoeff = scene->ambientCoeff; // scene property
     // These should be assigned per object
-    diffCoeff = objHit->diffCoeff;
-    specCoeff = objHit->specCoeff;
     shadow = shadowObj->timeHit;
     delete shadowRay;
     if(shadowObj->transmitive) {
@@ -232,9 +232,9 @@ glm::vec3 RayTracer::phongShading(Ray *inRay, Geometric *objHit) {
     } else {
         shadow = 1.0;
     }
-    amb = ambCoeff*glm::vec3(1.0, 1.0, 1.0);
-    diff = shadow*diffCoeff*myClamp(glm::dot(nor,lightDir), 0.0, 1.0);
-    spec = shadow*specCoeff*glm::pow(myClamp(glm::dot(reflectEye,lightDir), 0.0, 1.0), 20.0);
+    amb = objHit->ambCoeff*glm::vec3(1.0, 1.0, 1.0);
+    diff = shadow*objHit->diffCoeff*myClamp(glm::dot(nor,lightDir), 0.0, 1.0);
+    spec = shadow*objHit->specCoeff*glm::pow(myClamp(glm::dot(reflectEye,lightDir), 0.0, 1.0), objHit->specExp);
     returnColor = scene->light->color*material*(diff+spec);
     returnColor += amb;
     

@@ -34,6 +34,7 @@ glm::vec3 Camera::getRayPos() {
 
 // pos(0,0) translates to uv(0,0)
 // pos(N,M) translates to uv(1,1)
+// Returns a normalized ray direction value
 glm::vec3 Camera::getRayDir(int row, int col, int height, int width) {
     // convert to 0 -> 1.0 (normalize)
     float fmtRow = float(row) / float(height);

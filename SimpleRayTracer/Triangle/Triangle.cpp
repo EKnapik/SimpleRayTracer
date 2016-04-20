@@ -53,7 +53,7 @@ glm::vec3 Triangle::getNormal(glm::vec3 pos) {
     float B = glm::length(glm::cross(this->v1-this->v3, pos-this->v3)) / parallelogramArea;
     
     // C = 1 - A - B;
-    return (A*this->vNorm1 + B*this->vNorm2 + (1-A-B)*this->vNorm3);
+    return glm::normalize((A*this->vNorm1 + B*this->vNorm2 + (1-A-B)*this->vNorm3));
 }
 
 

@@ -53,7 +53,6 @@ public:
     void addMeshObj(Mesh *meshObj);
     void addGeometricObj(Geometric *geomObj);
     
-    float ambientCoeff;
 private:
     Background *baseBackground;
 };
