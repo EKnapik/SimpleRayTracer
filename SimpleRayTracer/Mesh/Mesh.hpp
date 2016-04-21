@@ -15,8 +15,6 @@
 #include <sstream>
 #include <fstream>
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include "tiny_obj_loader.h"
 #include "Triangle.hpp"
 
 class Mesh {

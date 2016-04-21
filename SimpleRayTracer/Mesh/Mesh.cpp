@@ -7,6 +7,8 @@
 //
 
 #include "Mesh.hpp"
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "tiny_obj_loader.hpp"
 
 Mesh::Mesh() {
     this->pos = glm::vec3(0.0, 0.0, 0.0);
