@@ -18,6 +18,7 @@ Triangle::Triangle(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3) {
     this->vNorm2 = surfaceNorm;
     this->vNorm3 = surfaceNorm;
     
+    this->pos = (v1 + v2 + v3) / float(3.0);
     this->color = glm::vec3(4.9, 0.1, 0.1);
     this->diffCoeff = .9454545;
     this->specCoeff = .545454;
@@ -33,7 +34,8 @@ Triangle::Triangle(glm::vec3 v1, glm::vec3 vNorm1, glm::vec3 v2, glm::vec3 vNorm
     this->vNorm2 = vNorm2;
     this->vNorm3 = vNorm3;
     
-    this->color = glm::vec3(4.9, 0.1, 0.1);
+    this->pos = (v1 + v2 + v3) / float(3.0);
+    this->color = glm::vec3(1.0, 0.1, 0.1);
     this->diffCoeff = .9454545;
     this->specCoeff = .545454;
 }

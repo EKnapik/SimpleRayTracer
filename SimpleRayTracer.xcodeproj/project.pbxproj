@@ -44,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1306B1971CC9159C005D6823 /* tiny_obj_loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = tiny_obj_loader.h; path = TinyObjLoader/tiny_obj_loader.h; sourceTree = "<group>"; };
 		130D1BC51BCB11E900CCF04A /* SimpleRayTracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRayTracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		130D1BC81BCB11E900CCF04A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		130D1BCF1BCB120600CCF04A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -98,6 +99,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1306B1961CC91571005D6823 /* TinyObjLoader */ = {
+			isa = PBXGroup;
+			children = (
+				1306B1971CC9159C005D6823 /* tiny_obj_loader.h */,
+			);
+			name = TinyObjLoader;
+			sourceTree = "<group>";
+		};
 		130D1BBC1BCB11E900CCF04A = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +128,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				1306B1961CC91571005D6823 /* TinyObjLoader */,
 				1381C65B1C91ECFF008732DB /* PhysicsEngine */,
 				137D9FB51C9155CA00137ACF /* FluidMath */,
 				137D9FB11C91515D00137ACF /* FluidParticle */,

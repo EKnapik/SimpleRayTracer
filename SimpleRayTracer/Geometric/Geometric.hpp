@@ -33,9 +33,9 @@ public:
     void applyPhysics(float timeStep) {this->pos += this->velocity * timeStep;};
     bool movable = false;
     
-    glm::vec3 pos;
-    glm::vec3 velocity;
-    glm::vec3 color;
+    glm::vec3 pos = glm::vec3(0.0);
+    glm::vec3 velocity = glm::vec3(0.0);
+    glm::vec3 color = glm::vec3(0.0);
     // Collision
     ObjType type;
     float collisionRadius;

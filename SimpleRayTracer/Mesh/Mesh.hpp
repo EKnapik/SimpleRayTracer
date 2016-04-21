@@ -10,11 +10,19 @@
 #define Mesh_hpp
 
 #include <stdio.h>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "tiny_obj_loader.h"
 #include "Triangle.hpp"
 
 class Mesh {
     Mesh();
     Mesh(Triangle **meshTriangles, int numTriangles);
+    Mesh(std::string fileName);
     void addTriangle(Triangle *triangle);
     
     // move, scale and rotate mesh

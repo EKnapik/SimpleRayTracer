@@ -21,6 +21,43 @@ Mesh::Mesh(Triangle **meshTriangles, int numTriangles) {
 }
 
 
+/*
+ Used for the importing of wavefront .obj files
+ */
+Mesh::Mesh(std::string fileName) {
+    std::ifstream meshFile(fileName);
+    std::string line;
+    std::string name;
+    
+    // verticies
+    // numVerticies
+    // normals
+    
+    int numVerticies = 0;
+    while(std::getline(meshFile, line)){
+        if(line == "" || line[0] == '#') // skip comments and blank lines
+            continue;
+        
+        std::istringstream lineStream(line);
+        lineStream >> name; // the type of line we are about to read
+        
+        if(name == "v"){    // Vertex
+            numVerticies++;
+            float *vertex = new float[3];
+            sscanf(line.c_str(), "%*s %f %f %f", &vertex[0], &vertex[1], &vertex[2]);
+        }
+        
+        if(name == "vn"){    // Vertex Normal
+            float *vertNorm = new float[3];
+            sscanf(line.c_str(), "%*s %f %f %f", &vertNorm[0], &vertNorm[1], &vertNorm[2]);
+        }
+    }
+    
+    
+}
+
+
+
 void Mesh::addTriangle(Triangle *triangle) {
     // expand the pointer
     // add to numTriangles
@@ -50,6 +87,8 @@ void Mesh::moveBy(glm::vec3 transVector) {
         
         resultVector = transMatrix * glm::vec4(this->triangles[i]->v3, 1.0);
         this->triangles[i]->v3 = glm::vec3(resultVector);
+        
+        this->triangles[i]->pos = (this->triangles[i]->v1 + this->triangles[i]->v2 + this->triangles[i]->v3) / float(3.0);
     }
 }
 
@@ -74,6 +113,8 @@ void Mesh::scale(float scaleFactor) {
         
         resultVector = scaleMatrix * glm::vec4(this->triangles[i]->v3, 1.0);
         this->triangles[i]->v3 = glm::vec3(resultVector);
+        
+        this->triangles[i]->pos = (this->triangles[i]->v1 + this->triangles[i]->v2 + this->triangles[i]->v3) / float(3.0);
     }
 }
 
@@ -91,6 +132,8 @@ void Mesh::rotateX(float degrees) {
         
         resultVector = rotateXMatrix * glm::vec4(this->triangles[i]->v3, 1.0);
         this->triangles[i]->v3 = glm::vec3(resultVector);
+        
+        this->triangles[i]->pos = (this->triangles[i]->v1 + this->triangles[i]->v2 + this->triangles[i]->v3) / float(3.0);
     }
 }
 
@@ -108,6 +151,8 @@ void Mesh::rotateY(float degrees) {
         
         resultVector = rotateYMatrix * glm::vec4(this->triangles[i]->v3, 1.0);
         this->triangles[i]->v3 = glm::vec3(resultVector);
+        
+        this->triangles[i]->pos = (this->triangles[i]->v1 + this->triangles[i]->v2 + this->triangles[i]->v3) / float(3.0);
     }
 }
 
@@ -125,6 +170,8 @@ void Mesh::rotateZ(float degrees) {
         
         resultVector = rotateZMatrix * glm::vec4(this->triangles[i]->v3, 1.0);
         this->triangles[i]->v3 = glm::vec3(resultVector);
+        
+        this->triangles[i]->pos = (this->triangles[i]->v1 + this->triangles[i]->v2 + this->triangles[i]->v3) / float(3.0);
     }
 }
 
