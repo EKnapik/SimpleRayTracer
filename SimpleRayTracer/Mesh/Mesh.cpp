@@ -27,34 +27,66 @@ Mesh::Mesh(Triangle **meshTriangles, int numTriangles) {
  Used for the importing of wavefront .obj files
  */
 Mesh::Mesh(std::string fileName) {
-    std::ifstream meshFile(fileName);
-    std::string line;
-    std::string name;
+    this->pos = glm::vec3(0.0, 0.0, 0.0);
+    this->numTriangles = 0;
+    this->triangles = (Triangle**) malloc(this->numTriangles*sizeof(Triangle*));
     
-    // verticies
-    // numVerticies
-    // normals
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
     
-    int numVerticies = 0;
-    while(std::getline(meshFile, line)){
-        if(line == "" || line[0] == '#') // skip comments and blank lines
-            continue;
-        
-        std::istringstream lineStream(line);
-        lineStream >> name; // the type of line we are about to read
-        
-        if(name == "v"){    // Vertex
-            numVerticies++;
-            float *vertex = new float[3];
-            sscanf(line.c_str(), "%*s %f %f %f", &vertex[0], &vertex[1], &vertex[2]);
-        }
-        
-        if(name == "vn"){    // Vertex Normal
-            float *vertNorm = new float[3];
-            sscanf(line.c_str(), "%*s %f %f %f", &vertNorm[0], &vertNorm[1], &vertNorm[2]);
-        }
+    std::string err;
+    bool ret = tinyobj::LoadObj(shapes, materials, err, fileName.c_str());
+    
+    if (!err.empty()) { // `err` may contain warning message.
+        std::cerr << err << std::endl;
     }
     
+    if (!ret) {
+        exit(1);
+    }
+    
+    int index;
+    for (size_t i = 0; i < shapes.size(); i++) {
+        index = 0;
+        assert((shapes[i].mesh.indices.size() % 3) == 0);
+        assert((shapes[i].mesh.positions.size() % 3) == 0);
+        while(index < shapes[i].mesh.indices.size()) {
+            int v1_index, v2_index, v3_index;
+            v1_index = shapes[i].mesh.indices[index];
+            index++;
+            v2_index = shapes[i].mesh.indices[index];
+            index++;
+            v3_index = shapes[i].mesh.indices[index];
+            index++;
+            
+            /*
+            printf("Triangle: (%.2f, %.2f, %.2f), (%.2f, %.2f, %.2f), (%.2f, %.2f, %.2f)\n",
+                   shapes[i].mesh.positions[3*v1_index+0],
+                   shapes[i].mesh.positions[3*v1_index+1],
+                   shapes[i].mesh.positions[3*v1_index+2],
+                   
+                   shapes[i].mesh.positions[3*v2_index+0],
+                   shapes[i].mesh.positions[3*v2_index+1],
+                   shapes[i].mesh.positions[3*v2_index+2],
+                   
+                   shapes[i].mesh.positions[3*v3_index+0],
+                   shapes[i].mesh.positions[3*v3_index+1],
+                   shapes[i].mesh.positions[3*v3_index+2]);
+            */
+            this->numTriangles++;
+            // reallocing every time and not checking the pointer good stuff.....
+            this->triangles = (Triangle**) realloc(this->triangles, this->numTriangles*sizeof(Triangle*));
+            this->triangles[numTriangles-1] = new Triangle(
+                glm::vec3(shapes[i].mesh.positions[3*v1_index+0], shapes[i].mesh.positions[3*v1_index+1],
+                          shapes[i].mesh.positions[3*v1_index+2]),
+                                                           
+                glm::vec3(shapes[i].mesh.positions[3*v2_index+0], shapes[i].mesh.positions[3*v2_index+1],
+                          shapes[i].mesh.positions[3*v2_index+2]),
+                                                           
+                glm::vec3(shapes[i].mesh.positions[3*v3_index+0], shapes[i].mesh.positions[3*v3_index+1],
+                          shapes[i].mesh.positions[3*v3_index+2]));
+        }
+    }
     
 }
 

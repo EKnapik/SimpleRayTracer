@@ -37,6 +37,53 @@
 //   #define TINYOBJLOADER_IMPLEMENTATION
 //   #include "tiny_obj_loader.h"
 //
+/*
+std::string fileName = "cube.obj";
+std::vector<tinyobj::shape_t> shapes;
+std::vector<tinyobj::material_t> materials;
+ 
+std::string err;
+bool ret = tinyobj::LoadObj(shapes, materials, err, fileName.c_str());
+ 
+if (!err.empty()) { // `err` may contain warning message.
+std::cerr << err << std::endl;
+}
+ 
+if (!ret) {
+    exit(1);
+}
+
+std::cout << "# of shapes    : " << shapes.size() << std::endl;
+std::cout << "# of materials : " << materials.size() << std::endl;
+
+for (size_t i = 0; i < shapes.size(); i++) {
+    printf("shape[%ld].name = %s\n", i, shapes[i].name.c_str());
+    printf("Size of shape[%ld].indices: %ld\n", i, shapes[i].mesh.indices.size());
+    
+    for (size_t f = 0; f < shapes[i].mesh.indices.size(); f++) {
+        printf("  idx[%ld] = %d\n", f, shapes[i].mesh.indices[f]);
+    }
+    
+    printf("shape[%ld].vertices: %ld\n", i, shapes[i].mesh.positions.size());
+    assert((shapes[i].mesh.positions.size() % 3) == 0);
+    for (size_t v = 0; v < shapes[i].mesh.positions.size() / 3; v++) {
+        printf("  v[%ld] = (%f, %f, %f)\n", v,
+               shapes[i].mesh.positions[3*v+0],
+               shapes[i].mesh.positions[3*v+1],
+               shapes[i].mesh.positions[3*v+2]);
+        
+    }
+    
+    printf("shape[%ld].normals: %ld\n", i, shapes[i].mesh.normals.size());
+    assert((shapes[i].mesh.normals.size() % 3) == 0);
+    for (size_t n = 0; n < shapes[i].mesh.normals.size() / 3; n++) {
+        printf("  v[%ld] = (%f, %f, %f)\n", n,
+               shapes[i].mesh.normals[3*n+0],
+               shapes[i].mesh.normals[3*n+1],
+               shapes[i].mesh.normals[3*n+2]);
+    }
+}
+*/
 
 #ifndef TINY_OBJ_LOADER_H_
 #define TINY_OBJ_LOADER_H_

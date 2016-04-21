@@ -9,15 +9,14 @@
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
+#include <iostream>
 #include <stdio.h>
 #include <string>
-#include <iostream>
-#include <sstream>
-#include <fstream>
 
 #include "Triangle.hpp"
 
 class Mesh {
+public:
     Mesh();
     Mesh(Triangle **meshTriangles, int numTriangles);
     Mesh(std::string fileName);

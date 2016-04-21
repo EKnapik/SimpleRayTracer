@@ -13,7 +13,8 @@ Scene::Scene() {
     // TURNER WHITTED
     this->baseBackground = new Background();
     this->camera = new Camera(glm::vec3(1.0, 1.3, 2.2), glm::vec3(1.0, 1.1, -1.0));
-    this->light = new Light();
+    this->light = new Light(); 
+    
     this->numObjects = 3;
     this->shapes = new Geometric *[numObjects];
     Plane *plane = new Plane();

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1306B19D1CC91E72005D6823 /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1306B19C1CC91DE8005D6823 /* cube.obj */; };
+		1306B1A11CC92C38005D6823 /* bunny.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1306B1A01CC92C13005D6823 /* bunny.obj */; };
 		130D1BC91BCB11E900CCF04A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130D1BC81BCB11E900CCF04A /* main.cpp */; };
 		130D1BD01BCB120600CCF04A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BCF1BCB120600CCF04A /* OpenGL.framework */; };
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
@@ -36,6 +38,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				1306B1A11CC92C38005D6823 /* bunny.obj in CopyFiles */,
+				1306B19D1CC91E72005D6823 /* cube.obj in CopyFiles */,
 				139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */,
 				139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */,
 			);
@@ -45,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		1306B19A1CC916DD005D6823 /* tiny_obj_loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = tiny_obj_loader.hpp; path = TinyObjLoader/tiny_obj_loader.hpp; sourceTree = "<group>"; };
+		1306B19C1CC91DE8005D6823 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		1306B1A01CC92C13005D6823 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
 		130D1BC51BCB11E900CCF04A /* SimpleRayTracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRayTracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		130D1BC81BCB11E900CCF04A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		130D1BCF1BCB120600CCF04A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -128,6 +134,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				1306B1A01CC92C13005D6823 /* bunny.obj */,
 				1306B1981CC916AA005D6823 /* TinyObjLoader */,
 				1381C65B1C91ECFF008732DB /* PhysicsEngine */,
 				137D9FB51C9155CA00137ACF /* FluidMath */,
@@ -147,6 +154,7 @@
 				13869CAD1BD5C71100AC13D3 /* Window */,
 				139AD8D31BD2F47700C65037 /* RayTracer */,
 				138DC86B1BDD8E1C00E6A767 /* TODO */,
+				1306B19C1CC91DE8005D6823 /* cube.obj */,
 			);
 			path = SimpleRayTracer;
 			sourceTree = "<group>";

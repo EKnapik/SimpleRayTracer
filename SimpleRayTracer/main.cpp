@@ -26,8 +26,8 @@ PhysicsEngine *physEngine;
 Scene *scene;
 
 
+
 int main(int argc, char * argv[]) {
-    
     // Setup window statically because GLUT is poor at window and display render
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
@@ -73,7 +73,7 @@ void display(void) {
     physEngine->applyTimeStep(); // DO THE PHYSICS
     t = clock() - t;
     physicsTime = t;
-    printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC, ((float)physicsTime)/CLOCKS_PER_SEC);
+    //printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC, ((float)physicsTime)/CLOCKS_PER_SEC);
     //printf("X: %.2f, Y: %.2f, Z: %.2f\n",physEngine->scene->particles[0]->pos.x, physEngine->scene->particles[0]->pos.y, physEngine->scene->particles[0]->pos.z);
     
     //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
