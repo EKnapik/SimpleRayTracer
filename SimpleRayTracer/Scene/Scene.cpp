@@ -21,6 +21,8 @@ Scene::Scene(Camera *camera) {
     this->numObjects = 0;
     this->camera = camera;
     this->light = new Light();
+    this->numObjects = 0;
+    this->numMeshes = 0;
     this->numParticles = 0;
 }
 
@@ -111,10 +113,14 @@ void Scene::updateDataStrucutre() {
 
 void Scene::addMeshObj(Mesh *meshObj) {
     this->numMeshes++;
-    this->meshes = (Mesh**) realloc(this->meshes, this->numMeshes*sizeof(Mesh*));
+    if(this->numMeshes <= 1) {
+        this->meshes = (Mesh**) malloc(sizeof(Mesh*));
+    } else {
+        this->meshes = (Mesh**) realloc(this->meshes, this->numMeshes*sizeof(Mesh*));
+    }
     if(this->shapes == NULL) {
         delete[] this->meshes;
-        std::cerr << "Error reallocating memory for adding Mesh obj" << std::endl;
+        std::cerr << "Error (re)allocating memory for adding Mesh obj" << std::endl;
         exit(1);
         
     }
@@ -123,7 +129,11 @@ void Scene::addMeshObj(Mesh *meshObj) {
     int start = this->numObjects;
     int i = 0;
     this->numObjects += meshObj->numTriangles;
-    this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+    if(start < 1) {
+        this->shapes = (Geometric**) malloc(sizeof(Geometric*));
+    } else {
+        this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+    }
     if(this->shapes == NULL) {
         delete[] this->shapes;
         std::cerr << "Error reallocating memory for adding geometric obj from Mesh" << std::endl;
@@ -141,7 +151,11 @@ void Scene::addMeshObj(Mesh *meshObj) {
 
 void Scene::addGeometricObj(Geometric *geomObj) {
     this->numObjects++;
-    this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+    if(this->numObjects <= 1) {
+        this->shapes = (Geometric**) malloc(sizeof(Geometric*));
+    } else {
+        this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+    }
     if(this->shapes == NULL) {
         delete[] this->shapes;
         std::cerr << "Error reallocating memory for adding geometric obj" << std::endl;
