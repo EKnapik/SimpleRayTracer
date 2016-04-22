@@ -14,7 +14,7 @@
 #include "Ray.hpp"
 #include "Geometric.hpp"
 
-#define MAX_NODE_DEPTH 8
+#define MAX_NODE_DEPTH 9
 
 class Kd3Node {
 public:
@@ -23,14 +23,16 @@ public:
     ~Kd3Node();
     
     Geometric* traverse(Ray *ray);
+    void PRINT();
     
-    int numObjects;
-    Geometric** objects;
+    int numObjects = 0;
+    Geometric** objects = NULL;
 
 private:
     // solves for the best axis alligned partition using the surface
     // area heuristic
     glm::vec3 SAH(int numObjects, Geometric** objects);
+    Geometric* intersectCast(Ray *ray);
     
     PlaneType pType;
     float xMin, xMax;
@@ -50,7 +52,6 @@ int countGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric*
 Geometric** getSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects);
 
 Geometric** getGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects);
-
 
 
 #endif /* Kd3Node_hpp */
