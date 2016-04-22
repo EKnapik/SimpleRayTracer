@@ -21,7 +21,6 @@
 #include "Sphere.hpp"
 #include "FluidParticle.hpp"
 
-
 /* This should be given a file of some sort then will make the array of objects
  * in the scene and do stuff. This is merely the current state of the world
  * the Physics Enginee may adjust the positions the file is merely a starting
@@ -35,7 +34,6 @@ public:
     
     Geometric* intersectMarch(Ray *ray);
     Geometric* intersectCast(Ray *ray);
-    Geometric* shadowCast(Ray *ray);
     
     Camera *camera;
     Light *light;
@@ -57,5 +55,14 @@ public:
 private:
     Background *baseBackground;
 };
+
+
+// The scene from Turner Whitted's ray tracing paper
+Scene* createTurnerWhitted();
+
+// FLUID TEST
+// Basic fluid simulation setup for use with physics engine and particle simulation
+Scene* createFluidTest();
+
 
 #endif /* Scene_hpp */

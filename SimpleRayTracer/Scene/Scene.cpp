@@ -10,51 +10,9 @@
 #include <iostream>
 
 Scene::Scene() {
-    // TURNER WHITTED
     this->baseBackground = new Background();
-    this->camera = new Camera(glm::vec3(1.0, 1.3, 4.2), glm::vec3(1.0, 1.1, -1.0));
-    this->light = new Light();
-    
-    this->numMeshes = 1;
-    this->meshes = new Mesh *[numMeshes];
-    this->meshes[0] = new Mesh("cube.obj");
-    
-    
-    this->numObjects = this->meshes[0]->numTriangles;
-    this->shapes = new Geometric *[numObjects];
-    Plane *plane = new Plane();
-    plane->setxLimit(glm::vec2(-5, 3));
-    plane->setzLimit(glm::vec2(-10, 5));
-    this->shapes[0] = plane;
-    this->shapes[0]->ambCoeff = 0.15;
-    this->shapes[0]->diffCoeff = 0.95;
-    this->shapes[0]->specCoeff = 0.5;
-    this->shapes[0]->specExp = 20.0;
-    
-    this->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
-    this->shapes[1]->reflective = true;
-    this->shapes[1]->ambCoeff = 0.15;
-    this->shapes[1]->diffCoeff = 0.25;
-    this->shapes[1]->specCoeff = 1.0;
-    this->shapes[1]->specExp = 20.0;
-    this->shapes[1]->kT = 0;
-    this->shapes[1]->kR = 0.75;
-    
-    this->shapes[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(1.0, 1.0, 1.0));
-    this->shapes[2]->transmitive = true;
-    this->shapes[2]->ambCoeff = 0.15;
-    this->shapes[2]->diffCoeff = 0.075;
-    this->shapes[2]->specCoeff = 0.2;
-    this->shapes[2]->specExp = 20.0;
-    this->shapes[2]->kT = 0.8;
-    this->shapes[2]->kR = 0.01;
-    this->shapes[2]->refractIndex = 0.95;
-    
-    
-    for(int i = 0; i < this->numObjects; i++) {
-        this->shapes[i] = this->meshes[0]->triangles[i];
-    }
-    
+    this->numObjects = 0;
+    this->numMeshes = 0;
     this->numParticles = 0;
 }
 
@@ -67,10 +25,11 @@ Scene::Scene(Camera *camera) {
 }
 
 Scene::~Scene() {
-    for(int i = 0; i < numObjects; i++) {
-        delete shapes[i];
-    }
-    delete[] shapes;
+    delete this->camera;
+    delete this->light;
+    delete[] this->shapes;
+    delete[] this->meshes;
+    delete[] this->particles;
 }
 
 // MARCHES FOR GEOMETRICS AND PARTICLES
@@ -144,31 +103,6 @@ Geometric* Scene::intersectCast(Ray *ray) {
     return returnShape;
 }
 
-Geometric* Scene::shadowCast(Ray *ray) {
-    float resT = 10000.0; // infinity kinda
-    float tempT;
-    Geometric *returnShape = this->baseBackground;
-    
-    for(int i = 0; i < this->numObjects; i++) {
-        tempT = shapes[i]->getIntersect(ray);
-        if(tempT > 0 && tempT < resT) {
-            resT = tempT;
-            returnShape = shapes[i];
-            returnShape->timeHit = resT;
-        }
-    }
-    
-    for(int i = 0; i < this->numParticles; i++) {
-        tempT = particles[i]->getIntersect(ray);
-        if(tempT > 0 && tempT < resT) {
-            resT = tempT;
-            returnShape = particles[i];
-            returnShape->timeHit = resT;
-        }
-    }
-    
-    return returnShape;
-}
 
 void Scene::updateDataStrucutre() {
     
@@ -176,97 +110,136 @@ void Scene::updateDataStrucutre() {
 
 
 void Scene::addMeshObj(Mesh *meshObj) {
+    this->numMeshes++;
+    this->meshes = (Mesh**) realloc(this->meshes, this->numMeshes*sizeof(Mesh*));
+    if(this->shapes == NULL) {
+        delete[] this->meshes;
+        std::cerr << "Error reallocating memory for adding Mesh obj" << std::endl;
+        exit(1);
+        
+    }
+    this->meshes[numMeshes-1] = meshObj;
     
+    int start = this->numObjects;
+    int i = 0;
+    this->numObjects += meshObj->numTriangles;
+    this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+    if(this->shapes == NULL) {
+        delete[] this->shapes;
+        std::cerr << "Error reallocating memory for adding geometric obj from Mesh" << std::endl;
+        exit(1);
+        
+    }
+    for( ; start < this->numObjects; start++) {
+        this->shapes[start] = meshObj->triangles[i];
+        i++;
+    }
+    
+    updateDataStrucutre();
 }
 
 
 void Scene::addGeometricObj(Geometric *geomObj) {
+    this->numObjects++;
+    this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+    if(this->shapes == NULL) {
+        delete[] this->shapes;
+        std::cerr << "Error reallocating memory for adding geometric obj" << std::endl;
+        exit(1);
+        
+    }
+    this->shapes[this->numObjects-1] = geomObj;
     
+    updateDataStrucutre();
 }
 
 
-/*
- // TURNER WHITTED
- this->baseBackground = new Background();
- this->camera = new Camera(glm::vec3(1.0, 1.3, 2.2), glm::vec3(1.0, 1.1, -1.0));
- this->light = new Light();
- this->numObjects = 3;
- this->shapes = new Geometric *[numObjects];
- Plane *plane = new Plane();
- plane->setxLimit(glm::vec2(-5, 3));
- plane->setzLimit(glm::vec2(-10, 5));
- this->shapes[0] = plane;
- this->shapes[0]->ambCoeff = 0.15;
- this->shapes[0]->diffCoeff = 0.95;
- this->shapes[0]->specCoeff = 0.5;
- this->shapes[0]->specExp = 20.0;
- 
- this->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
- this->shapes[1]->reflective = true;
- this->shapes[1]->ambCoeff = 0.15;
- this->shapes[1]->diffCoeff = 0.25;
- this->shapes[1]->specCoeff = 1.0;
- this->shapes[1]->specExp = 20.0;
- this->shapes[1]->kT = 0;
- this->shapes[1]->kR = 0.75;
- 
- this->shapes[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(1.0, 1.0, 1.0));
- this->shapes[2]->transmitive = true;
- this->shapes[2]->ambCoeff = 0.15;
- this->shapes[2]->diffCoeff = 0.075;
- this->shapes[2]->specCoeff = 0.2;
- this->shapes[2]->specExp = 20.0;
- this->shapes[2]->kT = 0.8;
- this->shapes[2]->kR = 0.01;
- this->shapes[2]->refractIndex = 0.95;
- 
- this->numParticles = 0;
-*/
-
-/*
- // FLUID TEST
- this->baseBackground = new Background();
- this->camera = new Camera(glm::vec3(1.0, 1.1, 2.0), glm::vec3(1.0, 1.1, -1.0));
- this->light = new Light();
- 
- this->numObjects = 1;
- this->shapes = new Geometric *[numObjects];
- Plane *plane = new Plane();
- plane->setxLimit(glm::vec2(-20, 20));
- plane->setzLimit(glm::vec2(-20, 20));
- this->shapes[0] = plane;
- 
- this->numParticles = FLUID_NUM_PARTICLES;
- this->particles = new FluidParticle *[numParticles];
- 
- float currX = 0.0;
- float currY = 0.4;
- float currZ = 0.0;
- 
- int tmp = powf(this->numParticles, float(1.0/3.0));
- int count = 0;
- for(int i = 0; i < tmp; i++) {
- currZ = 0.0;
- for(int j = 0; j < tmp; j++) {
- currX = 0.0;
- for(int w = 0; w < tmp; w++) {
- this->particles[count] = new FluidParticle(glm::vec3(currX, currY, currZ));
- count++;
- currX += (2*FLUID_RADIUS);
- }
- currZ -= (2*FLUID_RADIUS);
- }
- currY += (2*FLUID_RADIUS);
- }
- 
- 
- //for(int i = 0; i < numParticles; i++) {
- //    this->particles[i] = new FluidParticle(glm::vec3(currX, 1.0, 0.0));
- //    currX += (2*FLUID_RADIUS);
- //}
- 
- 
- */
 
 
+// The scene from Turner Whitted's ray tracing paper
+Scene* createTurnerWhitted() {
+    Scene *scene = new Scene();
+    scene->camera = new Camera(glm::vec3(1.0, 1.3, 2.2), glm::vec3(1.0, 1.1, -1.0));
+    scene->light = new Light();
+    scene->numObjects = 3;
+    scene->shapes = new Geometric *[scene->numObjects];
+    Plane *plane = new Plane();
+    plane->setxLimit(glm::vec2(-5, 3));
+    plane->setzLimit(glm::vec2(-10, 5));
+    scene->shapes[0] = plane;
+    scene->shapes[0]->ambCoeff = 0.15;
+    scene->shapes[0]->diffCoeff = 0.95;
+    scene->shapes[0]->specCoeff = 0.5;
+    scene->shapes[0]->specExp = 20.0;
+    
+    scene->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
+    scene->shapes[1]->reflective = true;
+    scene->shapes[1]->ambCoeff = 0.15;
+    scene->shapes[1]->diffCoeff = 0.25;
+    scene->shapes[1]->specCoeff = 1.0;
+    scene->shapes[1]->specExp = 20.0;
+    scene->shapes[1]->kT = 0;
+    scene->shapes[1]->kR = 0.75;
+    
+    scene->shapes[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(1.0, 1.0, 1.0));
+    scene->shapes[2]->transmitive = true;
+    scene->shapes[2]->ambCoeff = 0.15;
+    scene->shapes[2]->diffCoeff = 0.075;
+    scene->shapes[2]->specCoeff = 0.2;
+    scene->shapes[2]->specExp = 20.0;
+    scene->shapes[2]->kT = 0.8;
+    scene->shapes[2]->kR = 0.01;
+    scene->shapes[2]->refractIndex = 0.95;
+    
+    scene->numParticles = 0;
+    
+    return scene;
+}
 
+
+// FLUID TEST
+// Basic fluid simulation setup for use with physics engine and particle simulation
+Scene* createFluidTest() {
+    Scene *scene = new Scene();
+    
+    scene->camera = new Camera(glm::vec3(1.0, 1.1, 2.0), glm::vec3(1.0, 1.1, -1.0));
+    scene->light = new Light();
+    
+    scene->numObjects = 1;
+    scene->shapes = new Geometric *[scene->numObjects];
+    Plane *plane = new Plane();
+    plane->setxLimit(glm::vec2(-20, 20));
+    plane->setzLimit(glm::vec2(-20, 20));
+    scene->shapes[0] = plane;
+    
+    scene->numParticles = FLUID_NUM_PARTICLES;
+    scene->particles = new FluidParticle *[scene->numParticles];
+    
+    float currX = 0.0;
+    float currY = 0.4;
+    float currZ = 0.0;
+    
+    int tmp = powf(scene->numParticles, float(1.0/3.0));
+    int count = 0;
+    for(int i = 0; i < tmp; i++) {
+        currZ = 0.0;
+        for(int j = 0; j < tmp; j++) {
+            currX = 0.0;
+            for(int w = 0; w < tmp; w++) {
+                scene->particles[count] = new FluidParticle(glm::vec3(currX, currY, currZ));
+                count++;
+                currX += (2*FLUID_RADIUS);
+            }
+            currZ -= (2*FLUID_RADIUS);
+        }
+        currY += (2*FLUID_RADIUS);
+    }
+    
+    
+    //for(int i = 0; i < numParticles; i++) {
+    //    scene->particles[i] = new FluidParticle(glm::vec3(currX, 1.0, 0.0));
+    //    currX += (2*FLUID_RADIUS);
+    //}
+    
+    return scene;
+}
