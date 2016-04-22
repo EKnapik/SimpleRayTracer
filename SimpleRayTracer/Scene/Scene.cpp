@@ -29,7 +29,7 @@ Scene::Scene(Camera *camera) {
 Scene::~Scene() {
     delete this->camera;
     delete this->light;
-    delete[] this->shapes;
+    delete[] this->objects;
     delete[] this->meshes;
     delete[] this->particles;
 }
@@ -51,10 +51,10 @@ Geometric* Scene::intersectMarch(Ray *ray) {
         float dist = tmax;
         float distTemp;
         for(int j = 0; j < numObjects; j++) {
-            distTemp = shapes[j]->getDistance(ray->pos + t*ray->dir);
+            distTemp = objects[j]->getDistance(ray->pos + t*ray->dir);
             if(distTemp < dist) {
                 dist = distTemp;
-                returnShape = shapes[j];
+                returnShape = objects[j];
             }
         }
         for(int j = 0; j < numParticles; j++) {
@@ -85,10 +85,10 @@ Geometric* Scene::intersectCast(Ray *ray) {
     Geometric *returnShape = this->baseBackground;
     
     for(int i = 0; i < this->numObjects; i++) {
-        tempT = shapes[i]->getIntersect(ray);
+        tempT = objects[i]->getIntersect(ray);
         if(tempT > 0 && tempT < resT) {
             resT = tempT;
-            returnShape = shapes[i];
+            returnShape = objects[i];
             returnShape->timeHit = resT;
         }
     }
@@ -118,7 +118,7 @@ void Scene::addMeshObj(Mesh *meshObj) {
     } else {
         this->meshes = (Mesh**) realloc(this->meshes, this->numMeshes*sizeof(Mesh*));
     }
-    if(this->shapes == NULL) {
+    if(this->objects == NULL) {
         delete[] this->meshes;
         std::cerr << "Error (re)allocating memory for adding Mesh obj" << std::endl;
         exit(1);
@@ -130,18 +130,18 @@ void Scene::addMeshObj(Mesh *meshObj) {
     int i = 0;
     this->numObjects += meshObj->numTriangles;
     if(start < 1) {
-        this->shapes = (Geometric**) malloc(sizeof(Geometric*));
+        this->objects = (Geometric**) malloc(sizeof(Geometric*));
     } else {
-        this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+        this->objects = (Geometric**) realloc(this->objects, this->numObjects*sizeof(Geometric*));
     }
-    if(this->shapes == NULL) {
-        delete[] this->shapes;
+    if(this->objects == NULL) {
+        delete[] this->objects;
         std::cerr << "Error reallocating memory for adding geometric obj from Mesh" << std::endl;
         exit(1);
         
     }
     for( ; start < this->numObjects; start++) {
-        this->shapes[start] = meshObj->triangles[i];
+        this->objects[start] = meshObj->triangles[i];
         i++;
     }
     
@@ -152,17 +152,17 @@ void Scene::addMeshObj(Mesh *meshObj) {
 void Scene::addGeometricObj(Geometric *geomObj) {
     this->numObjects++;
     if(this->numObjects <= 1) {
-        this->shapes = (Geometric**) malloc(sizeof(Geometric*));
+        this->objects = (Geometric**) malloc(sizeof(Geometric*));
     } else {
-        this->shapes = (Geometric**) realloc(this->shapes, this->numObjects*sizeof(Geometric*));
+        this->objects = (Geometric**) realloc(this->objects, this->numObjects*sizeof(Geometric*));
     }
-    if(this->shapes == NULL) {
-        delete[] this->shapes;
+    if(this->objects == NULL) {
+        delete[] this->objects;
         std::cerr << "Error reallocating memory for adding geometric obj" << std::endl;
         exit(1);
         
     }
-    this->shapes[this->numObjects-1] = geomObj;
+    this->objects[this->numObjects-1] = geomObj;
     
     updateDataStrucutre();
 }
@@ -176,34 +176,34 @@ Scene* createTurnerWhitted() {
     scene->camera = new Camera(glm::vec3(1.0, 1.3, 2.2), glm::vec3(1.0, 1.1, -1.0));
     scene->light = new Light();
     scene->numObjects = 3;
-    scene->shapes = new Geometric *[scene->numObjects];
+    scene->objects = new Geometric *[scene->numObjects];
     Plane *plane = new Plane();
     plane->setxLimit(glm::vec2(-5, 3));
     plane->setzLimit(glm::vec2(-10, 5));
-    scene->shapes[0] = plane;
-    scene->shapes[0]->ambCoeff = 0.15;
-    scene->shapes[0]->diffCoeff = 0.95;
-    scene->shapes[0]->specCoeff = 0.5;
-    scene->shapes[0]->specExp = 20.0;
+    scene->objects[0] = plane;
+    scene->objects[0]->ambCoeff = 0.15;
+    scene->objects[0]->diffCoeff = 0.95;
+    scene->objects[0]->specCoeff = 0.5;
+    scene->objects[0]->specExp = 20.0;
     
-    scene->shapes[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
-    scene->shapes[1]->reflective = true;
-    scene->shapes[1]->ambCoeff = 0.15;
-    scene->shapes[1]->diffCoeff = 0.25;
-    scene->shapes[1]->specCoeff = 1.0;
-    scene->shapes[1]->specExp = 20.0;
-    scene->shapes[1]->kT = 0;
-    scene->shapes[1]->kR = 0.75;
+    scene->objects[1] = new Sphere(glm::vec3(0.1, 1.0, -1.0), 0.65, glm::vec3(0.7));
+    scene->objects[1]->reflective = true;
+    scene->objects[1]->ambCoeff = 0.15;
+    scene->objects[1]->diffCoeff = 0.25;
+    scene->objects[1]->specCoeff = 1.0;
+    scene->objects[1]->specExp = 20.0;
+    scene->objects[1]->kT = 0;
+    scene->objects[1]->kR = 0.75;
     
-    scene->shapes[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(1.0, 1.0, 1.0));
-    scene->shapes[2]->transmitive = true;
-    scene->shapes[2]->ambCoeff = 0.15;
-    scene->shapes[2]->diffCoeff = 0.075;
-    scene->shapes[2]->specCoeff = 0.2;
-    scene->shapes[2]->specExp = 20.0;
-    scene->shapes[2]->kT = 0.8;
-    scene->shapes[2]->kR = 0.01;
-    scene->shapes[2]->refractIndex = 0.95;
+    scene->objects[2] = new Sphere(glm::vec3(1.2, 1.4, 0.2), 0.7, glm::vec3(1.0, 1.0, 1.0));
+    scene->objects[2]->transmitive = true;
+    scene->objects[2]->ambCoeff = 0.15;
+    scene->objects[2]->diffCoeff = 0.075;
+    scene->objects[2]->specCoeff = 0.2;
+    scene->objects[2]->specExp = 20.0;
+    scene->objects[2]->kT = 0.8;
+    scene->objects[2]->kR = 0.01;
+    scene->objects[2]->refractIndex = 0.95;
     
     scene->numParticles = 0;
     
@@ -220,11 +220,11 @@ Scene* createFluidTest() {
     scene->light = new Light();
     
     scene->numObjects = 1;
-    scene->shapes = new Geometric *[scene->numObjects];
+    scene->objects = new Geometric *[scene->numObjects];
     Plane *plane = new Plane();
     plane->setxLimit(glm::vec2(-20, 20));
     plane->setzLimit(glm::vec2(-20, 20));
-    scene->shapes[0] = plane;
+    scene->objects[0] = plane;
     
     scene->numParticles = FLUID_NUM_PARTICLES;
     scene->particles = new FluidParticle *[scene->numParticles];

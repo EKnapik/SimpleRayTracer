@@ -25,9 +25,9 @@ void PhysicsEngine::applyTimeStep(float timeDelta) {
     for(int i = 0; i < this->scene->numObjects; i++) {
         // each object should choose if physics applies to it......
         // TODO: Ask each object to move
-        if(this->scene->shapes[i]->movable) {
-            this->scene->shapes[i]->velocity += 9.8 * timeDelta;
-            this->scene->shapes[i]->applyPhysics(timeDelta);
+        if(this->scene->objects[i]->movable) {
+            this->scene->objects[i]->velocity += 9.8 * timeDelta;
+            this->scene->objects[i]->applyPhysics(timeDelta);
         }
     }
     
@@ -61,7 +61,7 @@ void PhysicsEngine::applyTimeStep(float timeDelta) {
     for(int i = 0; i < this->scene->numObjects; i++) {
         for(int j = 0; j < this->scene->numObjects; j++) {
             if(i != j) {
-                this->scene->shapes[i]->mirrorCollisionHandling(this->scene->shapes[j], DEFAULT_TIME_DELTA);
+                this->scene->objects[i]->mirrorCollisionHandling(this->scene->objects[j], DEFAULT_TIME_DELTA);
             }
         }
     }
@@ -69,7 +69,7 @@ void PhysicsEngine::applyTimeStep(float timeDelta) {
     for(int i = 0; i < this->scene->numParticles; i++) {
         for(int j = 0; j < this->scene->numObjects; j++) {
             if(i != j) {
-                this->scene->particles[i]->mirrorCollisionHandling(this->scene->shapes[j], DEFAULT_TIME_DELTA);
+                this->scene->particles[i]->mirrorCollisionHandling(this->scene->objects[j], DEFAULT_TIME_DELTA);
             }
         }
     }

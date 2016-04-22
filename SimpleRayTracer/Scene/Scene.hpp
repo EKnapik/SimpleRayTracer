@@ -39,7 +39,7 @@ public:
     Light *light;
     
     int numObjects;
-    Geometric **shapes;
+    Geometric **objects;
     
     int numParticles;
     FluidParticle **particles;
