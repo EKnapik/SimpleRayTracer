@@ -27,6 +27,7 @@ public:
     float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
+    bool isLess(glm::vec3 pos, PlaneType pType);
     // Collision
     bool doesCollideWith(Geometric *obj);
     void mirrorCollisionHandling(Geometric *obj, float timeStep);

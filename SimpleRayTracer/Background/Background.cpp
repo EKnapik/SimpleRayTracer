@@ -31,6 +31,10 @@ glm::vec3 Background::getColor(glm::vec3 pos) {
     return this->color;
 }
 
+bool Background::isLess(glm::vec3 pos, PlaneType pType) {
+    return false;
+}
+
 void Background::setColor(glm::vec3 color) {
     this->color = color;
 }

@@ -90,6 +90,37 @@ glm::vec3 Plane::getColor(glm::vec3 pos) {
     return glm::vec3(0.9, 0.9, 0.1);
 }
 
+
+bool Plane::isLess(glm::vec3 pos, PlaneType pType) {
+    switch (pType) {
+        case XY:
+            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
+            if(this->pos.z >= pos.z) {
+                return false;
+            }
+            break;
+        case YZ:
+            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
+            if(this->pos.x >= pos.x) {
+                return false;
+            }
+            break;
+        case XZ:
+            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
+            if(this->pos.y >= pos.y) {
+                return false;
+            }
+            break;
+        default:
+            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
+            exit(1);
+            break;
+    }
+    
+    return true;
+}
+
+
 bool Plane::doesCollideWith(Geometric *obj) {
     float dist = obj->getDistance(this->pos);
     if(dist < 0.001) {

@@ -29,6 +29,7 @@
 		139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E81BD2FFD700C65037 /* RayTracer.frag */; };
 		139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
 		13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13AA682A1BE4318E009DDE59 /* Ray.cpp */; };
+		13E154D01CC9FC2C00A81A05 /* Kd3Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13E154CE1CC9FC2C00A81A05 /* Kd3Node.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +91,8 @@
 		139AD8E91BD2FFDC00C65037 /* RayTracer.vert */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = RayTracer.vert; path = RayTracer/RayTracer.vert; sourceTree = "<group>"; };
 		13AA682A1BE4318E009DDE59 /* Ray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ray.cpp; path = Ray/Ray.cpp; sourceTree = "<group>"; };
 		13AA682B1BE4318E009DDE59 /* Ray.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Ray.hpp; path = Ray/Ray.hpp; sourceTree = "<group>"; };
+		13E154CE1CC9FC2C00A81A05 /* Kd3Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Kd3Node.cpp; path = Kd3Node/Kd3Node.cpp; sourceTree = "<group>"; };
+		13E154CF1CC9FC2C00A81A05 /* Kd3Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Kd3Node.hpp; path = Kd3Node/Kd3Node.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,7 @@
 		130D1BC71BCB11E900CCF04A /* SimpleRayTracer */ = {
 			isa = PBXGroup;
 			children = (
+				13E154CD1CC9FBFC00A81A05 /* Kd3Node */,
 				1306B1A01CC92C13005D6823 /* bunny.obj */,
 				1306B1981CC916AA005D6823 /* TinyObjLoader */,
 				1381C65B1C91ECFF008732DB /* PhysicsEngine */,
@@ -298,6 +302,15 @@
 			name = Ray;
 			sourceTree = "<group>";
 		};
+		13E154CD1CC9FBFC00A81A05 /* Kd3Node */ = {
+			isa = PBXGroup;
+			children = (
+				13E154CE1CC9FC2C00A81A05 /* Kd3Node.cpp */,
+				13E154CF1CC9FC2C00A81A05 /* Kd3Node.hpp */,
+			);
+			name = Kd3Node;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -358,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1391B5961C6C112F000BE3E1 /* Light.cpp in Sources */,
+				13E154D01CC9FC2C00A81A05 /* Kd3Node.cpp in Sources */,
 				13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */,
 				130D1BC91BCB11E900CCF04A /* main.cpp in Sources */,
 				137D9FAC1C91444E00137ACF /* Sphere.cpp in Sources */,

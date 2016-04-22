@@ -37,11 +37,17 @@ int main(int argc, char * argv[]) {
     initOpenGL();
     
     // Setup the ray tracer
-    scene = new Scene();
+    Mesh *myMesh = new Mesh("cube.obj");
+    scene = createTurnerWhitted();
+    scene->addMeshObj(myMesh);
     rayTracer = new RayTracer(scene);
     physEngine = new PhysicsEngine(scene);
     
     glutMainLoop();
+    
+    delete physEngine;
+    delete rayTracer;
+    delete scene;
     return 0;
 }
 
@@ -73,15 +79,15 @@ void display(void) {
     physEngine->applyTimeStep(); // DO THE PHYSICS
     t = clock() - t;
     physicsTime = t;
+    
     //printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC, ((float)physicsTime)/CLOCKS_PER_SEC);
     //printf("X: %.2f, Y: %.2f, Z: %.2f\n",physEngine->scene->particles[0]->pos.x, physEngine->scene->particles[0]->pos.y, physEngine->scene->particles[0]->pos.z);
     
-    //rayTracer->scene->shapes[1]->velocity.y -= 9.8 * TIMESTEP;
-    //rayTracer->scene->shapes[1]->pos += rayTracer->scene->shapes[1]->velocity * float(0.02);
-    //rayTracer->scene->shapes[1]->mirrorCollisionHandling(rayTracer->scene->shapes[0]);
-    
     glutSwapBuffers();
-    glutPostRedisplay();
+    
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#!#!#!#!#!#!
+    // Doing this for now because I only really care about 1 frame for most cases
+    // glutPostRedisplay();
 }
 
 

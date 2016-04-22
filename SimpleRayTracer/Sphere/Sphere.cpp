@@ -63,12 +63,41 @@ float Sphere::getIntersect(Ray *ray) {
 
 
 float Sphere::getDistance(glm::vec3 pos) {
-    return (glm::length(pos - this->pos));// - this->radius);
+    return (glm::length(pos - this->pos) - this->radius);
 }
 
 
 glm::vec3 Sphere::getColor(glm::vec3 pos) {
     return this->color;
+}
+
+bool Sphere::isLess(glm::vec3 pos, PlaneType pType) {
+    switch (pType) {
+        case XY:
+            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
+            if((this->pos.z - radius) >= pos.z) {
+                return false;
+            }
+            break;
+        case YZ:
+            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
+            if((this->pos.x - radius) >= pos.x) {
+                return false;
+            }
+            break;
+        case XZ:
+            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
+            if((this->pos.y - radius) >= pos.y) {
+                return false;
+            }
+            break;
+        default:
+            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
+            exit(1);
+            break;
+    }
+    
+    return true;
 }
 
 

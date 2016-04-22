@@ -114,6 +114,36 @@ glm::vec3 Triangle::getColor(glm::vec3 pos) {
 }
 
 
+bool Triangle::isLess(glm::vec3 pos, PlaneType pType) {
+    switch (pType) {
+        case XY:
+            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
+            if(this->v1.z >= pos.z || this->v2.z >= pos.z || this->v3.z >= pos.z) {
+                return false;
+            }
+            break;
+        case YZ:
+            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
+            if(this->v1.x >= pos.x || this->v2.x >= pos.x || this->v3.x >= pos.x) {
+                return false;
+            }
+            break;
+        case XZ:
+            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
+            if(this->v1.y >= pos.y || this->v2.y >= pos.y || this->v3.y >= pos.y) {
+                return false;
+            }
+            break;
+        default:
+            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
+            exit(1);
+            break;
+    }
+    
+    return true;  
+}
+
+
 bool Triangle::doesCollideWith(Geometric *obj) {
     float dist = obj->getDistance(this->pos);
     if(dist < 0.001) {

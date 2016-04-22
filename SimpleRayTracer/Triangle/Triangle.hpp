@@ -9,7 +9,6 @@
 #ifndef Triangle_hpp
 #define Triangle_hpp
 
-#include <stdio.h>
 #include "Geometric.hpp"
 #include "glm/vec3.hpp"
 #include "glm/glm.hpp"
@@ -28,6 +27,7 @@ public:
     // knows the color this would be a forward backward relation between
     // subclasses... decisions decisions
     glm::vec3 getColor(glm::vec3 pos);
+    bool isLess(glm::vec3 pos, PlaneType pType);
     
     // Collision
     bool doesCollideWith(Geometric *obj);
