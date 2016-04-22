@@ -30,6 +30,12 @@ Mesh::Mesh(std::string fileName) {
     this->pos = glm::vec3(0.0, 0.0, 0.0);
     this->numTriangles = 0;
     this->triangles = (Triangle**) malloc(this->numTriangles*sizeof(Triangle*));
+    if(this->triangles == NULL) {
+        delete[] this->triangles;
+        std::cerr << "Error allocating memory for adding triangle to mesh" << std::endl;
+        exit(1);
+        
+    }
     
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -76,6 +82,12 @@ Mesh::Mesh(std::string fileName) {
             this->numTriangles++;
             // reallocing every time and not checking the pointer good stuff.....
             this->triangles = (Triangle**) realloc(this->triangles, this->numTriangles*sizeof(Triangle*));
+            if(this->triangles == NULL) {
+                delete[] this->triangles;
+                std::cerr << "Error reallocating memory for adding triangle to mesh" << std::endl;
+                exit(1);
+                
+            }
             this->triangles[numTriangles-1] = new Triangle(
                 glm::vec3(shapes[i].mesh.positions[3*v1_index+0], shapes[i].mesh.positions[3*v1_index+1],
                           shapes[i].mesh.positions[3*v1_index+2]),
