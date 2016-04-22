@@ -13,7 +13,7 @@ Triangle::Triangle(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3) {
     this->v1 = v1;
     this->v2 = v2;
     this->v3 = v3;
-    glm::vec3 surfaceNorm = -glm::normalize(glm::cross(v2-v1, v3-v1));
+    glm::vec3 surfaceNorm = glm::normalize(glm::cross(v2-v1, v3-v1));
     this->vNorm1 = surfaceNorm;
     this->vNorm2 = surfaceNorm;
     this->vNorm3 = surfaceNorm;

@@ -12,10 +12,15 @@
 Scene::Scene() {
     // TURNER WHITTED
     this->baseBackground = new Background();
-    this->camera = new Camera(glm::vec3(1.0, 1.3, 2.2), glm::vec3(1.0, 1.1, -1.0));
-    this->light = new Light(); 
+    this->camera = new Camera(glm::vec3(1.0, 1.3, 4.2), glm::vec3(1.0, 1.1, -1.0));
+    this->light = new Light();
     
-    this->numObjects = 3;
+    this->numMeshes = 1;
+    this->meshes = new Mesh *[numMeshes];
+    this->meshes[0] = new Mesh("cube.obj");
+    
+    
+    this->numObjects = this->meshes[0]->numTriangles;
     this->shapes = new Geometric *[numObjects];
     Plane *plane = new Plane();
     plane->setxLimit(glm::vec2(-5, 3));
@@ -44,6 +49,11 @@ Scene::Scene() {
     this->shapes[2]->kT = 0.8;
     this->shapes[2]->kR = 0.01;
     this->shapes[2]->refractIndex = 0.95;
+    
+    
+    for(int i = 0; i < this->numObjects; i++) {
+        this->shapes[i] = this->meshes[0]->triangles[i];
+    }
     
     this->numParticles = 0;
 }
