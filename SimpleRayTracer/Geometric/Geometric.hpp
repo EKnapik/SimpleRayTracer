@@ -33,6 +33,7 @@ public:
     
     // Is this object completely less than the given point ?
     virtual bool isLess(glm::vec3 pos, PlaneType pType) = 0;
+    virtual bool isGreater(glm::vec3 pos, PlaneType pType) = 0;
     
     virtual bool doesCollideWith(Geometric *obj) = 0;
     // TODO: This Function is very similar for all shapes and shouldn't be virtual

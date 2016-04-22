@@ -51,7 +51,7 @@ glm::vec3 Plane::getNormal(glm::vec3 pos) {
 // if the denom is zero then the ray and plane are parallel
 float Plane::getIntersect(Ray *ray) {
     float denom = glm::dot(ray->dir, this->normal);
-    if(denom == 0) {
+    if(-0.00001 < denom && denom < 0.00001) {
         return -1.0;
     }
     float retT = glm::dot((this->pos - ray->pos), this->normal) / denom;
@@ -95,20 +95,20 @@ bool Plane::isLess(glm::vec3 pos, PlaneType pType) {
     switch (pType) {
         case XY:
             // planeNorm = glm::vec3(0.0, 0.0, 1.0);
-            if(this->pos.z >= pos.z) {
-                return false;
+            if(this->pos.z <= pos.z) {
+                return true;
             }
             break;
         case YZ:
             // planeNorm = glm::vec3(1.0, 0.0, 0.0);
-            if(this->pos.x >= pos.x) {
-                return false;
+            if(this->pos.x <= pos.x) {
+                return true;
             }
             break;
         case XZ:
             // planeNorm = glm::vec3(0.0, 1.0, 0.0);
-            if(this->pos.y >= pos.y) {
-                return false;
+            if(this->pos.y <= pos.y) {
+                return true;
             }
             break;
         default:
@@ -117,7 +117,37 @@ bool Plane::isLess(glm::vec3 pos, PlaneType pType) {
             break;
     }
     
-    return true;
+    return false;
+}
+
+
+bool Plane::isGreater(glm::vec3 pos, PlaneType pType) {
+    switch (pType) {
+        case XY:
+            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
+            if(this->pos.z >= pos.z) {
+                return true;
+            }
+            break;
+        case YZ:
+            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
+            if(this->pos.x >= pos.x) {
+                return true;
+            }
+            break;
+        case XZ:
+            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
+            if(this->pos.y >= pos.y) {
+                return true;
+            }
+            break;
+        default:
+            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
+            exit(1);
+            break;
+    }
+    
+    return false;
 }
 
 

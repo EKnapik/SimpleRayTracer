@@ -120,16 +120,15 @@ Geometric* Kd3Node::traverse(Ray *ray) {
         switch (this->pType) {
             case XY:
                 if(ray->pos.z < this->planePos.z) { // ray is within smaller
-                    if(this->smaller == NULL) {
-                        return NULL;
+                    if(this->smaller != NULL) {
+                        return this->smaller->traverse(ray);
                     }
-                    return this->smaller->traverse(ray);
                 } else {
-                    if(this->greater == NULL) {
-                        return NULL;
+                    if(this->greater != NULL) {
+                        return this->greater->traverse(ray);
                     }
-                    return this->greater->traverse(ray);
                 }
+                return NULL;
                 break;
             case YZ:
                 if(ray->pos.x < this->planePos.x) { // ray is within smaller
@@ -162,18 +161,18 @@ Geometric* Kd3Node::traverse(Ray *ray) {
     
     Geometric* retObj = NULL;
     float retT = glm::dot((this->planePos - ray->pos), planeNorm) / denom;
-    if(retT > 0) {
+    if(retT < 0) {
         if(this->smaller != NULL) {
             retObj = this->smaller->traverse(ray);
         }
-        if(retObj != NULL && this->greater != NULL) {
+        if(retObj == NULL && this->greater != NULL) {
             return this->greater->traverse(ray);
         }
     } else {
         if(this->greater != NULL) {
             retObj = this->greater->traverse(ray);
         }
-        if(retObj != NULL && this->smaller != NULL) {
+        if(retObj == NULL && this->smaller != NULL) {
             return this->smaller->traverse(ray);
         }
     }

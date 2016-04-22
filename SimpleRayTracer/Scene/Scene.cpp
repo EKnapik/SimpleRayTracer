@@ -106,8 +106,26 @@ Geometric* Scene::intersectCast(Ray *ray) {
 }
 
 
-void Scene::updateDataStrucutre() {
+
+Geometric* Scene::kdTreeCast(Ray *ray) {
+    if(this->kdTree == NULL) {
+        return intersectCast(ray);
+    }
+    Geometric* retObj = this->kdTree->traverse(ray);
+    if(retObj == NULL) {
+        retObj = this->baseBackground;
+    }
     
+    return retObj;
+}
+
+
+// The naieve approach just recreate it.
+void Scene::updateDataStrucutre() {
+    delete this->kdTree;
+    this->kdTree = new Kd3Node(MIN, MAX, MIN, MAX, MIN, MAX,
+                               this->numObjects, this->objects, 0);
+    this->kdTree->PRINT();
 }
 
 
@@ -206,6 +224,8 @@ Scene* createTurnerWhitted() {
     scene->objects[2]->refractIndex = 0.95;
     
     scene->numParticles = 0;
+    scene->kdTree = new Kd3Node(MIN, MAX, MIN, MAX, MIN, MAX,
+                               scene->numObjects, scene->objects, 0);
     
     return scene;
 }
@@ -254,6 +274,8 @@ Scene* createFluidTest() {
     //    scene->particles[i] = new FluidParticle(glm::vec3(currX, 1.0, 0.0));
     //    currX += (2*FLUID_RADIUS);
     //}
+    scene->kdTree = new Kd3Node(MIN, MAX, MIN, MAX, MIN, MAX,
+                                scene->numObjects, scene->objects, 0);
     
     return scene;
 }

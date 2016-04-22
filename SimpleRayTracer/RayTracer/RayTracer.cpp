@@ -118,7 +118,7 @@ glm::vec3 RayTracer::illuminate(Ray *ray, int depth) {
     if (depth <= 0) {
         return glm::vec3(-1.0);
     }
-    Geometric *objHit = scene->intersectCast(ray);
+    Geometric *objHit = scene->kdTreeCast(ray);
     glm::vec3 posHit = ray->pos + (objHit->timeHit*ray->dir);
     if(objHit->timeHit < 0) {
         return objHit->getColor(posHit);
@@ -193,7 +193,7 @@ glm::vec3 RayTracer::phongShading(Ray *inRay, Geometric *objHit) {
     glm::vec3 material = objHit->getColor(posHit);
     
     Ray *shadowRay = new Ray(posShadow, lightDir);
-    Geometric *shadowObj = scene->intersectCast(shadowRay);
+    Geometric *shadowObj = scene->kdTreeCast(shadowRay);
     float spec, diff, shadow;
     glm::vec3 amb;
     glm::vec3 returnColor;

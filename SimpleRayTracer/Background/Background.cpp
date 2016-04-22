@@ -35,6 +35,10 @@ bool Background::isLess(glm::vec3 pos, PlaneType pType) {
     return false;
 }
 
+bool Background::isGreater(glm::vec3 pos, PlaneType pType) {
+    return true;
+}
+
 void Background::setColor(glm::vec3 color) {
     this->color = color;
 }

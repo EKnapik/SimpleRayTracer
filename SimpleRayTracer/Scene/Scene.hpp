@@ -20,7 +20,11 @@
 #include "Light.hpp"
 #include "Sphere.hpp"
 #include "FluidParticle.hpp"
+#include "Kd3Node.hpp"
 
+
+#define MIN -20.0
+#define MAX 20.0
 /* This should be given a file of some sort then will make the array of objects
  * in the scene and do stuff. This is merely the current state of the world
  * the Physics Enginee may adjust the positions the file is merely a starting
@@ -34,6 +38,7 @@ public:
     
     Geometric* intersectMarch(Ray *ray);
     Geometric* intersectCast(Ray *ray);
+    Geometric* kdTreeCast(Ray *ray);
     
     Camera *camera;
     Light *light;
@@ -48,6 +53,8 @@ public:
     Mesh **meshes;
     
     // Spacial Data Structure:
+    Kd3Node* kdTree;
+    
     void updateDataStrucutre();
     void addMeshObj(Mesh *meshObj);
     void addGeometricObj(Geometric *geomObj);
