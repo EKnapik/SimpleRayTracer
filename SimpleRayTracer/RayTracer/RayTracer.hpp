@@ -30,17 +30,21 @@ class RayTracer {
 public:
     RayTracer(Scene *scenePtr, Window *windowPtr);
     RayTracer(Scene *scenePtr);
-    RayTracer();
+    ~RayTracer();
     void raytraceScene(void);
     void changeScene(Scene *newScene);
     Scene *scene;
     Window *window;
     
     // Rendering Flags
-    int samplingLevel;
+    int samplingLevel = 1;
     int rayDepthLevel = 7; // THE DEPTH OF RAY RECURSION
     
 private:
+     // width and height will be covered by the window when that is fixed
+    int height = 450;
+    int width = 800;
+    
     void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix
     glm::vec3 illuminate(Ray *ray, int depth);
     glm::vec3 phongShading(Ray *inRay, Geometric *objHit);
@@ -61,8 +65,6 @@ private:
     GLushort elementData[6];
     // some 3D byte array for the texture data
     GLubyte *pixelData;
-    int height, width; // these will be covered by the window when that is fixed
-    
     
 };
 #endif /* RayTracer_hpp */

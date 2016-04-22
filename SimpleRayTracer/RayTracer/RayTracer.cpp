@@ -10,10 +10,6 @@
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 RayTracer::RayTracer(Scene *scene, Window *window) {
-    // Set Defaults
-    this->samplingLevel = 1;
-    this->width = 800;
-    this->height = 450;
 	this->scene = scene;
 	this->window = window;
     setVertexData();
@@ -22,27 +18,14 @@ RayTracer::RayTracer(Scene *scene, Window *window) {
 }
 
 RayTracer::RayTracer(Scene *scene) {
-    // Set Defaults
-    this->samplingLevel = 1;
-    this->width = 800;
-    this->height = 450;
     this->scene = scene;
     setVertexData();
     populateMatrix();
     setupOpenGLCalls();
 }
 
-// Default test scene
-// Default ray tracer
-RayTracer::RayTracer() {
-    // Set Defaults
-    this->samplingLevel = 1;
-    this->width = 800;
-    this->height = 450;
-    this->scene = new Scene(); // loads the default scene
-    setVertexData();
-    populateMatrix();
-	setupOpenGLCalls();
+RayTracer::~RayTracer() {
+    delete this->pixelData;
 }
 
 void RayTracer::raytraceScene(void) {
