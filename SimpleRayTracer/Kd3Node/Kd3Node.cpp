@@ -145,14 +145,32 @@ int countGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric*
 }
 
 Geometric** getSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects) {
-    Geometric** smaller;
+    int numSmaller = countSmaller(splitPos, pType, numObjects, objects);
+    Geometric** smaller = new Geometric *[numSmaller];
+    
+    int count = 0;
+    for(int i = 0; i < numObjects; i++) {
+        if(objects[i]->isLess(splitPos, pType)) {
+            smaller[count] = objects[i];
+            count++;
+        }
+    }
     
     return smaller;
 }
 
 
 Geometric** getGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects) {
-    Geometric** greater;
+    int numGreater = countGreater(splitPos, pType, numObjects, objects);
+    Geometric** greater = new Geometric *[numGreater];
+    
+    int count = 0;
+    for(int i = 0; i < numObjects; i++) {
+        if(!objects[i]->isLess(splitPos, pType)) {
+            greater[count] = objects[i];
+            count++;
+        }
+    }
     
     return greater;
 }
