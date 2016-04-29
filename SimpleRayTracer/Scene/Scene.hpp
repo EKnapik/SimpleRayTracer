@@ -23,8 +23,8 @@
 #include "Kd3Node.hpp"
 
 
-#define MIN -20.0
-#define MAX 20.0
+#define MIN -5.0
+#define MAX 10.0
 /* This should be given a file of some sort then will make the array of objects
  * in the scene and do stuff. This is merely the current state of the world
  * the Physics Enginee may adjust the positions the file is merely a starting
@@ -40,20 +40,20 @@ public:
     Geometric* intersectCast(Ray *ray);
     Geometric* kdTreeCast(Ray *ray);
     
-    Camera *camera;
-    Light *light;
+    Camera *camera = NULL;
+    Light *light = NULL;
     
-    int numObjects;
-    Geometric **objects;
+    int numObjects = 0;
+    Geometric **objects = NULL;
     
-    int numParticles;
-    FluidParticle **particles;
+    int numParticles = 0;
+    FluidParticle **particles = NULL;
     
-    int numMeshes;
-    Mesh **meshes;
+    int numMeshes = 0;
+    Mesh **meshes = NULL;
     
     // Spacial Data Structure:
-    Kd3Node* kdTree;
+    Kd3Node* kdTree = NULL;
     
     void updateDataStrucutre();
     void addMeshObj(Mesh *meshObj);
@@ -66,6 +66,8 @@ private:
 
 // The scene from Turner Whitted's ray tracing paper
 Scene* createTurnerWhitted();
+
+Scene* createMeshTest();
 
 // FLUID TEST
 // Basic fluid simulation setup for use with physics engine and particle simulation

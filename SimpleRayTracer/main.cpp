@@ -37,9 +37,16 @@ int main(int argc, char * argv[]) {
     initOpenGL();
     
     // Setup the ray tracer
-    Mesh *myMesh = new Mesh("cube.obj");
-    scene = createTurnerWhitted();
-    scene->addMeshObj(myMesh);
+    Mesh *myMesh1 = new Mesh("bunny.obj");
+    myMesh1->scale(1.0);
+    //Mesh *myMesh2 = new Mesh("cube.obj");
+    //Mesh *myMesh3 = new Mesh("cube.obj");
+    //myMesh2->moveBy(glm::vec3(1.5, 0.0, 0.0));
+    //myMesh3->moveBy(glm::vec3(-1.0, 1.5, -1.0));
+    scene = createMeshTest();
+    scene->addMeshObj(myMesh1);
+    //scene->addMeshObj(myMesh2);
+    //scene->addMeshObj(myMesh3);
     rayTracer = new RayTracer(scene);
     physEngine = new PhysicsEngine(scene);
     
@@ -80,7 +87,7 @@ void display(void) {
     t = clock() - t;
     physicsTime = t;
     
-    //printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC, ((float)physicsTime)/CLOCKS_PER_SEC);
+    printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC, ((float)physicsTime)/CLOCKS_PER_SEC);
     //printf("X: %.2f, Y: %.2f, Z: %.2f\n",physEngine->scene->particles[0]->pos.x, physEngine->scene->particles[0]->pos.y, physEngine->scene->particles[0]->pos.z);
     
     glutSwapBuffers();

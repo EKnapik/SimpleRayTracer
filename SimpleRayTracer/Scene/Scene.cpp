@@ -111,7 +111,10 @@ Geometric* Scene::kdTreeCast(Ray *ray) {
     if(this->kdTree == NULL) {
         return intersectCast(ray);
     }
-    Geometric* retObj = this->kdTree->traverse(ray);
+    // this will be modified within the traversal
+    Ray *tmpRay = new Ray(ray->pos, ray->dir);
+    Geometric* retObj = this->kdTree->traverse(ray, tmpRay);
+    delete tmpRay;
     if(retObj == NULL) {
         retObj = this->baseBackground;
     }
@@ -125,6 +128,7 @@ void Scene::updateDataStrucutre() {
     delete this->kdTree;
     this->kdTree = new Kd3Node(MIN, MAX, MIN, MAX, MIN, MAX,
                                this->numObjects, this->objects, 0);
+    printf("KD Tree updated\n");
     this->kdTree->PRINT();
 }
 
@@ -226,6 +230,22 @@ Scene* createTurnerWhitted() {
     scene->numParticles = 0;
     scene->kdTree = new Kd3Node(MIN, MAX, MIN, MAX, MIN, MAX,
                                scene->numObjects, scene->objects, 0);
+    
+    return scene;
+}
+
+Scene* createMeshTest() {
+    Scene *scene = new Scene();
+    scene->camera = new Camera(glm::vec3(1.0, 1.3, 2.2), glm::vec3(1.0, 1.1, -1.0));
+    scene->light = new Light();
+    scene->numObjects = 1;
+    scene->objects = new Geometric *[scene->numObjects];
+    Plane *plane = new Plane();
+    scene->objects[0] = plane;
+    scene->objects[0]->ambCoeff = 0.15;
+    scene->objects[0]->diffCoeff = 0.95;
+    scene->objects[0]->specCoeff = 0.5;
+    scene->objects[0]->specExp = 20.0;
     
     return scene;
 }

@@ -10,6 +10,8 @@
 #define RayTracer_hpp
 #include <cstdio>
 #include <iostream>
+#include <thread>
+#include <mutex>
 #include <OpenGL/gl.h>
 #include "shaderSetup.hpp"
 #include "Window.hpp"
@@ -38,23 +40,24 @@ public:
     
     // Rendering Flags
     int samplingLevel = 1;
-    int rayDepthLevel = 7; // THE DEPTH OF RAY RECURSION
+    int rayDepthLevel = 8; // THE DEPTH OF RAY RECURSION
     
-private:
      // width and height will be covered by the window when that is fixed
     int height = 450;
     int width = 800;
     
-    void setColor(int row, int col); // <- that is run per pixel updating the 3D matrix
     glm::vec3 illuminate(Ray *ray, int depth);
     glm::vec3 phongShading(Ray *inRay, Geometric *objHit);
     void setupOpenGLCalls(void);
     void renderToWindow(void); // renders the current 3D matrix to the window
     void populateMatrix(void);
-    void setupThreads(void);
-    void shutdownThreads(void);
+    void parallelPopulateMatrix(void);
     void setVertexData(void);
     void sendTexture(void);
+    // some 3D byte array for the texture data
+    GLubyte *pixelData;
+    
+    private:
     
     // render 2 triangles and texture
     GLuint shaderProgram;
@@ -63,28 +66,10 @@ private:
     GLuint numVerts;
     GLfloat vertexData[20]; // set in construction
     GLushort elementData[6];
-    // some 3D byte array for the texture data
-    GLubyte *pixelData;
-    
 };
 #endif /* RayTracer_hpp */
 
-/*
- setColor():<- public
-    Given camera and cell position will shoot a ray into the scene to ask
-    something from the scene. Things that can be asked from the scene:
-        Nearest object and dist to that object
-            I guess this would have gravity info if I follow that path
-        Intersect
-            returns what object is intersected and at what t t
- 
- Vect4 Color shootRay(Ray ray, int depth):
-    // polls scene for nearest object marching untill hit
-    // @ hit possibly spawns more rays at a depth + 1
-    // does stuff to color depending on ray color, object intsected and stuff
-    // returns color
- 
-*/
+void setColor(RayTracer* rayTracer, int row, int col); // <- that is run per pixel updating the 3D matrix
 
 
 

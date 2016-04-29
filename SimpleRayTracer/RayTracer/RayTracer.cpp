@@ -39,62 +39,6 @@ void RayTracer::changeScene(Scene *newScene) {
 }
 
 
-// Uses the height and width of the RayTracer to determine the pixelData offset
-// to set the approprate values.
-// Values are determined by using the current scene to create rays shooting them
-// into the scene with a variable bounce depth
-// Supersampling can be done here by treating the pixel grid as if it were
-// doubled or tripled or more then there are 4, 9 or more rays shot per pixel
-// this adds computation time but no greater memory impact
-// SAMPLING:
-//  Supersampling can be done as part of the ray tracer. THe defualt is sampling
-//  level of 1 but that can be increased. The sampling is uniform super sampling
-//  where the amount of rays per pixel is the sampling level squared.
-void RayTracer::setColor(int row, int col) {
-    int dataOffset = (row * (4*this->width)) + (col * 4); // start of wher the color data should go
-    int rowPrime, colPrime, rowEnd, colEnd, widthPrime, heightPrime;
-    glm::vec4 totalColor = glm::vec4(0.0);
-    glm::vec4 color = glm::vec4(0.0);
-    Ray *ray = new Ray();
-    widthPrime = this->width * this->samplingLevel;
-    heightPrime = this->height * this->samplingLevel;
-    ray->pos = scene->camera->getRayPos();
-    
-    rowPrime = row * this->samplingLevel;
-    rowEnd = rowPrime + this->samplingLevel;
-    for(;rowPrime < rowEnd; rowPrime++) {
-        colPrime = col * this->samplingLevel;
-        colEnd = colPrime + this->samplingLevel;
-        for(;colPrime < colEnd; colPrime++) {
-            // ray dir is normalized
-            ray->dir = scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
-            color = glm::vec4(illuminate(ray, this->rayDepthLevel), 1.0);
-            // Color values may have been returned as greater than 1.0;
-            if(color.x > 1.0) {
-                color.x = 1.0;
-            }
-            if(color.y > 1.0) {
-                color.y = 1.0;
-            }
-            if(color.z > 1.0) {
-                color.z = 1.0;
-            }
-            totalColor += color;
-        }
-    }
-    
-    totalColor = totalColor / float(this->samplingLevel * this->samplingLevel);
-    // color values are currently 0.0 -> 1.0 need to transform them
-    // set the values
-    pixelData[dataOffset] = (totalColor.x * 255);
-    pixelData[dataOffset+1] = (totalColor.y * 255);
-    pixelData[dataOffset+2] = (totalColor.z * 255);
-    pixelData[dataOffset+3] = (totalColor.w * 255);
-    
-    delete ray;
-}
-
-
 float myClamp(float value, float min, float max) {
     if(value < min) {
         return min;
@@ -286,17 +230,37 @@ void RayTracer::renderToWindow(void) {
 void RayTracer::populateMatrix(void) {
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            setColor(row, col);
+            setColor(this, row, col);
         }
     }
 }
 
 // Using Threads
-void RayTracer::setupThreads(void) {
-    return;
-}
-
-void RayTracer::shutdownThreads(void) {
+// simple semi paralleled design
+// not optimal
+void RayTracer::parallelPopulateMatrix(void) {
+    int numThreads = 6;
+    std::thread* threads = new std::thread[numThreads];
+    
+    
+    int i = 0;
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            threads[i] = std::thread(setColor, this, row, col);
+            i++;
+            if(i >= numThreads) {
+                for(i = 0; i < numThreads; i++) {
+                    threads[i].join();
+                }
+                i = 0;
+            }
+        }
+    }
+    i--;
+    for(; i > 0; i--) {
+        threads[i].join();
+    }
+    
     return;
 }
 
@@ -350,6 +314,62 @@ void RayTracer::sendTexture(void) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
+
+
+// Uses the height and width of the RayTracer to determine the pixelData offset
+// to set the approprate values.
+// Values are determined by using the current scene to create rays shooting them
+// into the scene with a variable bounce depth
+// Supersampling can be done here by treating the pixel grid as if it were
+// doubled or tripled or more then there are 4, 9 or more rays shot per pixel
+// this adds computation time but no greater memory impact
+// SAMPLING:
+//  Supersampling can be done as part of the ray tracer. THe defualt is sampling
+//  level of 1 but that can be increased. The sampling is uniform super sampling
+//  where the amount of rays per pixel is the sampling level squared.
+void setColor(RayTracer* rayTracer, int row, int col) {
+    int dataOffset = (row * (4*rayTracer->width)) + (col * 4); // start of wher the color data should go
+    int rowPrime, colPrime, rowEnd, colEnd, widthPrime, heightPrime;
+    glm::vec4 totalColor = glm::vec4(0.0);
+    glm::vec4 color = glm::vec4(0.0);
+    Ray *ray = new Ray();
+    widthPrime = rayTracer->width * rayTracer->samplingLevel;
+    heightPrime = rayTracer->height * rayTracer->samplingLevel;
+    ray->pos = rayTracer->scene->camera->getRayPos();
+    
+    rowPrime = row * rayTracer->samplingLevel;
+    rowEnd = rowPrime + rayTracer->samplingLevel;
+    for(;rowPrime < rowEnd; rowPrime++) {
+        colPrime = col * rayTracer->samplingLevel;
+        colEnd = colPrime + rayTracer->samplingLevel;
+        for(;colPrime < colEnd; colPrime++) {
+            // ray dir is normalized
+            ray->dir = rayTracer->scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
+            color = glm::vec4(rayTracer->illuminate(ray, rayTracer->rayDepthLevel), 1.0);
+            // Color values may have been returned as greater than 1.0;
+            if(color.x > 1.0) {
+                color.x = 1.0;
+            }
+            if(color.y > 1.0) {
+                color.y = 1.0;
+            }
+            if(color.z > 1.0) {
+                color.z = 1.0;
+            }
+            totalColor += color;
+        }
+    }
+    
+    totalColor = totalColor / float(rayTracer->samplingLevel * rayTracer->samplingLevel);
+    // color values are currently 0.0 -> 1.0 need to transform them
+    // set the values
+    rayTracer->pixelData[dataOffset] = (totalColor.x * 255);
+    rayTracer->pixelData[dataOffset+1] = (totalColor.y * 255);
+    rayTracer->pixelData[dataOffset+2] = (totalColor.z * 255);
+    rayTracer->pixelData[dataOffset+3] = (totalColor.w * 255);
+    
+    delete ray;
+}
 
 
 
