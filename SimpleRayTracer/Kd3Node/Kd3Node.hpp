@@ -11,11 +11,13 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <stack>
 #include "Ray.hpp"
 #include "Geometric.hpp"
+#include "Background.hpp"
 
-#define MAX_NODE_DEPTH 6
-#define TEST_STEP 0.00005
+#define MAX_NODE_DEPTH 3
+#define TEST_STEP float(0.005)
 
 class Kd3Node {
 public:
@@ -23,7 +25,7 @@ public:
             int numObjects, Geometric** objects, int curDepth);
     ~Kd3Node();
     
-    Geometric* traverse(Ray *ray, Ray *tmpRay);
+    Geometric* traverse(Ray *ray, glm::vec3 tmpPos);
     void PRINT();
     
     int numObjects = 0;

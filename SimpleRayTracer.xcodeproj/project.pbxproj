@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1306B19D1CC91E72005D6823 /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1306B19C1CC91DE8005D6823 /* cube.obj */; };
-		1306B1A11CC92C38005D6823 /* bunny.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1306B1A01CC92C13005D6823 /* bunny.obj */; };
+		1306B19D1CC91E72005D6823 /* cube.obj in Copy Files */ = {isa = PBXBuildFile; fileRef = 1306B19C1CC91DE8005D6823 /* cube.obj */; };
+		1306B1A11CC92C38005D6823 /* bunny.obj in Copy Files */ = {isa = PBXBuildFile; fileRef = 1306B1A01CC92C13005D6823 /* bunny.obj */; };
 		130D1BC91BCB11E900CCF04A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130D1BC81BCB11E900CCF04A /* main.cpp */; };
 		130D1BD01BCB120600CCF04A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BCF1BCB120600CCF04A /* OpenGL.framework */; };
 		130D1BD21BCB120D00CCF04A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130D1BD11BCB120D00CCF04A /* GLUT.framework */; };
@@ -17,33 +17,31 @@
 		137D9FA61C90937400137ACF /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FA41C90937400137ACF /* Triangle.cpp */; };
 		137D9FA91C90956C00137ACF /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FA71C90956C00137ACF /* Mesh.cpp */; };
 		137D9FAC1C91444E00137ACF /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FAA1C91444E00137ACF /* Sphere.cpp */; };
-		137D9FB41C91517600137ACF /* FluidParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FB21C91517600137ACF /* FluidParticle.cpp */; };
-		137D9FB81C9155F500137ACF /* FluidMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137D9FB61C9155F500137ACF /* FluidMath.cpp */; };
-		1381C6621C91EDCA008732DB /* PhysicsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1381C6601C91EDCA008732DB /* PhysicsEngine.cpp */; };
 		13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CAE1BD5C77900AC13D3 /* Window.cpp */; };
 		13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13869CB21BD5C85000AC13D3 /* Scene.cpp */; };
 		1391B5961C6C112F000BE3E1 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1391B5941C6C112F000BE3E1 /* Light.cpp */; };
 		1391B5DD1C6C1DFD000BE3E1 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1391B5DB1C6C1DFD000BE3E1 /* Background.cpp */; };
 		139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8DF1BD2F6EE00C65037 /* RayTracer.cpp */; };
 		139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139AD8E31BD2F6EE00C65037 /* shaderSetup.cpp */; };
-		139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E81BD2FFD700C65037 /* RayTracer.frag */; };
-		139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
+		139AD8F41BD3045400C65037 /* RayTracer.frag in Copy Files */ = {isa = PBXBuildFile; fileRef = 139AD8E81BD2FFD700C65037 /* RayTracer.frag */; };
+		139AD8F51BD3045400C65037 /* RayTracer.vert in Copy Files */ = {isa = PBXBuildFile; fileRef = 139AD8E91BD2FFDC00C65037 /* RayTracer.vert */; };
 		13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13AA682A1BE4318E009DDE59 /* Ray.cpp */; };
 		13E154D01CC9FC2C00A81A05 /* Kd3Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13E154CE1CC9FC2C00A81A05 /* Kd3Node.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		139AD8F31BD3044400C65037 /* CopyFiles */ = {
+		139AD8F31BD3044400C65037 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				1306B1A11CC92C38005D6823 /* bunny.obj in CopyFiles */,
-				1306B19D1CC91E72005D6823 /* cube.obj in CopyFiles */,
-				139AD8F41BD3045400C65037 /* RayTracer.frag in CopyFiles */,
-				139AD8F51BD3045400C65037 /* RayTracer.vert in CopyFiles */,
+				1306B1A11CC92C38005D6823 /* bunny.obj in Copy Files */,
+				1306B19D1CC91E72005D6823 /* cube.obj in Copy Files */,
+				139AD8F41BD3045400C65037 /* RayTracer.frag in Copy Files */,
+				139AD8F51BD3045400C65037 /* RayTracer.vert in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -68,12 +66,6 @@
 		137D9FA81C90956C00137ACF /* Mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Mesh.hpp; path = Mesh/Mesh.hpp; sourceTree = "<group>"; };
 		137D9FAA1C91444E00137ACF /* Sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sphere.cpp; path = Sphere/Sphere.cpp; sourceTree = "<group>"; };
 		137D9FAB1C91444E00137ACF /* Sphere.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Sphere.hpp; path = Sphere/Sphere.hpp; sourceTree = "<group>"; };
-		137D9FB21C91517600137ACF /* FluidParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FluidParticle.cpp; path = FluidParticle/FluidParticle.cpp; sourceTree = "<group>"; };
-		137D9FB31C91517600137ACF /* FluidParticle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FluidParticle.hpp; path = FluidParticle/FluidParticle.hpp; sourceTree = "<group>"; };
-		137D9FB61C9155F500137ACF /* FluidMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FluidMath.cpp; path = FluidMath/FluidMath.cpp; sourceTree = "<group>"; };
-		137D9FB71C9155F500137ACF /* FluidMath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FluidMath.hpp; path = FluidMath/FluidMath.hpp; sourceTree = "<group>"; };
-		1381C6601C91EDCA008732DB /* PhysicsEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsEngine.cpp; path = PhysicsEngine/PhysicsEngine.cpp; sourceTree = "<group>"; };
-		1381C6611C91EDCA008732DB /* PhysicsEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PhysicsEngine.hpp; path = PhysicsEngine/PhysicsEngine.hpp; sourceTree = "<group>"; };
 		13869CAE1BD5C77900AC13D3 /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Window.cpp; path = Window/Window.cpp; sourceTree = "<group>"; };
 		13869CAF1BD5C77900AC13D3 /* Window.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Window.hpp; path = Window/Window.hpp; sourceTree = "<group>"; };
 		13869CB21BD5C85000AC13D3 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = Scene/Scene.cpp; sourceTree = "<group>"; };
@@ -140,9 +132,6 @@
 				13E154CD1CC9FBFC00A81A05 /* Kd3Node */,
 				1306B1A01CC92C13005D6823 /* bunny.obj */,
 				1306B1981CC916AA005D6823 /* TinyObjLoader */,
-				1381C65B1C91ECFF008732DB /* PhysicsEngine */,
-				137D9FB51C9155CA00137ACF /* FluidMath */,
-				137D9FB11C91515D00137ACF /* FluidParticle */,
 				137D9FA31C90934600137ACF /* Mesh */,
 				137D9FA21C90933D00137ACF /* Triangle */,
 				1391B5DA1C6C1DD2000BE3E1 /* Background */,
@@ -214,33 +203,6 @@
 				137D9FA81C90956C00137ACF /* Mesh.hpp */,
 			);
 			name = Mesh;
-			sourceTree = "<group>";
-		};
-		137D9FB11C91515D00137ACF /* FluidParticle */ = {
-			isa = PBXGroup;
-			children = (
-				137D9FB21C91517600137ACF /* FluidParticle.cpp */,
-				137D9FB31C91517600137ACF /* FluidParticle.hpp */,
-			);
-			name = FluidParticle;
-			sourceTree = "<group>";
-		};
-		137D9FB51C9155CA00137ACF /* FluidMath */ = {
-			isa = PBXGroup;
-			children = (
-				137D9FB61C9155F500137ACF /* FluidMath.cpp */,
-				137D9FB71C9155F500137ACF /* FluidMath.hpp */,
-			);
-			name = FluidMath;
-			sourceTree = "<group>";
-		};
-		1381C65B1C91ECFF008732DB /* PhysicsEngine */ = {
-			isa = PBXGroup;
-			children = (
-				1381C6601C91EDCA008732DB /* PhysicsEngine.cpp */,
-				1381C6611C91EDCA008732DB /* PhysicsEngine.hpp */,
-			);
-			name = PhysicsEngine;
 			sourceTree = "<group>";
 		};
 		13869CAD1BD5C71100AC13D3 /* Window */ = {
@@ -320,7 +282,7 @@
 			buildPhases = (
 				130D1BC11BCB11E900CCF04A /* Sources */,
 				130D1BC21BCB11E900CCF04A /* Frameworks */,
-				139AD8F31BD3044400C65037 /* CopyFiles */,
+				139AD8F31BD3044400C65037 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -375,15 +337,12 @@
 				13AA682C1BE4318E009DDE59 /* Ray.cpp in Sources */,
 				130D1BC91BCB11E900CCF04A /* main.cpp in Sources */,
 				137D9FAC1C91444E00137ACF /* Sphere.cpp in Sources */,
-				137D9FB41C91517600137ACF /* FluidParticle.cpp in Sources */,
 				137D9FA91C90956C00137ACF /* Mesh.cpp in Sources */,
 				13637D891BD5FE220017CC2A /* Plane.cpp in Sources */,
 				139AD8E51BD2F6EE00C65037 /* RayTracer.cpp in Sources */,
 				139AD8E61BD2F6EE00C65037 /* shaderSetup.cpp in Sources */,
 				137D9FA61C90937400137ACF /* Triangle.cpp in Sources */,
 				13869CB41BD5C85000AC13D3 /* Scene.cpp in Sources */,
-				1381C6621C91EDCA008732DB /* PhysicsEngine.cpp in Sources */,
-				137D9FB81C9155F500137ACF /* FluidMath.cpp in Sources */,
 				13637D811BD5FDC00017CC2A /* Camera.cpp in Sources */,
 				13869CB01BD5C77900AC13D3 /* Window.cpp in Sources */,
 				1391B5DD1C6C1DFD000BE3E1 /* Background.cpp in Sources */,
