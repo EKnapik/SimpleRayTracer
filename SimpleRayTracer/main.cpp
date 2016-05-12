@@ -79,7 +79,7 @@ void display(void) {
     t = clock() - t;
     rayTime = t;
     
-    printf("RayTracer took (%.4f seconds)\nFluid Physics took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC);
+    printf("RayTracer took (%.4f seconds)\n",((float)rayTime)/CLOCKS_PER_SEC);
     
     glutSwapBuffers();
     

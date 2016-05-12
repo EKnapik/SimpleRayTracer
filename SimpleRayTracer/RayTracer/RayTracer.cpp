@@ -30,8 +30,21 @@ RayTracer::~RayTracer() {
 
 void RayTracer::raytraceScene(void) {
     populateMatrix();
-    renderToWindow();
+    
+    // CAN DO TONE REPRODUCTION BECAUSE EVERYTHING IS SET
+    switch (this->toneModel) {
+        case WARD_TONE:
+            wardToneModel();
+            break;
+        case REINHARD_TONE:
+            reinhardToneModel();
+            break;
+        default:
+            break;
+    }
+    
     sendTexture(); // Every time the scene changes the texture must be resent
+    renderToWindow();
 }
 
 void RayTracer::changeScene(Scene *newScene) {
@@ -219,7 +232,6 @@ void RayTracer::renderToWindow(void) {
 	glVertexAttribPointer(uvPos, 2, GL_FLOAT, GL_FALSE, step, BUFFER_OFFSET(3*sizeof(GLfloat)));
 
 	glUniform1i(texPos, 0); // GL_TEXTURE0
-
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 }
 
@@ -371,6 +383,107 @@ void setColor(RayTracer* rayTracer, int row, int col) {
     delete ray;
 }
 
+
+
+
+// HEURISTIC calculation for the luminacne at a particular
+// pixel given the sRGB values at that pixel
+// the 'magic'  numbers associated with calculating the red, gree, and blue
+// contribution are based on the human visual perception of how much we precieve
+// color
+float RayTracer::luminanceAt(int row, int col) {
+    int dataOffset = (row * (4*this->width)) + (col * 4); // start of where the color is
+    float red = float(this->pixelData[dataOffset]) * 0.27;
+    float green = float(this->pixelData[dataOffset+1]) * 0.67;
+    float blue = float(this->pixelData[dataOffset+2]) * 0.06;
+    
+    return red + green + blue;
+}
+
+
+float RayTracer::logAvgLuminance() {
+    float total = 0.0;
+    const float epsilon = 0.001; // prevents ln(0)
+    // Sum up the ln(luminance) of each pixel
+    for(int row = 0; row < this->height; row++) {
+        for(int col = 0; col < this->width; col++) {
+            total += ln(epsilon + luminanceAt(row, col));
+        }
+    }
+    // divide by number of pixels
+    total = total / (this->width*this->height);
+    // take the e^(summed average)
+    total = powf(E_CONST, total);
+    
+    return total;
+}
+
+// Ward tone reproduction
+// uses sf - the scale factor
+void RayTracer::wardToneModel() {
+    float logAvg = logAvgLuminance();
+    float sf = powf((1.219 + powf(this->L_dmax/2.0, 0.4)) / (1.219 + powf(logAvg, 0.4)), 2.5);
+    printf("sf: %.2f\n", sf);
+    
+    // update each value
+    // colorNew = color * scaleFactor / L_dmax
+    int dataOffset;
+    float tmp;
+    for(int row = 0; row < this->height; row++) {
+        for(int col = 0; col < this->width; col++) {
+            dataOffset = (row * (4*this->width)) + (col * 4);
+            for(int i = 0; i < 3; i++) {
+                tmp = float(this->pixelData[dataOffset+i]) * sf / L_dmax * 255;
+                if(tmp > 255) {
+                    tmp = 255;
+                }
+                this->pixelData[dataOffset+i] = tmp;
+            }
+        }
+    }
+}
+
+
+// Reinhard Tone reproduction
+void RayTracer::reinhardToneModel() {
+    const float a = 0.18;
+    float logAvg = logAvgLuminance();
+    int dataOffset;
+    float rScaled;
+    float gScaled;
+    float bScaled;
+    
+    float rTarget;
+    float gTarget;
+    float bTarget;
+    
+    for(int row = 0; row < this->height; row++) {
+        for(int col = 0; col < this->width; col++) {
+            dataOffset = (row * (4*this->width)) + (col * 4);
+            rScaled = float(this->pixelData[dataOffset]) * a / logAvg;
+            gScaled = float(this->pixelData[dataOffset+1]) * a / logAvg;
+            bScaled = float(this->pixelData[dataOffset+2]) * a / logAvg;
+            
+            rTarget = rScaled / (1+rScaled) * 255;
+            gTarget = gScaled / (1+gScaled) * 255;
+            bTarget = bScaled / (1+bScaled) * 255;
+            
+            if(rTarget > 255) {
+                rTarget = 255;
+            }
+            if(gTarget > 255) {
+                gTarget = 255;
+            }
+            if(bTarget > 255) {
+                bTarget = 255;
+            }
+            
+            this->pixelData[dataOffset] = rTarget;
+            this->pixelData[dataOffset+1] = gTarget;
+            this->pixelData[dataOffset+2] = bTarget;
+        }
+    }
+}
 
 
 

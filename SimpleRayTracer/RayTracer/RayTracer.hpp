@@ -12,6 +12,7 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
+#include <math.h>
 #include <OpenGL/gl.h>
 #include "shaderSetup.hpp"
 #include "Window.hpp"
@@ -22,11 +23,16 @@
 #include "glm/vec3.hpp"
 #include "glm/glm.hpp"
 
+#define E_CONST 2.7182818281828
+#define ln(x) (log(x) / log(E_CONST))
+
 /*
  This draws two triangles over the entire rendering scene then given a scene
  and a window size and width or the window itself. Will create a texture that
  will be draw on those two triangles
  */
+
+enum ToneType {DEFAULT_TONE, WARD_TONE, REINHARD_TONE};
 
 class RayTracer {
 public:
@@ -41,6 +47,8 @@ public:
     // Rendering Flags
     int samplingLevel = 1;
     int rayDepthLevel = 8; // THE DEPTH OF RAY RECURSION
+    ToneType toneModel = REINHARD_TONE;
+    int L_dmax = 10000; // THE DEFAULT MAX NIT VALUE FORE TONE REPRODUCTION
     
      // width and height will be covered by the window when that is fixed
     int height = 450;
@@ -58,6 +66,12 @@ public:
     GLubyte *pixelData;
     
     private:
+    // Tone Reproduction
+    float luminanceAt(int row, int col);
+    float logAvgLuminance();
+    void wardToneModel();
+    void reinhardToneModel();
+    
     
     // render 2 triangles and texture
     GLuint shaderProgram;
