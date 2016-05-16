@@ -358,6 +358,8 @@ void setColor(RayTracer* rayTracer, int row, int col) {
             // ray dir is normalized
             ray->dir = rayTracer->scene->camera->getRayDir(rowPrime, colPrime, heightPrime, widthPrime);
             color = glm::vec4(rayTracer->illuminate(ray, rayTracer->rayDepthLevel), 1.0);
+            
+            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // Color values may have been returned as greater than 1.0;
             if(color.x > 1.0) {
                 color.x = 1.0;
@@ -393,17 +395,18 @@ void setColor(RayTracer* rayTracer, int row, int col) {
 // color
 float RayTracer::luminanceAt(int row, int col) {
     int dataOffset = (row * (4*this->width)) + (col * 4); // start of where the color is
-    float red = float(this->pixelData[dataOffset]) * 0.27;
-    float green = float(this->pixelData[dataOffset+1]) * 0.67;
-    float blue = float(this->pixelData[dataOffset+2]) * 0.06;
+    float red = float(this->pixelData[dataOffset]) / 255.0 * 0.27;
+    float green = float(this->pixelData[dataOffset+1]) / 255.0 * 0.67;
+    float blue = float(this->pixelData[dataOffset+2]) / 255.0 * 0.06;
+    float luminance = red + green + blue;
     
-    return red + green + blue;
+    return luminance;
 }
 
 
 float RayTracer::logAvgLuminance() {
     float total = 0.0;
-    const float epsilon = 0.001; // prevents ln(0)
+    const float epsilon = 0.0001; // prevents ln(0)
     // Sum up the ln(luminance) of each pixel
     for(int row = 0; row < this->height; row++) {
         for(int col = 0; col < this->width; col++) {
@@ -411,7 +414,7 @@ float RayTracer::logAvgLuminance() {
         }
     }
     // divide by number of pixels
-    total = total / (this->width*this->height);
+    total = total / float(this->width*this->height);
     // take the e^(summed average)
     total = powf(E_CONST, total);
     
@@ -422,9 +425,10 @@ float RayTracer::logAvgLuminance() {
 // uses sf - the scale factor
 void RayTracer::wardToneModel() {
     float logAvg = logAvgLuminance();
-    float sf = powf((1.219 + powf(this->L_dmax/2.0, 0.4)) / (1.219 + powf(logAvg, 0.4)), 2.5);
+    float top = (1.219 + powf((this->L_dmax/2.0), 0.4));
+    float bot = (1.219 + powf(logAvg, 0.4));
+    float sf = powf((top/bot), 2.5);
     printf("sf: %.2f\n", sf);
-    
     // update each value
     // colorNew = color * scaleFactor / L_dmax
     int dataOffset;
@@ -433,7 +437,7 @@ void RayTracer::wardToneModel() {
         for(int col = 0; col < this->width; col++) {
             dataOffset = (row * (4*this->width)) + (col * 4);
             for(int i = 0; i < 3; i++) {
-                tmp = float(this->pixelData[dataOffset+i]) * sf / L_dmax * 255;
+                tmp = float(this->pixelData[dataOffset+i]) * sf / L_dmax;
                 if(tmp > 255) {
                     tmp = 255;
                 }
@@ -457,13 +461,15 @@ void RayTracer::reinhardToneModel() {
     float gTarget;
     float bTarget;
     
+    // I pull the rgb out of 0-255 and transform them to 0-1.0 then
+    // put them back into 0-255 for the pixel data
     for(int row = 0; row < this->height; row++) {
         for(int col = 0; col < this->width; col++) {
             dataOffset = (row * (4*this->width)) + (col * 4);
-            rScaled = float(this->pixelData[dataOffset]) * a / logAvg;
-            gScaled = float(this->pixelData[dataOffset+1]) * a / logAvg;
-            bScaled = float(this->pixelData[dataOffset+2]) * a / logAvg;
-            
+            rScaled = float(this->pixelData[dataOffset]) / 255.0 * a / logAvg;
+            gScaled = float(this->pixelData[dataOffset+1]) / 255.0 * a / logAvg;
+            bScaled = float(this->pixelData[dataOffset+2]) / 255.0 * a / logAvg;
+
             rTarget = rScaled / (1+rScaled) * 255;
             gTarget = gScaled / (1+gScaled) * 255;
             bTarget = bScaled / (1+bScaled) * 255;
