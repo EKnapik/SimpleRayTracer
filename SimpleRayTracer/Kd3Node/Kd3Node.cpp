@@ -128,7 +128,7 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
     switch (this->pType) {
         case XY:
             planeNorm = glm::vec3(0.0, 0.0, 1.0);
-            if(ray->pos.z < this->planePos.z) {
+            if(tmpPos.z < this->planePos.z) {
                 inSmaller = true;
             } else {
                 inGreater = true;
@@ -136,7 +136,7 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
             break;
         case YZ:
             planeNorm = glm::vec3(1.0, 0.0, 0.0);
-            if(ray->pos.x < this->planePos.x) {
+            if(tmpPos.x < this->planePos.x) {
                 inSmaller = true;
             } else {
                 inGreater = true;
@@ -144,7 +144,7 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
             break;
         case XZ:
             planeNorm = glm::vec3(0.0, 1.0, 0.0);
-            if(ray->pos.y < this->planePos.y) {
+            if(tmpPos.y < this->planePos.y) {
                 inSmaller = true;
             } else {
                 inGreater = true;
@@ -174,7 +174,7 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
     
     // intersect the plane and traverse accordingly:
     float hitTime;
-    hitTime = (glm::dot((this->planePos - ray->pos), planeNorm) / denom);
+    hitTime = (glm::dot((this->planePos - tmpPos), planeNorm) / denom);
     glm::vec3 posHit;
     if(hitTime < 0) {
         // Pointing away from the plane
@@ -188,30 +188,30 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
             }
         }
     } else {
-        posHit = tmpPos + ray->dir*hitTime;
+        posHit = tmpPos + ray->dir*float(hitTime-0.01);
         switch (this->pType) {
             case XY:
-                if(posHit.x > this->xMax || posHit.y > this->yMax ||
-                   posHit.x < this->xMin || posHit.y < this->yMin) {
-                    inBounds = false;
-                } else {
+                if(posHit.x >= this->xMin && posHit.x <= this->xMax &&
+                   posHit.z >= this->zMin && posHit.z <= this->zMax) {
                     inBounds = true;
+                } else {
+                    inBounds = false;
                 }
                 break;
             case YZ:
-                if(posHit.y > this->yMax || posHit.z > this->zMax ||
-                   posHit.y < this->yMin || posHit.z < this->zMin) {
-                    inBounds = false;
-                } else {
+                if(posHit.y >= this->yMin && posHit.y <= this->yMax &&
+                   posHit.z >= this->zMin && posHit.z <= this->zMax) {
                     inBounds = true;
+                } else {
+                    inBounds = false;
                 }
                 break;
             case XZ:
-                if(posHit.x > this->xMax || posHit.z > this->zMax ||
-                   posHit.x < this->xMin || posHit.z < this->zMin) {
-                    inBounds = false;
-                } else {
+                if(posHit.x >= this->xMin && posHit.x <= this->xMax &&
+                   posHit.z >= this->zMin && posHit.z <= this->zMax) {
                     inBounds = true;
+                } else {
+                    inBounds = false;
                 }
                 break;
             default:

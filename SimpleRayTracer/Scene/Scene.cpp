@@ -106,8 +106,6 @@ void Scene::updateDataStrucutre() {
     delete this->kdTree;
     this->kdTree = new Kd3Node(MIN, MAX, MIN, MAX, MIN, MAX,
                                this->numObjects, this->objects, 0);
-    printf("KD Tree updated\n");
-    this->kdTree->PRINT();
 }
 
 

@@ -17,7 +17,7 @@
 #include "Background.hpp"
 
 #define MAX_NODE_DEPTH 3
-#define TEST_STEP float(0.5)
+#define TEST_STEP float(0.0005)
 
 class Kd3Node {
 public:
@@ -25,7 +25,7 @@ public:
             int numObjects, Geometric** objects, int curDepth);
     ~Kd3Node();
     
-    Geometric* traverse(Ray *ray, glm::vec3 tmpPos);
+    Geometric* traverse(Ray *ray,  glm::vec3 tmpPos);
     void PRINT();
     
     int numObjects = 0;

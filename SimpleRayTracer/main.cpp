@@ -36,14 +36,14 @@ int main(int argc, char * argv[]) {
     
     // Setup the ray tracer
     Mesh *myMesh1 = new Mesh("cube.obj");
-    myMesh1->scale(1.0);
-    myMesh1->moveBy(glm::vec3(0.0, 0.5, 0.0));
-    Mesh *myMesh2 = new Mesh("cube.obj");
+    myMesh1->scale(2.0);
+    myMesh1->moveBy(glm::vec3(0.0, 1.5, 0.0));
+    //Mesh *myMesh2 = new Mesh("cube.obj");
     //Mesh *myMesh3 = new Mesh("cube.obj");
-    myMesh2->moveBy(glm::vec3(1.5, 0.5, 0.0));
+    //myMesh2->moveBy(glm::vec3(1.5, 0.5, 0.0));
     //myMesh3->moveBy(glm::vec3(-1.0, 1.5, -1.0));
-    scene = createMeshTest();
-    scene->addMeshObj(myMesh1);
+    scene = createTurnerWhitted();
+    //scene->addMeshObj(myMesh1);
     //scene->addMeshObj(myMesh2);
     //scene->addMeshObj(myMesh3);
     rayTracer = new RayTracer(scene);
