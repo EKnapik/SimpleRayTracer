@@ -115,13 +115,22 @@ glm::vec3 Triangle::getColor(glm::vec3 pos) {
 
 
 bool Triangle::inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
-    // check X bounds
-    if((this->v1.x >= xMin && this->v1.x <= xMax) ||
-       (this->v2.x >= xMin && this->v2.x <= xMax) ||
-       (this->v3.x >= xMin && this->v3.x <= xMax)) {
+    // check X Y Z bounds for each triangle
+    if(((this->v1.x >= xMin && this->v1.x <= xMax) &&
+        (this->v1.y >= yMin && this->v1.y <= yMax) &&
+        (this->v1.z >= zMin && this->v1.z <= zMax)) ||
+       
+       ((this->v2.x >= xMin && this->v2.x <= xMax) &&
+        (this->v2.y >= yMin && this->v2.y <= yMax) &&
+        (this->v2.z >= zMin && this->v2.z <= zMax))||
+       
+       ((this->v3.x >= xMin && this->v3.x <= xMax) &&
+        (this->v3.y >= yMin && this->v3.y <= yMax) &&
+        (this->v3.z >= zMin && this->v3.z <= zMax))) {
         return true;
     }
-
+    
+    /*
     // check Y bounds
     if((this->v1.y >= yMin && this->v1.y <= yMax) ||
        (this->v2.y >= yMin && this->v2.y <= yMax) ||
@@ -135,6 +144,7 @@ bool Triangle::inBounds(float xMin, float xMax, float yMin, float yMax, float zM
        (this->v3.z >= zMin && this->v3.z <= zMax)) {
         return true;
     }
+    */
     
     return false;
 }

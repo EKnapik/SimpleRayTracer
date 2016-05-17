@@ -73,9 +73,12 @@ glm::vec3 Sphere::getColor(glm::vec3 pos) {
 
 bool Sphere::inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
     // Check X Bounds
-    if((this->pos.x + radius) >=  xMin && (this->pos.x - radius) <= xMax) {
+    if(((this->pos.x + radius) >=  xMin && (this->pos.x - radius) <= xMax) &&
+       ((this->pos.y + radius) >=  yMin && (this->pos.y - radius) <= yMax) &&
+       ((this->pos.z + radius) >=  zMin && (this->pos.z - radius) <= zMax)) {
         return true;
     }
+    
     // Check Y Bounds
     if((this->pos.y + radius) >=  yMin && (this->pos.y - radius) <= yMax) {
         return true;

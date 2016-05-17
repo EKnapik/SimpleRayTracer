@@ -213,7 +213,7 @@ Scene* createTurnerWhitted() {
 
 Scene* createMeshTest() {
     Scene *scene = new Scene();
-    scene->camera = new Camera(glm::vec3(0.0, 1.0, 3.0), glm::vec3(0.0, 1.0, -1.0));
+    scene->camera = new Camera(glm::vec3(0.0, 2.0, 5.0), glm::vec3(0.0, 1.0, -1.0));
     scene->light = new Light();
     scene->numObjects = 1;
     scene->objects = new Geometric *[scene->numObjects];
