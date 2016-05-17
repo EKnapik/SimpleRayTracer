@@ -16,7 +16,7 @@
 #include "Geometric.hpp"
 #include "Background.hpp"
 
-#define MAX_NODE_DEPTH 4
+#define MAX_NODE_DEPTH 6
 #define TEST_STEP float(0.005)
 
 class Kd3Node {

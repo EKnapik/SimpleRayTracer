@@ -121,8 +121,6 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
     }
     */
     
-    
-    // !!! SWITCHED TO NOT HAVE THE MOVED POSITION
     glm::vec3 planeNorm;
     bool inSmaller = false;
     bool inGreater = false;
@@ -250,107 +248,6 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
         }
     }
     return retObj;
-
-
-    /*
-    if(hitTime < 0) {
-        if(smaller) {
-            if(this->smaller != NULL) {
-                retObj = this->smaller->traverse(ray, tmpPos);
-            }
-        } else {
-            if(this->greater != NULL) {
-                retObj = this->greater->traverse(ray, tmpPos);
-            }
-        }
-    }
-    glm::vec3 posHit = tmpPos + ray->dir*hitTime;
-    if(posHit.x < this->xMax && posHit.y < yMax && posHit.z < zMax) {
-        if(this->smaller != NULL) {
-            retObj = this->smaller->traverse(ray, tmpPos);
-        }
-        if(this->greater != NULL && retObj != NULL) {
-            retObj = this->smaller->traverse(ray, posHit);
-        }
-    }
-    return retObj;
-    /*
-    Geometric* retObj = NULL;
-    bool smaller = false;
-    bool greater = false;
-    switch (this->pType) {
-        case XY:
-            if(tmpPos.z < this->planePos.z) { // within smaller
-                smaller = true;
-            } else if(tmpPos.z > this->planePos.z){ // within greater
-                greater = true;
-            }
-            break;
-        case YZ:
-            if(tmpPos.x < this->planePos.x) { // within smaller
-                smaller = true;
-            } else if(tmpPos.x > this->planePos.x) {
-                greater = true;
-            }
-            break;
-        case XZ:
-            if(tmpPos.y < this->planePos.y) { // within smaller
-                smaller = true;
-            } else if(tmpPos.y > this->planePos.y) {
-                greater = true;
-            }
-            break;
-    }
-    
-    // Move tmpRay to the position it hit on the intersecting plane
-    // Turns out you can never intersect a plane if you are below it.....
-    // Feels bad
-    //
-    float hitTime;
-    if(smaller) { // within the smaller slice
-        if(denom < 0) { // pointing away from the greater <- ->
-            if(this->smaller != NULL) {
-                retObj = this->smaller->traverse(ray, tmpPos);
-            }
-        } else { // pointing toward the greater -> ->
-            if(this->smaller != NULL) {
-                retObj = this->smaller->traverse(ray, tmpPos);
-            }
-            if(this->greater != NULL && retObj == NULL) {
-                // denom = glm::dot(ray->dir, planeNorm);
-                hitTime = (glm::dot((this->planePos - tmpPos), planeNorm) / denom);
-                retObj = this->greater->traverse(ray, tmpPos + (hitTime*ray->dir));
-            }
-        }
-    } else if(greater){ // within the greater slice
-        if(denom < 0) { // pointing toward the smaller -> <-
-            if(this->greater != NULL) {
-                retObj = this->greater->traverse(ray, tmpPos);
-            }
-            if(this->smaller != NULL && retObj == NULL) {
-                hitTime = (glm::dot((this->planePos - tmpPos), planeNorm) / denom);
-                retObj = this->smaller->traverse(ray, tmpPos + (hitTime*ray->dir));
-            }
-        } else { // pointing away from the smaller -> ->
-            if(this->greater != NULL) {
-                retObj = this->greater->traverse(ray, tmpPos);
-            }
-        }
-    } else { // on the splitting line
-        hitTime = (glm::dot((this->planePos - tmpPos), planeNorm) / denom);
-        if(denom < 0) {
-            if(this->smaller != NULL) {
-                retObj = this->smaller->traverse(ray, tmpPos + (hitTime*ray->dir));
-            }
-        } else {
-            if(this->greater != NULL) {
-                retObj = this->greater->traverse(ray, tmpPos + (hitTime*ray->dir));
-            }
-        }
-    }
-    return retObj;
-    */
-    
 }
 
 
