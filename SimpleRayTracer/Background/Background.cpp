@@ -31,11 +31,7 @@ glm::vec3 Background::getColor(glm::vec3 pos) {
     return this->color;
 }
 
-bool Background::isLess(glm::vec3 pos, PlaneType pType) {
-    return false;
-}
-
-bool Background::isGreater(glm::vec3 pos, PlaneType pType) {
+bool Background::inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
     return true;
 }
 

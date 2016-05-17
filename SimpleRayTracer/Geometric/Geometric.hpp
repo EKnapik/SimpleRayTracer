@@ -32,8 +32,7 @@ public:
     virtual glm::vec3 getColor(glm::vec3 pos) = 0;
     
     // Is this object completely less than the given point ?
-    virtual bool isLess(glm::vec3 pos, PlaneType pType) = 0;
-    virtual bool isGreater(glm::vec3 pos, PlaneType pType) = 0;
+    virtual bool inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) = 0;
     
     virtual bool doesCollideWith(Geometric *obj) = 0;
     // TODO: This Function is very similar for all shapes and shouldn't be virtual

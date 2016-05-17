@@ -27,8 +27,7 @@ public:
     float getIntersect(Ray *ray);
     float getDistance(glm::vec3 pos);
     glm::vec3 getColor(glm::vec3 pos);
-    bool isLess(glm::vec3 pos, PlaneType pType);
-    bool isGreater(glm::vec3 pos, PlaneType pType);
+    bool inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
     
     // Collision
     bool doesCollideWith(Geometric *obj);

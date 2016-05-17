@@ -47,7 +47,7 @@ public:
     // Rendering Flags
     int samplingLevel = 1;
     int rayDepthLevel = 8; // THE DEPTH OF RAY RECURSION
-    ToneType toneModel = WARD_TONE;
+    ToneType toneModel = DEFAULT_TONE;
     float L_dmax = 1.0; // THE DEFAULT MAX NIT VALUE FORE TONE REPRODUCTION
     
      // width and height will be covered by the window when that is fixed

@@ -16,7 +16,7 @@
 #include "Geometric.hpp"
 #include "Background.hpp"
 
-#define MAX_NODE_DEPTH 2
+#define MAX_NODE_DEPTH 4
 #define TEST_STEP float(0.005)
 
 class Kd3Node {
@@ -48,13 +48,13 @@ private:
     int nodeDepth;
 };
 
-int countSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects);
+int countSmaller(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, int numObjects, Geometric** objects);
 
-int countGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects);
+int countGreater(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, int numObjects, Geometric** objects);
 
-Geometric** getSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects);
+Geometric** getSmaller(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, int numObjects, Geometric** objects);
 
-Geometric** getGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects);
+Geometric** getGreater(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, int numObjects, Geometric** objects);
 
 
 #endif /* Kd3Node_hpp */

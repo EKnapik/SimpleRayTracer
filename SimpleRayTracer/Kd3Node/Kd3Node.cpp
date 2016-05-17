@@ -66,15 +66,17 @@ Kd3Node::Kd3Node(float xMin, float xMax, float yMin, float yMax, float zMin, flo
             break;
     }
     // Find Objects Smaller and Greater than split plane
-    int numSmaller = countSmaller(this->planePos, this->pType, numObjects, objects);
-    int numGreater = countGreater(this->planePos, this->pType, numObjects, objects);
+    int numSmaller = countSmaller(xMin, minUpper.x, yMin, minUpper.y, zMin, minUpper.z, numObjects, objects);
+    int numGreater = countGreater(maxLower.x, xMax, maxLower.y, yMax, maxLower.z, zMax, numObjects, objects);
     if(numSmaller > 0) {
-        this->smaller = new Kd3Node(xMin, minUpper.x, yMin, minUpper.y, zMin, minUpper.z,
-                                numSmaller, getSmaller(this->planePos, this->pType, numObjects, objects), curDepth+1);
+        this->smaller = new Kd3Node(xMin, minUpper.x, yMin, minUpper.y, zMin, minUpper.z, numSmaller,
+                                    getSmaller(xMin, minUpper.x, yMin, minUpper.y, zMin, minUpper.z, numObjects, objects),
+                                    curDepth+1);
     }
     if(numGreater > 0) {
-        this->greater = new Kd3Node(maxLower.x, xMax, maxLower.y, yMax, maxLower.z, zMax,
-                                numGreater, getGreater(this->planePos, this->pType, numObjects, objects), curDepth+1);
+        this->greater = new Kd3Node(maxLower.x, xMax, maxLower.y, yMax, maxLower.z, zMax, numGreater,
+                                    getGreater(maxLower.x, xMax, maxLower.y, yMax, maxLower.z, zMax, numObjects, objects),
+                                    curDepth+1);
     }
 }
 
@@ -159,7 +161,7 @@ Geometric* Kd3Node::traverse(Ray *ray, glm::vec3 tmpPos) {
     Geometric* retObj = NULL;
     // check for ray and plane being parallel
     float denom = glm::dot(ray->dir, planeNorm);
-    if(denom < 0.0001 && denom > -0.0001) {
+    if(denom < 0.00001 && denom > -0.00001) {
         if(inSmaller) {
             if(this->smaller != NULL) {
                 retObj = this->smaller->traverse(ray, tmpPos);
@@ -379,18 +381,26 @@ glm::vec3 Kd3Node::SAH(int numObjects, Geometric** objects) {
     glm::vec3 planeNorm;
     glm::vec3 bestPos;
     float bestSAH = -1;
+    glm::vec3 minUpper;
+    glm::vec3 maxLower;
     switch (this->pType) {
         case XY:
             planeNorm = glm::vec3(0.0, 0.0, 1.0);
             bestPos = glm::vec3((xMin+xMax)/2.0, (yMin+yMax)/2.0, zMin);
+            minUpper = glm::vec3(xMax, yMax, bestPos.z);
+            maxLower = glm::vec3(xMin, yMin, bestPos.z);
             break;
         case YZ:
             planeNorm = glm::vec3(1.0, 0.0, 0.0);
             bestPos = glm::vec3(xMin, (yMin+yMax)/2.0, (zMin+zMax)/2.0);
+            minUpper = glm::vec3(bestPos.x, yMax, zMax);
+            maxLower = glm::vec3(bestPos.x, yMin, zMin);
             break;
         case XZ:
             planeNorm = glm::vec3(0.0, 1.0, 0.0);
             bestPos = glm::vec3((xMin+xMax)/2.0, yMin, (zMin+zMax)/2.0);
+            minUpper = glm::vec3(xMax, bestPos.y, zMax);
+            maxLower = glm::vec3(xMin, bestPos.y, zMin);
             break;
     }
     glm::vec3 currPos = bestPos;
@@ -399,8 +409,8 @@ glm::vec3 Kd3Node::SAH(int numObjects, Geometric** objects) {
     int numGreater;
     float testSAH;
     while(currPos.x <= this->xMax && currPos.y <= this->yMax && currPos.z <= this->zMax) {
-        numSmaller = countSmaller(currPos, this->pType, numObjects, objects);
-        numGreater = countGreater(currPos, this->pType, numObjects, objects);
+        numSmaller = countSmaller(xMin, minUpper.x, yMin, minUpper.y, zMin, minUpper.z, numObjects, objects);
+        numGreater = countGreater(maxLower.x, xMax, maxLower.y, yMax, maxLower.z, zMax, numObjects, objects);
         
         testSAH = (numSmaller*(std::fabsf(currPos.x-this->xMin))*(std::fabsf(currPos.y-this->yMin))*(std::fabsf(currPos.z-this->zMin)))
                 + (numGreater*(std::fabsf(this->xMax-currPos.x))*(std::fabsf(this->yMax-currPos.y))*(std::fabsf(this->zMax-currPos.z)));
@@ -411,6 +421,8 @@ glm::vec3 Kd3Node::SAH(int numObjects, Geometric** objects) {
         }
         
         currPos += TEST_STEP * planeNorm;
+        minUpper += TEST_STEP * planeNorm;
+        maxLower += TEST_STEP * planeNorm;
     }
     
     return bestPos;
@@ -437,10 +449,11 @@ Geometric* Kd3Node::intersectCast(Ray *ray) {
 
 
 
-int countSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects) {
+int countSmaller(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax,
+                 int numObjects, Geometric** objects) {
     int smaller = 0;
     for(int i = 0; i < numObjects; i++) {
-        if(objects[i]->isLess(splitPos, pType)) {
+        if(objects[i]->inBounds(xMin, xMax, yMin, yMax, zMin, zMax)) {
             smaller++;
         }
     }
@@ -448,23 +461,25 @@ int countSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric*
 }
 
 
-int countGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects) {
+int countGreater(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax,
+                 int numObjects, Geometric** objects) {
     int greater = 0;
     for(int i = 0; i < numObjects; i++) {
-        if(objects[i]->isGreater(splitPos, pType)) {
+        if(objects[i]->inBounds(xMin, xMax, yMin, yMax, zMin, zMax)) {
             greater++;
         }
     }
     return greater;
 }
 
-Geometric** getSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects) {
-    int numSmaller = countSmaller(splitPos, pType, numObjects, objects);
+Geometric** getSmaller(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax,
+                       int numObjects, Geometric** objects) {
+    int numSmaller = countSmaller(xMin, xMax, yMin, yMax, zMin, zMax, numObjects, objects);
     Geometric** smaller = new Geometric *[numSmaller];
     
     int count = 0;
     for(int i = 0; i < numObjects; i++) {
-        if(objects[i]->isLess(splitPos, pType)) {
+        if(objects[i]->inBounds(xMin, xMax, yMin, yMax, zMin, zMax)) {
             smaller[count] = objects[i];
             count++;
         }
@@ -474,13 +489,14 @@ Geometric** getSmaller(glm::vec3 splitPos, PlaneType pType, int numObjects, Geom
 }
 
 
-Geometric** getGreater(glm::vec3 splitPos, PlaneType pType, int numObjects, Geometric** objects) {
-    int numGreater = countGreater(splitPos, pType, numObjects, objects);
+Geometric** getGreater(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax,
+                       int numObjects, Geometric** objects) {
+    int numGreater = countGreater(xMin, xMax, yMin, yMax, zMin, zMax, numObjects, objects);
     Geometric** greater = new Geometric *[numGreater];
     
     int count = 0;
     for(int i = 0; i < numObjects; i++) {
-        if(objects[i]->isGreater(splitPos, pType)) {
+        if(objects[i]->inBounds(xMin, xMax, yMin, yMax, zMin, zMax)) {
             greater[count] = objects[i];
             count++;
         }

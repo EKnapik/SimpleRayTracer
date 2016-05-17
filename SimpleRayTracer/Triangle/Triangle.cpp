@@ -114,64 +114,33 @@ glm::vec3 Triangle::getColor(glm::vec3 pos) {
 }
 
 
-bool Triangle::isLess(glm::vec3 pos, PlaneType pType) {
-    switch (pType) {
-        case XY:
-            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
-            if(this->v1.z <= pos.z || this->v2.z <= pos.z || this->v3.z <= pos.z) {
-                return true;
-            }
-            break;
-        case YZ:
-            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
-            if(this->v1.x <= pos.x || this->v2.x <= pos.x || this->v3.x <= pos.x) {
-                return true;
-            }
-            break;
-        case XZ:
-            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
-            if(this->v1.y <= pos.y || this->v2.y <= pos.y || this->v3.y <= pos.y) {
-                return true;
-            }
-            break;
-        default:
-            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
-            exit(1);
-            break;
+bool Triangle::inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
+    // check X bounds
+    if((this->v1.x >= xMin && this->v1.x <= xMax) ||
+       (this->v2.x >= xMin && this->v2.x <= xMax) ||
+       (this->v3.x >= xMin && this->v3.x <= xMax)) {
+        return true;
+    }
+
+    // check Y bounds
+    if((this->v1.y >= yMin && this->v1.y <= yMax) ||
+       (this->v2.y >= yMin && this->v2.y <= yMax) ||
+       (this->v3.y >= yMin && this->v3.y <= yMax)) {
+        return true;
+    }
+    
+    // check Z bounds
+    if((this->v1.z >= zMin && this->v1.z <= zMax) ||
+       (this->v2.z >= zMin && this->v2.z <= zMax) ||
+       (this->v3.z >= zMin && this->v3.z <= zMax)) {
+        return true;
     }
     
     return false;
 }
 
 
-bool Triangle::isGreater(glm::vec3 pos, PlaneType pType) {
-    switch (pType) {
-        case XY:
-            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
-            if(this->v1.z >= pos.z || this->v2.z >= pos.z || this->v3.z >= pos.z) {
-                return true;
-            }
-            break;
-        case YZ:
-            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
-            if(this->v1.x >= pos.x || this->v2.x >= pos.x || this->v3.x >= pos.x) {
-                return true;
-            }
-            break;
-        case XZ:
-            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
-            if(this->v1.y >= pos.y || this->v2.y >= pos.y || this->v3.y >= pos.y) {
-                return true;
-            }
-            break;
-        default:
-            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
-            exit(1);
-            break;
-    }
-    
-    return false;
-}
+
 
 
 bool Triangle::doesCollideWith(Geometric *obj) {

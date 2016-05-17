@@ -91,62 +91,10 @@ glm::vec3 Plane::getColor(glm::vec3 pos) {
 }
 
 
-bool Plane::isLess(glm::vec3 pos, PlaneType pType) {
-    switch (pType) {
-        case XY:
-            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
-            if(this->pos.z <= pos.z) {
-                return true;
-            }
-            break;
-        case YZ:
-            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
-            if(this->pos.x <= pos.x) {
-                return true;
-            }
-            break;
-        case XZ:
-            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
-            if(this->pos.y <= pos.y) {
-                return true;
-            }
-            break;
-        default:
-            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
-            exit(1);
-            break;
+bool Plane::inBounds(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
+    if(this->pos.y >= yMin && this->pos.y <= yMax) {
+        return true;
     }
-    
-    return false;
-}
-
-
-bool Plane::isGreater(glm::vec3 pos, PlaneType pType) {
-    switch (pType) {
-        case XY:
-            // planeNorm = glm::vec3(0.0, 0.0, 1.0);
-            if(this->pos.z >= pos.z) {
-                return true;
-            }
-            break;
-        case YZ:
-            // planeNorm = glm::vec3(1.0, 0.0, 0.0);
-            if(this->pos.x >= pos.x) {
-                return true;
-            }
-            break;
-        case XZ:
-            // planeNorm = glm::vec3(0.0, 1.0, 0.0);
-            if(this->pos.y >= pos.y) {
-                return true;
-            }
-            break;
-        default:
-            std::cerr << "Error Ray Traversing the Kd3Node" << std::endl;
-            exit(1);
-            break;
-    }
-    
     return false;
 }
 
