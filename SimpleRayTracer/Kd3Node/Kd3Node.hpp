@@ -19,6 +19,14 @@
 #define MAX_NODE_DEPTH 3
 #define TEST_STEP float(0.0005)
 
+
+/*
+ TODO: Check and change the triangle bounding interscection
+ All the points could be outside the bounds but the triangle traverses within
+ the bounds of the box.
+ */
+
+
 class Kd3Node {
 public:
     Kd3Node(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax,
